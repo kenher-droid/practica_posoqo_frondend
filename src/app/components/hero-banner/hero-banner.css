@@ -19,6 +19,40 @@
   background: #f5f5f5;
   position: relative;
   overflow: hidden;
+  z-index: 0;
+}
+
+.hero_color::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e0b800; /* amarillo */
+
+  clip-path: polygon(0 0, 50% 0, 45% 100%, 0 100%);
+  z-index: -1;
+}
+.hero_color_2 {
+  height: 60vh;
+  background: #f5f5f5;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero_color_2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e0b800; /* amarillo */
+
+  clip-path: polygon(0 0, 50% 0, 45% 100%, 0 100%);
+  z-index: -1;
+}
+.hero_color {
+  height: 60vh;
+  background: #f5f5f5;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero_color::before {
@@ -29,14 +63,14 @@
 
   clip-path: polygon(0 0, 50% 0, 45% 100%, 0 100%);
 }
-.hero_color_2 {
+.hero_color {
   height: 60vh;
   background: #f5f5f5;
   position: relative;
   overflow: hidden;
 }
 
-.hero_color_2::before {
+.hero_color::before {
   content: "";
   position: absolute;
   inset: 0;
