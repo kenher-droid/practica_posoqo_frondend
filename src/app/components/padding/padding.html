@@ -1,0 +1,67 @@
+<footer class="footer-container">
+  <div class="footer-grid">
+    
+    <div class="footer-col brand-col">
+      <div class="logo-box">
+        <div class="top-border"></div>
+        <h1 class="brand-title">POSOQO</h1>
+        <div class="bottom-border"></div>
+      </div>
+      
+      <div class="location-info" (click)="abrirMapa()" style="cursor: pointer;">
+        <span class="flag-icon">{{ ubicacion.icono }}</span>
+        <p>
+          @for (linea of ubicacion.lineas; track linea) {
+            {{ linea }}<br>
+          }
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h2 class="col-title">Contactanos</h2>
+      <ul class="col-list">
+        @for (c of contactos; track c.etiqueta) {
+          <li>{{ c.etiqueta }}: {{ c.valor }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h2 class="col-title">Informacion</h2>
+      <ul class="col-list">
+        @for (item of informacion; track item.nombre) {
+          <li><a [routerLink]="item.ruta" class="footer-link">{{ item.nombre }}</a></li>
+        }
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h2 class="col-title">Sobre nosotros</h2>
+      <ul class="col-list">
+        @for (item of sobreNosotros; track item.nombre) {
+          <li><a [routerLink]="item.ruta" class="footer-link">{{ item.nombre }}</a></li>
+        }
+        <li class="spacer-top">
+          <a [routerLink]="eventoLink.ruta" class="footer-link">{{ eventoLink.nombre }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 🔥 REDES DENTRO DEL GRID (CLAVE PARA ALINEACIÓN) -->
+    <div class="footer-social">
+      <a [href]="redes.facebook" target="_blank" class="fb">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+
+      <a [href]="redes.instagram" target="_blank" class="ig">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© Cerveceria posoqo Todos los derechos reservados 2026. por kenher_droid</p>
+  </div>
+</footer>
