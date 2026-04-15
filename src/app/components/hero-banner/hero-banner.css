@@ -8,11 +8,16 @@
 }
 .hero_2 {
   height: 100vh;
+  width: 100%; /* Asegura el ancho total */
   background-image: url('/backgrounds/background_2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Evita que el scroll horizontal rompa el layout de la página */
 }
 .hero_color {
   height: 60vh;

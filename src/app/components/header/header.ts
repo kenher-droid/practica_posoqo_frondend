@@ -10,8 +10,9 @@ import { RouterModule } from '@angular/router';
 export class Header {
   menu = [
     { nombre: 'Inicio', ruta: '#' },
-    { nombre: 'Productos', ruta: '#' },
-    { nombre: 'Servicios', ruta: '#' },
-    { nombre: 'Contacto', ruta: '#' }
+    { nombre: 'Carta', ruta: '#' },
+    { nombre: 'Eventos', ruta: '#' },
+    { nombre: 'Otros', ruta: '#' },
+    { nombre: 'Iniciar sesión', ruta: '#' }
   ];
 }
