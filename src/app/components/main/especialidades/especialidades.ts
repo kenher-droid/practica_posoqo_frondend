@@ -27,22 +27,19 @@ export class Especialidades {
   private readonly GAP = 24;
 
   maxScroll = computed(() => {
-    // Si quieres que siempre se detenga mostrando las últimas 3 cartas:
+
     return Math.max(0, this.items().length - 1);
   });
 
-  // 2. Cálculo en PIXELES para evitar deformaciones:
-  // Usamos el ancho de la carta + el espacio entre ellas (gap)
   transform = computed(() => {
     const offset = this.currentIndex() * (this.CARD_WIDTH + this.GAP);
     return `translateX(-${offset}px)`;
   });
 
-  // ... dentro de la clase Especialidades
 
   next() {
     this.currentIndex.update(idx => {
-      // Si llegamos al final del scroll, volvemos a la primera carta (0)
+
       if (idx >= this.maxScroll()) {
         return 0;
       }
