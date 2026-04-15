@@ -1,0 +1,59 @@
+.hero {
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  background: transparent;
+
+  margin: 0;
+  padding: 0;
+
+  /* 🔥 sube todo el contenido */
+  transform: translateY(-60px);
+}
+
+/* TITULO */
+.logo {
+  font-size: 7.5rem;
+  font-weight: 900;
+  color: #fdfdfd;
+  margin: 0;
+  line-height: 1;
+}
+
+/* TEXTO */
+.subtexto {
+  font-size: 1.5rem;
+  color: #dddada;
+  margin-top: 15px;
+  line-height: 1.4;
+}
+
+/* BOTON */
+.btn-login {
+  margin-top: 30px;
+  padding: 15px 45px;
+
+  background: #f2c200;
+  color: #000;
+
+  font-weight: bold;
+  font-size: 1.2rem;
+
+  border: none;
+  border-radius: 30px;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  transform: scale(1.05);
+}

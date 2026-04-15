@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   templateUrl: './bienvenida.html',
   styleUrl: './bienvenida.css',
 })
-export class Bienvenida {}
+export class Bienvenida {
+
+  irASeccion() {
+    // aquí luego pones la ruta que quieras
+    console.log('Botón listo para redirigir');
+  }
+}
