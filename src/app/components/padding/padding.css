@@ -87,13 +87,14 @@
   text-align: center;
 }
 
-/* 🔥 FIX IMPORTANTE: evita que se aplaste */
+/* 🔥 FIX IMPORTANTE */
 .col-list li {
   margin-bottom: 12px;
   font-size: 0.95rem;
-  white-space: normal;
-  word-break: break-word;
-  text-align: center;
+  text-align: left;
+
+  /* 👇 MANTENER TODO EN UNA SOLA LÍNEA */
+  white-space: nowrap;
 }
 
 /* links */
@@ -181,5 +182,10 @@
 
   .footer-social {
     flex-direction: row;
+  }
+
+  /* 👇 En celular sí puede bajar */
+  .col-list li {
+    white-space: normal;
   }
 }
