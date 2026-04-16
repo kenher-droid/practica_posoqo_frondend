@@ -1,31 +1,34 @@
 .container-nosotros {
-  display: flex;
+  display: grid;
+  /* Creamos dos columnas iguales: una para el área amarilla y otra para la blanca */
+  grid-template-columns: 1fr 1fr; 
   align-items: center;
+  min-height:50vh; /* Centrado vertical en toda la pantalla */
+  width: 100%;
+  padding: 0; /* Quitamos el padding lateral para que el fondo llegue a los bordes */
 
-  /* 🔥 menos separación a los lados */
-  justify-content: center;
-
-  padding: 3rem 5%;  /* antes 10%, ahora más cerrado */
-  min-height: 450px;
-
-  /* 🔥 más juntos entre imagen y texto */
-  gap: 40px;
-
-  flex-direction: row-reverse;
+  /* 🔥 agregado */
+  grid-template-areas: "imagen texto";
 }
 
 .texto-col {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
   z-index: 2;
-    position: relative;
-  left: 180px;
+  text-align: center;
+
+  /* 🔥 agregado */
+  grid-area: texto;
 }
 
 .titulo {
   font-family: 'Arial Black', sans-serif;
   font-size: 3.5rem;
   font-weight: 900;
-  margin: 0 0 2rem 0;
+  margin-bottom: 1.5rem;
   color: #000;
   line-height: 1;
 }
@@ -40,39 +43,50 @@
 }
 
 .imagen-col {
-  flex: 1;
-  display: flex;
-  justify-content: center; /* 🔥 antes estaba a la derecha */
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+
+  /* 🔥 agregado */
+  grid-area: imagen;
 }
 
 .foto-curva {
   width: 100%;
-  max-width: 420px;
-  height: 320px;
+  max-width: 400px; 
+  height: 400px;
 
   background-image: url('/backgrounds/plaza.jpg');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
+  
   border-radius: 25px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
 }
 
-/* Responsive */
+.foto-curva:hover {
+  transform: scale(1.03);
+}
+
+/* --- RESPONSIVO PARA MÓVIL --- */
 @media (max-width: 992px) {
   .container-nosotros {
-    flex-direction: column;
-    text-align: center;
-    padding: 2rem 5%;
-  }
+    grid-template-columns: 1fr;
+    padding: 4rem 1rem;
 
-  .imagen-col {
-    justify-content: center;
-    width: 100%;
+    /* opcional: orden en móvil */
+    grid-template-areas:
+      "imagen"
+      "texto";
+  }
+  
+  .titulo {
+    font-size: 2.5rem;
   }
 
   .foto-curva {
-    height: 300px;
+    max-width: 320px;
+    height: 320px;
   }
 }

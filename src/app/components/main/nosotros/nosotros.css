@@ -1,22 +1,28 @@
 .container-nosotros {
-  display: flex;
+  display: grid;
+  /* Creamos dos columnas iguales: una para el área amarilla y otra para la blanca */
+  grid-template-columns: 1fr 1fr; 
   align-items: center;
-  justify-content: space-between;
-  padding: 4rem 10%;
-  min-height: 450px;
-  gap: 20px;
+  min-height:50vh; /* Centrado vertical en toda la pantalla */
+  width: 100%;
+  padding: 0; /* Quitamos el padding lateral para que el fondo llegue a los bordes */
 }
 
 .texto-col {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* Centra el texto horizontalmente en su mitad */
+  justify-content: center; /* Centra el texto verticalmente */
+  padding: 2rem;
   z-index: 2;
+  text-align: center; /* Para que el texto se vea centrado como en tu imagen */
 }
 
 .titulo {
   font-family: 'Arial Black', sans-serif;
   font-size: 3.5rem;
   font-weight: 900;
-  margin: 0 0 2rem 0;
+  margin-bottom: 1.5rem;
   color: #000;
   line-height: 1;
 }
@@ -28,43 +34,48 @@
   max-width: 450px;
   line-height: 1.4;
   color: #1a1a1a;
-  text-transform: lowercase;
 }
 
 .imagen-col {
-  flex: 1;
-  display: flex;
-  /* Esto la empuja a la derecha (zona blanca) */
-  justify-content: flex-end; 
+  display: grid;
+  place-items: center; /* Esto centra el cuadro blanco exacto en su mitad de la pantalla */
+  padding: 2rem;
 }
 
 .foto-curva {
   width: 100%;
-  /* Bajamos el tamaño para que encaje mejor */
-  max-width: 420px; 
-  height: 320px; 
+  max-width: 400px; 
+  height: 400px; /* Lo hacemos más cuadrado para que se vea como el cuadro blanco */
 
-  /* TU RUTA EXACTA */
+  /* TU IMAGEN DE FONDO CON EL CORTE AMARILLO */
   background-image: url('/backgrounds/Rectangle16.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
-  /* Estilos de la foto en la captura */
+  
   border-radius: 25px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  
+  /* INTERACTIVIDAD BÁSICA */
+  transition: transform 0.3s ease;
 }
-/* Responsive para móvil */
+
+.foto-curva:hover {
+  transform: scale(1.03); /* Efecto visual al pasar el mouse */
+}
+
+/* --- RESPONSIVO PARA MÓVIL --- */
 @media (max-width: 992px) {
   .container-nosotros {
-    flex-direction: column;
-    text-align: center;
+    grid-template-columns: 1fr; /* Una sola columna en móvil */
+    padding: 4rem 1rem;
   }
-  .imagen-col {
-    justify-content: center;
-    width: 100%;
+  
+  .titulo {
+    font-size: 2.5rem;
   }
+
   .foto-curva {
-    height: 300px;
+    max-width: 320px;
+    height: 320px;
   }
 }
