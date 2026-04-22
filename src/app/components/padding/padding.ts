@@ -10,19 +10,19 @@ import { RouterModule } from '@angular/router';
 })
 export class Padding {
 
-  // 🔥 URL de Google Maps (tu dirección exacta)
-mapaUrl = encodeURI('https://www.google.com/maps/search/?api=1&query=Plaza de Armas, Portal Independencia Nº65, Jr. Argentina Mz. Y Lt. 05, Ayacucho 05001');
-  // 🔥 Función para abrir el mapa
-  abrirMapa() {
-    window.open(this.mapaUrl, '_blank');
-  }
+// Esta URL activa la navegación GPS desde el usuario hasta el restaurante
+mapaUrl = 'https://www.google.com/maps/dir/?api=1&destination=Plaza+de+Armas+Portal+Independencia+65+Ayacucho+05001';
+
+abrirMapa() {
+  window.open(this.mapaUrl, '_blank');
+}
 
   // Datos de Ubicación con el nuevo icono
   ubicacion = {
     icono: '',
     lineas: [
       'Parque Sucre',
-      'Av. los olivos',
+      'Av. Portal Independencia ',
       'Huamanga-Ayacucho'
     ]
   };
