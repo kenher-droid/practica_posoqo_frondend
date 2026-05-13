@@ -1,0 +1,86 @@
+<div class="contenedor">
+
+  <header class="navbar">
+    <div class="logo">POSOQO</div>
+    <div class="nav-botones">
+      <button (click)="verEventos()">EVENTOS</button>
+      <button (click)="verCarta()">CARTA</button>
+      <button (click)="cerrarSesion()">CERRAR SESION</button>
+    </div>
+  </header>
+
+  <section class="bienvenida">
+    <h1 class="saludo">
+      ¡Hola!, <span>{{ nombreUsuario }}</span>
+    </h1>
+  </section>
+
+  <section class="puntos-card">
+    <div class="puntos-box">
+      <h3>MIS PUNTOS ACUMULADOS</h3>
+      <div class="monedas">
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda llena">posoqo</div>
+        <div class="moneda vacia"></div>
+      </div>
+      <div class="puntos">
+        <h2>12 puntos</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>¿Cómo canjear mis puntos?</h2>
+    <div class="info-contenido">
+      <img src="/backgrounds/Rectangle16.png" class="img-placeholder" alt="Canjear puntos">
+      <p>
+        Para canjear tus puntos tienes que comunicarte o acercarte
+        al local o por medio de delivery, eliges las promociones disponibles
+        y al recibir el producto tus puntos se descontarán. Recuerda leer nuestra
+        política de privacidad por los canjes de puntos.
+      </p>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>¿Cómo ganar puntos?</h2>
+    <div class="info-contenido reverse">
+      <p>
+        Para ganar tus puntos tienes que comunicarte o acercarte
+        al local o por medio de delivery, eliges las promociones disponibles
+        y al recibir el producto tus puntos se descontarán. Recuerda leer nuestra
+        política de privacidad por los canjes de puntos.
+      </p>
+      <img src="/backgrounds/Rectangle16.png" class="img-placeholder" alt="Ganar puntos">
+    </div>
+  </section>
+
+  <section class="delivery">
+    <div class="delivery-texto">
+      <h2>POSOQO DELIVERY</h2>
+      <p>
+        Comunícate al WhatsApp de Posoqo para pedir tus
+        comidas preferidas y también ganar puntos.
+      </p>
+    </div>
+    <button class="btn-delivery" (click)="irAWhatsApp()">
+      Realizar pedido
+    </button>
+  </section>
+
+  <footer class="footer">
+    <button class="volver-btn" (click)="volverInicio()">
+      Volver a inicio
+    </button>
+  </footer>
+
+</div>
