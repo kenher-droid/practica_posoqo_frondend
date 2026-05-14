@@ -1,0 +1,64 @@
+.admin-page {
+  padding: 20px;
+  position: relative;
+}
+
+.header-table { border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 15px; }
+.table-title { font-size: 14px; font-weight: 400; }
+
+.admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.chevron { border: solid #555; border-width: 0 1px 1px 0; display: inline-block; padding: 2px; transform: rotate(45deg); margin-left: 5px; }
+
+.btns-cell { white-space: nowrap; }
+
+.admin-modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 100;
+}
+
+.admin-modal-card {
+  background: white; width: 600px; padding: 35px; border-radius: 25px; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center;
+}
+
+.edit-title { font-size: 18px; margin-bottom: 25px; text-align: left; }
+
+.admin-form-row { display: flex; gap: 20px; margin-bottom: 15px; flex-wrap: wrap; }
+.admin-form-group { flex: 1; text-align: left; display: flex; flex-direction: column; gap: 5px; }
+.admin-form-group label { font-weight: bold; font-size: 13px; }
+
+.admin-input { 
+  padding: 10px; border: 1px solid #ccc; border-radius: 8px; 
+  background: #fdfdfd; font-size: 12px; 
+}
+
+.password-field .input-wrapper { position: relative; }
+.eye-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; opacity: 0.5; }
+
+.admin-modal-actions { 
+  display: flex; 
+  gap: 10px; 
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.admin-toast {
+  position: absolute; bottom: 50px; right: 50px; width: 320px; padding: 30px; border-radius: 20px; background: white;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2); text-align: center; z-index: 110;
+}
+
+.delete-toast h3 { font-size: 16px; letter-spacing: 1px; margin-bottom: 20px; }
+.user-target { color: #555; margin-bottom: 25px; font-size: 13px; }
+
+.toast-actions { display: flex; gap: 10px; justify-content: center; }
+
+.admin-button--secondary,
+.admin-button--danger,
+.admin-button--ghost {
+  min-width: 120px;
+}
+
+@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }

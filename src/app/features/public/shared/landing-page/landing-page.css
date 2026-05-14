@@ -1,0 +1,67 @@
+.hero {
+  min-height: 100vh;
+  background-image: url('/assets/backgrounds/background_1.avif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.hero_2 {
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('/assets/backgrounds/background_2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero_color {
+  min-height: 60vh;
+  background: #f5f5f5;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero_color::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e0b800;
+  clip-path: polygon(0 0, 50% 0, 45% 100%, 0 100%);
+  z-index: -1;
+}
+
+.hero_color_2 {
+  min-height: 60vh;
+  background: #f5f5f5;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero_color_2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e0b800;
+  clip-path: polygon(0 0, 50% 0, 45% 100%, 0 100%);
+  z-index: -1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero, .hero_2 {
+    min-height: 80vh;
+  }
+
+  .hero_color, .hero_color_2 {
+    min-height: 50vh;
+  }
+}

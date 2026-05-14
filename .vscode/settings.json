@@ -1,0 +1,39 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "tsconfig.spec.json": true,
+        "tsconfig.json": true,
+        "tsconfig.app.json": true,
+        "README.md": true,
+        "package.json": true,
+        "package-lock.json": true,
+        "angular.json": true,
+        ".prettierrc": true,
+        ".postcssrc.json": true,
+        ".gitignore": true,
+        ".editorconfig": true,
+        "node_modules": true,
+        ".vscode": true,
+        ".angular": true
+    },
+    "hide-files.files": [
+        "tsconfig.spec.json",
+        "tsconfig.json",
+        "tsconfig.app.json",
+        "README.md",
+        "package.json",
+        "package-lock.json",
+        "angular.json",
+        ".prettierrc",
+        ".postcssrc.json",
+        ".gitignore",
+        ".editorconfig",
+        "node_modules",
+        ".vscode",
+        ".angular"
+    ]
+}

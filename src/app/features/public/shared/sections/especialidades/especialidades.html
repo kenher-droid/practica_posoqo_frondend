@@ -1,0 +1,48 @@
+<div class="text-white font-sans w-full max-w-[1200px] mx-auto">
+  
+  <h2 class="text-5xl font-bold mb-12 ml-4">Especialidades</h2>
+
+  <div class="relative group px-4 md:px-0">
+    
+    <div class="overflow-hidden">
+      <div 
+        class="flex gap-6 transition-transform duration-500 ease-out"
+        [style.transform]="transform()"
+      >
+        @for (item of items(); track $index) {
+          <div class="w-[320px] flex-shrink-0">
+            <div class="bg-[#e9c440] rounded-[2.5rem] overflow-hidden flex flex-col h-[420px] shadow-xl">
+              <div class="h-[80%] overflow-hidden">
+                <img [src]="item.image" class="w-full h-full object-cover" [alt]="item.title" loading="lazy">
+              </div>
+              <div class="h-[20%] flex items-center justify-center">
+                <span class="text-black text-2xl font-bold italic">{{ item.title }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <button (click)="prev()" class="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-all z-10">
+      <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+        <path d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <button (click)="next()" class="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-all z-10">
+      <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+        <path d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="flex justify-center gap-2 mt-12">
+    @for (item of items(); track $index) {
+      <button 
+        (click)="goTo($index)"
+        [class]="'h-3 rounded-full transition-all ' + ($index === currentIndex() ? 'w-8 bg-white' : 'w-3 bg-white/30')"
+      ></button>
+    }
+  </div>
+</div>

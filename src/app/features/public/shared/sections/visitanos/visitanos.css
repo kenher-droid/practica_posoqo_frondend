@@ -1,0 +1,92 @@
+.container-nosotros {
+  display: grid;
+  /* Creamos dos columnas iguales: una para el área amarilla y otra para la blanca */
+  grid-template-columns: 1fr 1fr; 
+  align-items: center;
+  min-height:50vh; /* Centrado vertical en toda la pantalla */
+  width: 100%;
+  padding: 0; /* Quitamos el padding lateral para que el fondo llegue a los bordes */
+
+  /* 🔥 agregado */
+  grid-template-areas: "imagen texto";
+}
+
+.texto-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 2;
+  text-align: center;
+
+  /* 🔥 agregado */
+  grid-area: texto;
+}
+
+.titulo {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  color: #000;
+  line-height: 1;
+}
+
+.descripcion {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  max-width: 450px;
+  line-height: 1.4;
+  color: #1a1a1a;
+}
+
+.imagen-col {
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+
+  /* 🔥 agregado */
+  grid-area: imagen;
+}
+
+.foto-curva {
+  width: 100%;
+  max-width: 400px; 
+  height: 400px;
+
+  background-image: url('/assets/backgrounds/plaza.jpg');
+  background-size: cover;
+  background-position: center;
+  
+  border-radius: 25px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.foto-curva:hover {
+  transform: scale(1.03);
+}
+
+/* --- RESPONSIVO PARA MÓVIL --- */
+@media (max-width: 992px) {
+  .container-nosotros {
+    grid-template-columns: 1fr;
+    padding: 4rem 1rem;
+
+    /* opcional: orden en móvil */
+    grid-template-areas:
+      "imagen"
+      "texto";
+  }
+  
+  .titulo {
+    font-size: 2.5rem;
+  }
+
+  .foto-curva {
+    max-width: 320px;
+    height: 320px;
+  }
+}

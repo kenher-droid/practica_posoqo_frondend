@@ -1,0 +1,269 @@
+/* carta.component.css */
+
+*{
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: sans-serif;
+}
+
+body{
+ background: #0b0b0b;
+}
+
+.contenedor{
+ width: 100%;
+ min-height: 100vh;
+ background: #0b0b0b;
+ color: white;
+}
+
+/* NAVBAR */
+
+.navbar{
+ width: 100%;
+ background: #d4b21d;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 20px 40px;
+ border-bottom-left-radius: 20px;
+ border-bottom-right-radius: 20px;
+}
+
+.logo{
+ font-size: 32px;
+ font-weight: bold;
+ color: black;
+ border-bottom: 4px solid black;
+ width: fit-content;
+}
+
+.nav-botones{
+ display: flex;
+ gap: 15px;
+}
+
+.nav-botones button{
+ background: #c09f12;
+ border: none;
+ padding: 10px 20px;
+ border-radius: 10px;
+ font-weight: bold;
+ cursor: pointer;
+}
+
+/* BIENVENIDA */
+
+.bienvenida{
+ text-align: center;
+ margin-top: 80px;
+}
+
+.bienvenida h1{
+ font-size: 80px;
+ font-style: italic;
+ color: #cfcfcf;
+}
+
+.bienvenida span{
+ color: #f2cb18;
+}
+
+/* CARD PUNTOS */
+
+.puntos-card{
+ width: 85%;
+ margin: 60px auto;
+ border: 4px solid #a98618;
+ border-radius: 25px;
+ padding: 40px;
+ background: linear-gradient(to right, #161616, #1f1f1f);
+}
+
+.puntos-card h3{
+ text-align: center;
+ color: #caa61a;
+ margin-bottom: 50px;
+ font-size: 30px;
+}
+
+.monedas{
+ display: grid;
+ grid-template-columns: repeat(6, 1fr);
+ gap: 40px;
+ justify-items: center;
+}
+
+.moneda{
+ width: 120px;
+ height: 120px;
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: bold;
+ text-transform: lowercase;
+ font-size: 25px;
+}
+
+.llena{
+ background: #f0cb1a;
+ color: black;
+ border: 5px solid #c29f0f;
+}
+
+.vacia{
+ border: 5px solid #c29f0f;
+ background: transparent;
+}
+
+.puntos-card h2{
+ text-align: center;
+ margin-top: 60px;
+ color: #f0cb1a;
+ font-size: 60px;
+}
+
+/* INFO */
+
+.info-section{
+ width: 85%;
+ margin: 80px auto;
+}
+
+.info-section h2{
+ font-size: 50px;
+ margin-bottom: 40px;
+}
+
+.info-contenido{
+ display: flex;
+ align-items: center;
+ gap: 50px;
+}
+
+.reverse{
+ justify-content: space-between;
+}
+
+/* ACTUALIZADO PARA LA IMAGEN */
+.img-placeholder{
+ width: 220px;
+ height: 220px;
+ background: #d9d9d9;
+ object-fit: cover; /* Asegura que la imagen no se deforme */
+ border-radius: 10px; /* Opcional: un pequeño redondeado para que se vea mejor */
+}
+
+.info-contenido p{
+ font-size: 28px;
+ line-height: 1.6;
+ max-width: 900px;
+}
+
+/* DELIVERY */
+
+.delivery{
+ width: 100%;
+ background: #d4b21d;
+ padding: 60px 80px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+
+.delivery-texto h2{
+ font-size: 45px;
+ color: black;
+ margin-bottom: 25px;
+}
+
+.delivery-texto p{
+ font-size: 28px;
+ color: black;
+ max-width: 700px;
+ font-weight: bold;
+}
+
+.btn-delivery{
+ background: #08b320;
+ border: none;
+ padding: 25px 60px;
+ border-radius: 20px;
+ color: white;
+ font-size: 28px;
+ font-weight: bold;
+ cursor: pointer;
+}
+
+/* FOOTER */
+
+.footer{
+ display: flex;
+ justify-content: center;
+ padding: 70px 0;
+}
+
+.footer button{
+ background: #d4b21d;
+ border: none;
+ padding: 25px 70px;
+ border-radius: 20px;
+ font-size: 28px;
+ font-weight: bold;
+ cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1200px){
+
+ .monedas{
+  grid-template-columns: repeat(3,1fr);
+ }
+
+ .info-contenido{
+  flex-direction: column;
+ }
+
+ .reverse{
+  flex-direction: column-reverse;
+ }
+
+ .delivery{
+  flex-direction: column;
+  gap: 40px;
+  text-align: center;
+ }
+
+}
+
+@media(max-width: 768px){
+
+ .bienvenida h1{
+  font-size: 50px;
+ }
+
+ .puntos-card h2{
+  font-size: 40px;
+ }
+
+ .info-section h2{
+  font-size: 35px;
+ }
+
+ .info-contenido p{
+  font-size: 20px;
+ }
+
+ .monedas{
+  grid-template-columns: repeat(2,1fr);
+ }
+
+ .navbar{
+  flex-direction: column;
+  gap: 20px;
+ }
+
+}

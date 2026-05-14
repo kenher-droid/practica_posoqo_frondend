@@ -1,0 +1,99 @@
+<div class="admin-page">
+  <div class="header-table">
+    <span class="table-title">Usuarios totales</span>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Id <i class="chevron"></i></th>
+          <th>Nombre <i class="chevron"></i></th>
+          <th>Teléfono <i class="chevron"></i></th>
+          <th>Gmail <i class="chevron"></i></th>
+          <th>Contraseña <i class="chevron"></i></th>
+          <th>Puntos <i class="chevron"></i></th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of usuarios(); track user.id) {
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.nombre }} {{ user.apellidos }}</td>
+            <td>{{ user.telefono }}</td>
+            <td>{{ user.gmail }}</td>
+            <td>{{ user.contrasena }}</td>
+            <td>{{ user.puntos }}</td>
+            <td class="btns-cell">
+              <button class="admin-button admin-button--secondary" (click)="openEdit(user)">Editar</button>
+              <button class="admin-button admin-button--danger" (click)="openDelete(user)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showEditModal) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card animate-scale">
+        <h2 class="edit-title">Editar: {{ selectedUser?.nombre }}</h2>
+        
+        <form class="edit-form">
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label>Nombres</label>
+              <input class="admin-input" type="text" [value]="selectedUser?.nombre" placeholder="|Cantidad de integrantes">
+            </div>
+            <div class="admin-form-group">
+              <label>Apellidos</label>
+              <input class="admin-input" type="text" [value]="selectedUser?.apellidos" placeholder="|Número del representante">
+            </div>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label>Teléfono</label>
+              <input class="admin-input" type="text" [value]="selectedUser?.telefono" placeholder="|+51">
+            </div>
+            <div class="admin-form-group">
+              <label>Gmail</label>
+              <input class="admin-input" type="email" [value]="selectedUser?.gmail" placeholder="|Example@gmail.com">
+            </div>
+          </div>
+
+          <div class="admin-form-row">
+            <div class="admin-form-group password-field">
+              <label>Contraseña</label>
+              <div class="input-wrapper">
+                <input class="admin-input" type="password" [value]="selectedUser?.contrasena" placeholder="|password">
+                <button type="button" class="eye-btn">👁️</button>
+              </div>
+            </div>
+            <div class="admin-form-group">
+              <label>Fecha de nacimiento</label>
+              <input class="admin-input" type="text" [value]="selectedUser?.fecha_nacimiento" placeholder="|Fecha de nacimiento">
+            </div>
+          </div>
+
+          <div class="admin-modal-actions">
+            <button type="button" class="admin-button admin-button--primary">Realizar cambios</button>
+            <button type="button" class="admin-button admin-button--ghost" (click)="closeModals()">Cerrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  @if (showDeleteConfirm) {
+    <div class="admin-toast animate-slide">
+      <h3>ELIMINAR USUARIO</h3>
+      <p class="user-target">{{ selectedUser?.nombre }} {{ selectedUser?.apellidos }}</p>
+      <div class="admin-modal-actions">
+        <button class="admin-button admin-button--primary" (click)="confirmDelete()">✓ Confirmar</button>
+        <button class="admin-button admin-button--ghost" (click)="closeModals()">✕ Cancelar</button>
+      </div>
+    </div>
+  }
+</div>

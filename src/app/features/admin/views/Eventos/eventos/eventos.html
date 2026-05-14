@@ -1,0 +1,99 @@
+<div class="page-layout">
+  <!-- Cabecera de tabla -->
+  <div class="table-header">
+    <p class="title-label">Eventos actuales</p>
+    <button class="add-trigger" (click)="openCreate()">
+      Añadir eventos <span class="badge">+</span>
+    </button>
+  </div>
+
+  <!-- Tabla -->
+  <div class="card-container">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Lugar</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ev of eventos(); track ev.id) {
+          <tr>
+            <td>{{ ev.id }}</td>
+            <td>{{ ev.nombre }}</td>
+            <td>{{ ev.fecha }}</td>
+            <td>{{ ev.hora }}</td>
+            <td>{{ ev.lugar }}</td>
+            <td class="text-muted">{{ ev.descripcion }}</td>
+            <td>
+              <button class="btn-edit" (click)="openEdit(ev)">Editar</button>
+              <button class="btn-delete" (click)="openDelete(ev)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MODAL: CREAR / EDITAR -->
+  @if (modalMode !== 'none') {
+    <div class="overlay">
+      <div class="modal-form animate-in">
+        <h2 class="modal-title">{{ modalMode === 'create' ? 'Añadir evento' : 'Editar evento' }}</h2>
+        
+        <form class="grid-form">
+          <div class="left-col">
+            <div class="input-group">
+              <label>Fecha</label>
+              <input type="text" [value]="selectedEvento?.fecha || ''" placeholder="dd/mm/aa">
+            </div>
+            <div class="input-group">
+              <label>Nombre</label>
+              <input type="text" [value]="selectedEvento?.nombre || ''" placeholder="Nombre del evento">
+            </div>
+            <div class="input-group">
+              <label>Hora</label>
+              <input type="text" [value]="selectedEvento?.hora || ''" placeholder="HH:MM">
+            </div>
+            <div class="input-group">
+              <label>Lugar</label>
+              <input type="text" [value]="selectedEvento?.lugar || ''" placeholder="Dirección">
+            </div>
+          </div>
+
+          <div class="right-col">
+            <label>Imagen descriptiva</label>
+            <div class="drop-zone">Agrega una imagen aquí</div>
+            <button type="button" class="btn-submit-form">
+              {{ modalMode === 'create' ? 'Añadir evento' : 'Guardar cambios' }}
+            </button>
+          </div>
+
+          <div class="full-col">
+            <label>Descripción</label>
+            <textarea placeholder="Detalles del evento">{{ selectedEvento?.descripcion }}</textarea>
+          </div>
+        </form>
+        
+        <button class="btn-close-text" (click)="closeAll()">Cerrar</button>
+      </div>
+    </div>
+  }
+
+  <!-- MODAL: ELIMINAR (Abajo a la derecha como en la imagen) -->
+  @if (showDeleteConfirm) {
+    <div class="delete-toast animate-up">
+      <h3>ELIMINAR EVENTO</h3>
+      <p class="target-name">{{ selectedEvento?.nombre }}</p>
+      <div class="actions">
+        <button class="btn-confirm" (click)="confirmDelete()">✓ Confirmar</button>
+        <button class="btn-cancel" (click)="closeAll()">✕ Cancelar</button>
+      </div>
+    </div>
+  }
+</div>

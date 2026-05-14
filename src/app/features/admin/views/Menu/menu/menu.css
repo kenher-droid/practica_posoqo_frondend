@@ -1,0 +1,17 @@
+.menu-placeholder {
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #ececec;
+}
+
+.menu-placeholder h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.menu-placeholder p {
+  color: #6b7280;
+  line-height: 1.7;
+}
+

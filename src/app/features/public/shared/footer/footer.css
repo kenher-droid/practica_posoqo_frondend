@@ -1,0 +1,191 @@
+/* Contenedor principal */
+.footer-container {
+  background-color: #e6c12c;
+  color: #1a1a1a;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+}
+
+/* 🔥 REJILLA PRINCIPAL (MEJORADO RESPONSIVE) */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(180px, 1fr));
+  gap: 40px;
+  padding: 60px 6% 40px 6%;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+/* columnas */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+/* LOGO */
+.brand-col {
+  align-items: center;
+  text-align: center;
+}
+
+.logo-box {
+  margin-bottom: 25px;
+}
+
+.brand-title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 10px 0;
+  letter-spacing: -2px;
+  font-family: 'Arial Black', Gadget, sans-serif;
+  line-height: 1;
+}
+
+.top-border,
+.bottom-border {
+  height: 4px;
+  background-color: #1a1a1a;
+  width: 180px;
+  margin: 0 auto;
+}
+
+/* ubicación */
+.location-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* icono ubicación */
+.flag-icon {
+  font-size: 1.7rem;
+}
+
+/* títulos */
+.col-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* listas */
+.col-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+/* 🔥 FIX IMPORTANTE */
+.col-list li {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* links */
+.footer-link {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.3s;
+}
+
+.footer-link:hover {
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
+/* 🔥 ICONOS */
+.social-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* iconos */
+.footer-social a {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.footer-social a:hover {
+  transform: scale(1.15);
+}
+
+/* colores */
+.fb { background: #1877f2; }
+.ig { background: #e4405f; }
+
+/* footer inferior */
+.footer-bottom {
+  background-color: #211d13;
+  color: #8b8b8b;
+  text-align: center;
+  padding: 25px 0;
+  font-size: 0.85rem;
+}
+
+/* 🔥 RESPONSIVE MEJORADO */
+@media (max-width: 1200px) {
+  .footer-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 40px 20px;
+  }
+
+  .footer-col {
+    text-align: center;
+  }
+
+  .footer-social {
+    flex-direction: row;
+  }
+
+  /* 👇 En celular sí puede bajar */
+  .col-list li {
+    white-space: normal;
+  }
+
+  .brand-title {
+    font-size: 2.5rem;
+  }
+}

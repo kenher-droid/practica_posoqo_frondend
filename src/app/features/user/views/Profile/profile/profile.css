@@ -1,0 +1,147 @@
+.profile-banner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 2rem;
+}
+
+.profile-banner__text {
+  display: grid;
+  gap: 1rem;
+}
+
+.profile-banner .eyebrow {
+  color: #e1be21;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.profile-banner h1 {
+  font-size: clamp(2rem, 3vw, 3.5rem);
+  margin: 0;
+  color: #ffffff;
+}
+
+.profile-banner__text p {
+  color: #c9c9c9;
+  line-height: 1.8;
+}
+
+.profile-banner__stats {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.points-block {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.points-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  background: #e1be21;
+  color: #0b0b0c;
+  font-weight: 700;
+  min-height: 70px;
+}
+
+.points-circle--empty {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.points-total {
+  text-align: center;
+  color: #e1be21;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.profile-actions {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-actions article {
+  padding: 1.75rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-actions h2 {
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.profile-actions p {
+  color: #c9c9c9;
+  line-height: 1.8;
+}
+
+.profile-cta-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  padding: 1.75rem 2rem;
+  border-radius: 24px;
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  align-items: center;
+}
+
+.profile-cta-bar strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #e1be21;
+}
+
+.profile-cta-bar p {
+  margin: 0;
+  color: #c9c9c9;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .profile-banner {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+
+  .points-block {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .profile-cta-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-banner,
+  .profile-actions article,
+  .profile-cta-bar {
+    padding: 1.25rem;
+  }
+
+  .points-circle {
+    min-height: 60px;
+  }
+}

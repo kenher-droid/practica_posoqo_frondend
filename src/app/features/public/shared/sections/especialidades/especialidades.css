@@ -1,0 +1,26 @@
+/* Especialidades carousel styles */
+@media (max-width: 768px) {
+  .w-\[320px\] {
+    width: 280px !important;
+  }
+
+  h2 {
+    font-size: 2.5rem !important;
+    margin-left: 0 !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .w-\[320px\] {
+    width: 250px !important;
+  }
+
+  h2 {
+    font-size: 2rem !important;
+  }
+
+  .gap-6 {
+    gap: 1rem !important;
+  }
+}

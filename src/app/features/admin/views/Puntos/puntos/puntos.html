@@ -1,0 +1,77 @@
+<div class="admin-layout">
+  <!-- Contenido Principal -->
+  <main class="main-content">
+    <div class="puntos-header">
+      <h1 class="view-title">Gestión de Puntos</h1>
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" 
+               (input)="onSearch($event)" 
+               [value]="searchTerm()" 
+               placeholder="Buscar por nombre o número de teléfono...">
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="table-header">
+        <span class="col-name">Nombre <i class="chevron"></i></span>
+        <span class="col-tel">Teléfono <i class="chevron"></i></span>
+        <span class="col-pts">Puntos <i class="chevron"></i></span>
+        <span class="col-actions">Acciones</span>
+      </div>
+
+      <div class="user-list">
+        @for (user of usuarios(); track user.id) {
+          @if (user.nombre.toLowerCase().includes(searchTerm().toLowerCase()) || user.telefono.includes(searchTerm())) {
+            <div class="user-card animate-in">
+              <span class="user-name">{{ user.nombre }}</span>
+              <span class="user-tel">{{ user.telefono }}</span>
+              <span class="user-pts-badge">{{ user.puntos }}</span>
+              
+              <div class="action-group">
+              <button class="admin-button admin-button--primary" (click)="openAdd(user)">Añadir punto</button>
+              <button class="admin-button admin-button--danger" (click)="openDelete(user)">✕</button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </main>
+
+  <!-- Modales Superpuestos (Overlays) -->
+  @if (showAddModal() || showDeleteModal()) {
+    <div class="admin-modal-overlay" (click)="close()">
+      <div class="admin-modal-wrapper" (click)="$event.stopPropagation()">
+        
+        @if (showAddModal()) {
+          <div class="admin-modal-card">
+            <h2 class="modal-headline">¿Añadir punto?</h2>
+            <p class="modal-subtext">{{ selectedUser()?.nombre }}</p>
+            <div class="admin-modal-actions">
+              <button class="admin-button admin-button--primary" (click)="confirmAdd()">✓ Confirmar</button>
+              <button class="admin-button admin-button--ghost" (click)="close()">Cancelar</button>
+            </div>
+          </div>
+        }
+
+        @if (showDeleteModal()) {
+          <div class="admin-modal-card">
+            <h2 class="modal-headline">Quitar Puntos</h2>
+            <p class="modal-subtext">{{ selectedUser()?.nombre }}</p>
+            
+            <div class="input-wrapper">
+              <label>Cantidad a descontar:</label>
+              <input type="number" (input)="onPuntosChange($event)" [value]="puntosAQuitar" autofocus>
+            </div>
+
+            <div class="admin-modal-actions">
+              <button class="admin-button admin-button--danger" (click)="confirmDelete()">Confirmar Baja</button>
+              <button class="admin-button admin-button--ghost" (click)="close()">Regresar</button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

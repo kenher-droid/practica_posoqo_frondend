@@ -1,0 +1,31 @@
+<div class="admin-container">
+  <!-- Header Superior -->
+  <header class="admin-header">
+    <div class="logo">POSOQO</div>
+    <div class="user-info">
+      <span>username (admin)</span>
+      <img src="path-to-avatar.jpg" alt="Admin" class="avatar">
+    </div>
+  </header>
+
+  <div class="main-body">
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+      <nav>
+        <ul>
+          <li><a routerLink="inicio"><i class="icon-home"></i> Inicio</a></li>
+          <li><a routerLink="eventos"><i class="icon-calendar"></i> Eventos</a></li>
+          <li><a routerLink="menu"><i class="icon-book"></i> Menú virtual</a></li>
+          <li><a routerLink="usuarios"><i class="icon-users"></i> Usuarios</a></li>
+          <li><a routerLink="promociones"><i class="icon-smile"></i> Promociones</a></li>
+          <li><a routerLink="puntos"><i class="icon-star"></i> Puntos</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Contenido Dinámico -->
+    <main class="admin-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

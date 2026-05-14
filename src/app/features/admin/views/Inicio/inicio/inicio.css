@@ -1,0 +1,60 @@
+.dashboard-container {
+  padding: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  display: flex;
+  background: white;
+  border-radius: 4px; /* Bordes rectos según la imagen */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  height: 100px;
+}
+
+.icon-section {
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+}
+
+/* Colores de la imagen inicio.png */
+.bg-green { background-color: #43A047; }
+.bg-brown { background-color: #A16B33; }
+.bg-blue  { background-color: #283593; }
+
+.info-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.info-section .number {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.info-section .label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.recent-activity {
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+  text-align: center;
+}

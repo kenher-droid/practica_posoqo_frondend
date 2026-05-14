@@ -1,0 +1,33 @@
+/* Public layout global styles */
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+/* Smooth scrolling for the entire app */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure proper stacking context */
+app-header {
+  position: relative;
+  z-index: 1000;
+}
+
+app-landing-page {
+  position: relative;
+  z-index: 1;
+}
+
+app-footer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Global responsive adjustments */
+@media (max-width: 768px) {
+  :host {
+    font-size: 14px;
+  }
+}
