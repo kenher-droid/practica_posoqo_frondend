@@ -1,0 +1,65 @@
+<div class="categorias-container">
+  <!-- Header con dropdown y botón de añadir -->
+  <div class="categorias-header">
+    <select class="categoria-select">
+      <option>Nombre de la categoría</option>
+      @for (cat of categorias(); track cat.id) {
+        <option>{{ cat.nombre }}</option>
+      }
+    </select>
+    <button class="btn-add-categoria" (click)="anadirCategoria()">
+      Añadir categoría +
+    </button>
+  </div>
+
+  <!-- Listado de categorías -->
+  <div class="categorias-list">
+    @for (categoria of categorias(); track categoria.id; let i = $index) {
+      <div class="categoria-block">
+        <!-- Header de la categoría -->
+        <div class="categoria-header">
+          <button
+            class="categoria-toggle"
+            (click)="toggleExpandir(i)"
+            [class.expandida]="categoria.expandida"
+          >
+            <span class="toggle-icon">▶</span>
+            <span class="categoria-nombre">{{ categoria.nombre }}</span>
+          </button>
+          <button
+            class="btn-danger"
+            (click)="eliminarCategoria(categoria.id)"
+            title="Eliminar categoría"
+          >
+            Eliminar
+          </button>
+        </div>
+
+        <!-- Sub-categorías (expandibles) -->
+        @if (categoria.expandida) {
+          <div class="subcategorias-section">
+            <!-- Botón para añadir sub-categoría -->
+            <div class="add-subcategoria">
+              <button class="btn-add-subcategoria">Añadir sub-categoría</button>
+            </div>
+
+            <!-- Listado de sub-categorías -->
+            <div class="subcategorias-list">
+              @for (sub of categoria.subCategorias; track sub.id) {
+                <div class="subcategoria-item">
+                  <span class="subcategoria-nombre">{{ sub.nombre }}</span>
+                  <button
+                    class="btn-danger-small"
+                    (click)="eliminarSubCategoria(categoria.id, sub.id)"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

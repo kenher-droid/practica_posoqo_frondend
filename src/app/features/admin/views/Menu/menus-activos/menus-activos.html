@@ -1,0 +1,42 @@
+<div class="menus-container">
+  <!-- Secciones por categoría -->
+  <div class="categorias-section">
+    @for (categoria of categorias; track categoria; let i = $index) {
+      <div class="categoria-comidas">
+        <h3 class="categoria-title">{{ categoria }}</h3>
+        
+        <div class="comidas-grid">
+          @for (comida of comidasPorCategoria[categoria]; track comida.id; let j = $index) {
+            <div class="comida-card">
+              <!-- Imagen de la comida -->
+              <div class="comida-imagen">
+                <img 
+                  [src]="comida.imagen" 
+                  [alt]="comida.nombre"
+                  loading="lazy"
+                >
+              </div>
+
+              <!-- Información de la comida -->
+              <div class="comida-info">
+                <h4 class="comida-nombre">{{ comida.nombre }}</h4>
+                <p class="comida-precio">s/{{ comida.precio }}</p>
+                <p class="comida-subcategoria">{{ comida.subcategoria }}</p>
+              </div>
+
+              <!-- Botón de acción -->
+              <div class="comida-acciones">
+                <button 
+                  class="btn-inhabilitarse"
+                  (click)="inhabilitarComida(comida.id)"
+                >
+                  Inhabilitarse
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

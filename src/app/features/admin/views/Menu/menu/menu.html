@@ -1,4 +1,56 @@
-<div class="menu-placeholder">
-  <h2>Menú administrativo</h2>
-  <p>Aquí va la vista de Menú. Por ahora está vacía para mantener el layout común de admin.</p>
+<div class="menu-container">
+  <!-- Sección de botones principales -->
+  <div class="menu-tabs">
+    <button 
+      class="menu-btn"
+      [class.active]="tabActiva() === 'activos'"
+      (click)="cambiarTab('activos')"
+    >
+      Menus activos
+    </button>
+    <button 
+      class="menu-btn"
+      [class.active]="tabActiva() === 'inactivos'"
+      (click)="cambiarTab('inactivos')"
+    >
+      Menus inactivos
+    </button>
+    <button 
+      class="menu-btn"
+      [class.active]="tabActiva() === 'general'"
+      (click)="cambiarTab('general')"
+    >
+      Menu_general
+    </button>
+    <button 
+      class="menu-btn"
+      [class.active]="tabActiva() === 'categorias'"
+      (click)="cambiarTab('categorias')"
+    >
+      Categor\u00edas
+    </button>
+  </div>
+
+  <!-- \u00c1rea de contenido -->
+  <div class="menu-content">
+    <!-- Ventana de Categor\u00edas -->
+    @if (tabActiva() === 'categorias') {
+      <app-categorias></app-categorias>
+    }
+
+    <!-- Ventana de Menus Activos -->
+    @if (tabActiva() === 'activos') {
+      <app-menus-activos></app-menus-activos>
+    }
+
+    <!-- Ventana de Menus Inactivos -->
+    @if (tabActiva() === 'inactivos') {
+      <app-menus-inactivos></app-menus-inactivos>
+    }
+
+    <!-- Ventana de Menu General -->
+    @if (tabActiva() === 'general') {
+      <app-menu-general></app-menu-general>
+    }
+  </div>
 </div>
