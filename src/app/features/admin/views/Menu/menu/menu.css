@@ -7,6 +7,9 @@
 
 /* Sección de botones principales */
 .menu-tabs {
+  position: sticky;
+  top: calc(80px + 20px);
+  z-index: 15;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;

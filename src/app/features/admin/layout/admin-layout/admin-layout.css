@@ -2,27 +2,43 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
 .admin-header {
+  min-height: 80px;
   height: 80px;
+  flex-shrink: 0;
+  width: 100%;
   background-color: #E7C227;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 .main-body {
   display: flex;
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .admin-sidebar {
   width: 250px;
+  min-width: 250px;
+  flex-shrink: 0;
   background-color: #977D17;
   color: white;
   padding-top: 1rem;
+  position: sticky;
+  top: 80px;
+  align-self: flex-start;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
 }
 
 .admin-sidebar ul {
@@ -47,4 +63,6 @@
   background-color: #fff;
   padding: 20px;
   overflow-y: auto;
+  min-height: 0;
+  height: calc(100vh - 80px);
 }

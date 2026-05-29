@@ -50,19 +50,19 @@
           <div class="left-col">
             <div class="input-group">
               <label>Fecha</label>
-              <input type="text" [value]="selectedEvento?.fecha || ''" placeholder="dd/mm/aa">
+              <input type="text" [(ngModel)]="selectedEvento.fecha" name="fecha" placeholder="dd/mm/aa">
             </div>
             <div class="input-group">
               <label>Nombre</label>
-              <input type="text" [value]="selectedEvento?.nombre || ''" placeholder="Nombre del evento">
+              <input type="text" [(ngModel)]="selectedEvento.nombre" name="nombre" placeholder="Nombre del evento">
             </div>
             <div class="input-group">
               <label>Hora</label>
-              <input type="text" [value]="selectedEvento?.hora || ''" placeholder="HH:MM">
+              <input type="text" [(ngModel)]="selectedEvento.hora" name="hora" placeholder="HH:MM">
             </div>
             <div class="input-group">
               <label>Lugar</label>
-              <input type="text" [value]="selectedEvento?.lugar || ''" placeholder="Dirección">
+              <input type="text" [(ngModel)]="selectedEvento.lugar" name="lugar" placeholder="Dirección">
             </div>
           </div>
 
@@ -76,7 +76,7 @@
 
           <div class="full-col">
             <label>Descripción</label>
-            <textarea placeholder="Detalles del evento">{{ selectedEvento?.descripcion }}</textarea>
+            <textarea [(ngModel)]="selectedEvento.descripcion" name="descripcion" placeholder="Detalles del evento"></textarea>
           </div>
         </form>
         

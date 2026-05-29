@@ -113,9 +113,13 @@ export class MenuGeneralComponent {
     },
   ]);
 
+  showModalAgregarComida = signal(false);
+  showModalConfirmEliminar = signal(false);
+  comidaParaEliminar = signal<Comida | null>(null);
+
   nuevoNombre = signal('');
   nuevoPrecio = signal('');
-  nouevaSubcategoria = signal('');
+  nuevaSubcategoria = signal('Sub-categoría');
   nuevaCategoria = signal('Comidas');
 
   get comidasPorCategoria(): { [key: string]: Comida[] } {
@@ -143,26 +147,56 @@ export class MenuGeneralComponent {
     }
   }
 
-  eliminarComida(id: number): void {
-    this.comidas.set(this.comidas().filter((c) => c.id !== id));
+  abrirModalAgregarComida(): void {
+    this.nuevoNombre.set('');
+    this.nuevoPrecio.set('');
+    this.nuevaSubcategoria.set('Sub-categoría');
+    this.nuevaCategoria.set(this.categorias[0] ?? 'Comidas');
+    this.showModalAgregarComida.set(true);
   }
 
-  anadirComida(): void {
-    if (this.nuevoNombre().trim() && this.nuevoPrecio()) {
-      const nuevaComida: Comida = {
-        id: Math.max(...this.comidas().map((c) => c.id), 0) + 1,
-        nombre: this.nuevoNombre(),
-        precio: parseInt(this.nuevoPrecio()),
-        subcategoria: 'Sub-categoría',
-        estado: 'activo',
-        imagen:
-          'https://via.placeholder.com/300x300?text=' +
-          this.nuevoNombre(),
-        categoria: this.nuevaCategoria(),
-      };
-      this.comidas.set([...this.comidas(), nuevaComida]);
-      this.nuevoNombre.set('');
-      this.nuevoPrecio.set('');
+  cerrarModalAgregarComida(): void {
+    this.showModalAgregarComida.set(false);
+  }
+
+  confirmarAgregarComida(): void {
+    const nombre = this.nuevoNombre().trim();
+    const precio = parseInt(this.nuevoPrecio());
+    if (!nombre || !precio || !this.nuevaCategoria()) {
+      return;
     }
+
+    const nuevaComida: Comida = {
+      id: Math.max(...this.comidas().map((c) => c.id), 0) + 1,
+      nombre,
+      precio,
+      subcategoria: this.nuevaSubcategoria(),
+      estado: 'activo',
+      imagen: `https://via.placeholder.com/300x300?text=${encodeURIComponent(nombre)}`,
+      categoria: this.nuevaCategoria(),
+    };
+
+    this.comidas.set([...this.comidas(), nuevaComida]);
+    this.cerrarModalAgregarComida();
+  }
+
+  abrirModalConfirmEliminar(comida: Comida): void {
+    this.comidaParaEliminar.set(comida);
+    this.showModalConfirmEliminar.set(true);
+  }
+
+  cerrarModalConfirmEliminar(): void {
+    this.comidaParaEliminar.set(null);
+    this.showModalConfirmEliminar.set(false);
+  }
+
+  confirmarEliminarComida(): void {
+    const comida = this.comidaParaEliminar();
+    if (!comida) {
+      return;
+    }
+
+    this.comidas.set(this.comidas().filter((c) => c.id !== comida.id));
+    this.cerrarModalConfirmEliminar();
   }
 }

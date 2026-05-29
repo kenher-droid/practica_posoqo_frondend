@@ -103,6 +103,9 @@ export class MenusActivosComponent {
     },
   ]);
 
+  showModalConfirmInhabilitar = signal(false);
+  comidaParaInhabilitar = signal<Comida | null>(null);
+
   get comidasPorCategoria(): { [key: string]: Comida[] } {
     const agrupadas: { [key: string]: Comida[] } = {};
     this.comidas().forEach((comida) => {
@@ -118,16 +121,27 @@ export class MenusActivosComponent {
     return Object.keys(this.comidasPorCategoria);
   }
 
-  inhabilitarComida(id: number): void {
-    const nuevas = [...this.comidas()];
-    nuevas.splice(
-      nuevas.findIndex((c) => c.id === id),
-      1
-    );
-    this.comidas.set(nuevas);
+  abrirModalInhabilitar(comida: Comida): void {
+    this.comidaParaInhabilitar.set(comida);
+    this.showModalConfirmInhabilitar.set(true);
   }
 
-  eliminarComida(id: number): void {
-    this.comidas.set(this.comidas().filter((c) => c.id !== id));
+  cerrarModalInhabilitar(): void {
+    this.comidaParaInhabilitar.set(null);
+    this.showModalConfirmInhabilitar.set(false);
+  }
+
+  confirmarInhabilitarComida(): void {
+    const comida = this.comidaParaInhabilitar();
+    if (!comida) {
+      return;
+    }
+    const nuevas = [...this.comidas()];
+    const indice = nuevas.findIndex((c) => c.id === comida.id);
+    if (indice >= 0) {
+      nuevas.splice(indice, 1);
+    }
+    this.comidas.set(nuevas);
+    this.cerrarModalInhabilitar();
   }
 }

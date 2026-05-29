@@ -49,6 +49,14 @@ export class CategoriasComponent {
   ]);
 
   categoriaSeleccionada = signal<Categoria | null>(null);
+  categoriaParaEliminar = signal<Categoria | null>(null);
+  subCategoriaParaEliminar = signal<{ categoriaId: number; subcategoria: SubCategoria } | null>(null);
+
+  showModalAgregarCategoria = signal(false);
+  showModalAgregarSubcategoria = signal(false);
+  showModalConfirmEliminarCategoria = signal(false);
+  showModalConfirmEliminarSubcategoria = signal(false);
+
   nuevoNombre = signal('');
   nuevoSubNombre = signal('');
 
@@ -58,54 +66,112 @@ export class CategoriasComponent {
     this.categorias.set(nuevas);
   }
 
-  anadirCategoria(): void {
-    if (this.nuevoNombre().trim()) {
-      const nuevaCategoria: Categoria = {
-        id: Math.max(...this.categorias().map((c) => c.id), 0) + 1,
-        nombre: this.nuevoNombre(),
-        expandida: true,
-        subCategorias: [],
-      };
-      this.categorias.set([...this.categorias(), nuevaCategoria]);
-      this.nuevoNombre.set('');
-    }
+  abrirModalAgregarCategoria(): void {
+    this.nuevoNombre.set('');
+    this.showModalAgregarCategoria.set(true);
   }
 
-  anadirSubCategoria(categoria: Categoria): void {
-    if (this.nuevoSubNombre().trim()) {
-      const nuevas = [...this.categorias()];
-      const indice = nuevas.findIndex((c) => c.id === categoria.id);
-
-      if (indice >= 0) {
-        const nuevaSubCategoria: SubCategoria = {
-          id: Math.max(
-            ...nuevas[indice].subCategorias.map((s) => s.id),
-            0
-          ) + 1,
-          nombre: this.nuevoSubNombre(),
-        };
-        nuevas[indice].subCategorias.push(nuevaSubCategoria);
-        this.categorias.set(nuevas);
-        this.nuevoSubNombre.set('');
-      }
-    }
+  cerrarModalAgregarCategoria(): void {
+    this.nuevoNombre.set('');
+    this.showModalAgregarCategoria.set(false);
   }
 
-  eliminarSubCategoria(categoriaId: number, subCategoriaId: number): void {
+  confirmarAgregarCategoria(): void {
+    const nombre = this.nuevoNombre().trim();
+    if (!nombre) {
+      return;
+    }
+
+    const nuevaCategoria: Categoria = {
+      id: Math.max(...this.categorias().map((c) => c.id), 0) + 1,
+      nombre,
+      expandida: true,
+      subCategorias: [],
+    };
+
+    this.categorias.set([...this.categorias(), nuevaCategoria]);
+    this.cerrarModalAgregarCategoria();
+  }
+
+  abrirModalAgregarSubcategoria(categoria: Categoria): void {
+    this.categoriaSeleccionada.set(categoria);
+    this.nuevoSubNombre.set('');
+    this.showModalAgregarSubcategoria.set(true);
+  }
+
+  cerrarModalAgregarSubcategoria(): void {
+    this.nuevoSubNombre.set('');
+    this.categoriaSeleccionada.set(null);
+    this.showModalAgregarSubcategoria.set(false);
+  }
+
+  confirmarAgregarSubcategoria(): void {
+    const nombre = this.nuevoSubNombre().trim();
+    const categoria = this.categoriaSeleccionada();
+    if (!nombre || !categoria) {
+      return;
+    }
+
     const nuevas = [...this.categorias()];
-    const indice = nuevas.findIndex((c) => c.id === categoriaId);
+    const indice = nuevas.findIndex((c) => c.id === categoria.id);
 
     if (indice >= 0) {
+      const nuevaSubCategoria: SubCategoria = {
+        id: Math.max(...nuevas[indice].subCategorias.map((s) => s.id), 0) + 1,
+        nombre,
+      };
+      nuevas[indice].subCategorias = [...nuevas[indice].subCategorias, nuevaSubCategoria];
+      this.categorias.set(nuevas);
+    }
+
+    this.cerrarModalAgregarSubcategoria();
+  }
+
+  abrirModalEliminarCategoria(categoria: Categoria): void {
+    this.categoriaParaEliminar.set(categoria);
+    this.showModalConfirmEliminarCategoria.set(true);
+  }
+
+  cerrarModalEliminarCategoria(): void {
+    this.categoriaParaEliminar.set(null);
+    this.showModalConfirmEliminarCategoria.set(false);
+  }
+
+  confirmarEliminarCategoria(): void {
+    const categoria = this.categoriaParaEliminar();
+    if (!categoria) {
+      return;
+    }
+
+    this.categorias.set(this.categorias().filter((c) => c.id !== categoria.id));
+    this.cerrarModalEliminarCategoria();
+  }
+
+  abrirModalEliminarSubcategoria(categoria: Categoria, subcategoria: SubCategoria): void {
+    this.subCategoriaParaEliminar.set({ categoriaId: categoria.id, subcategoria });
+    this.showModalConfirmEliminarSubcategoria.set(true);
+  }
+
+  cerrarModalEliminarSubcategoria(): void {
+    this.subCategoriaParaEliminar.set(null);
+    this.showModalConfirmEliminarSubcategoria.set(false);
+  }
+
+  confirmarEliminarSubcategoria(): void {
+    const info = this.subCategoriaParaEliminar();
+    if (!info) {
+      return;
+    }
+
+    const nuevas = [...this.categorias()];
+    const indice = nuevas.findIndex((c) => c.id === info.categoriaId);
+    if (indice >= 0) {
       nuevas[indice].subCategorias = nuevas[indice].subCategorias.filter(
-        (s) => s.id !== subCategoriaId
+        (s) => s.id !== info.subcategoria.id
       );
       this.categorias.set(nuevas);
     }
-  }
 
-  eliminarCategoria(id: number): void {
-    this.categorias.set(
-      this.categorias().filter((c) => c.id !== id)
-    );
+    this.cerrarModalEliminarSubcategoria();
   }
 }

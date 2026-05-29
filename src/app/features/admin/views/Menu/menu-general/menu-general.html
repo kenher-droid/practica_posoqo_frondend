@@ -2,7 +2,7 @@
   <!-- Header con botón de añadir -->
   <div class="menu-general-header">
     <h2>Menú General</h2>
-    <button class="btn-add-comida">
+    <button class="btn-add-comida" (click)="abrirModalAgregarComida()">
       Añadir comida +
     </button>
   </div>
@@ -44,7 +44,7 @@
                 </button>
                 <button 
                   class="btn-eliminar"
-                  (click)="eliminarComida(comida.id)"
+                  (click)="abrirModalConfirmEliminar(comida)"
                   title="Eliminar comida"
                 >
                   ✕
@@ -56,4 +56,81 @@
       </div>
     }
   </div>
+
+  @if (showModalAgregarComida()) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Agregar comida</h2>
+        <p class="admin-modal-text">Ingresa los datos para crear una nueva comida en el menú general.</p>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Nombre</label>
+            <input
+              type="text"
+              class="admin-modal-input"
+              placeholder="Nombre"
+              [(ngModel)]="nuevoNombre"
+              name="nombreComida"
+            />
+          </div>
+          <div class="admin-form-group">
+            <label>Precio</label>
+            <input
+              type="number"
+              class="admin-modal-input"
+              placeholder="Precio"
+              [(ngModel)]="nuevoPrecio"
+              name="precioComida"
+            />
+          </div>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Categoría</label>
+            <select
+              class="admin-modal-input"
+              [(ngModel)]="nuevaCategoria"
+              name="categoriaComida"
+            >
+              @for (categoria of categorias; track categoria) {
+                <option>{{ categoria }}</option>
+              }
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label>Subcategoría</label>
+            <input
+              type="text"
+              class="admin-modal-input"
+              placeholder="Subcategoría"
+              [(ngModel)]="nuevaSubcategoria"
+              name="subcategoriaComida"
+            />
+          </div>
+        </div>
+
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--secondary" (click)="cerrarModalAgregarComida()">Cancelar</button>
+          <button class="admin-button admin-button--primary" (click)="confirmarAgregarComida()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (showModalConfirmEliminar()) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Eliminar comida</h2>
+        <p class="admin-modal-text">
+          ¿Eliminar <strong>{{ comidaParaEliminar()?.nombre }}</strong> del menú general?
+        </p>
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--secondary" (click)="cerrarModalConfirmEliminar()">Cancelar</button>
+          <button class="admin-button admin-button--danger" (click)="confirmarEliminarComida()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  }
 </div>

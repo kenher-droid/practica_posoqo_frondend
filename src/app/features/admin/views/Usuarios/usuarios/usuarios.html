@@ -87,12 +87,16 @@
   }
 
   @if (showDeleteConfirm) {
-    <div class="admin-toast animate-slide">
-      <h3>ELIMINAR USUARIO</h3>
-      <p class="user-target">{{ selectedUser?.nombre }} {{ selectedUser?.apellidos }}</p>
-      <div class="admin-modal-actions">
-        <button class="admin-button admin-button--primary" (click)="confirmDelete()">✓ Confirmar</button>
-        <button class="admin-button admin-button--ghost" (click)="closeModals()">✕ Cancelar</button>
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Eliminar usuario</h2>
+        <p class="admin-modal-text">
+          ¿Eliminar al usuario <strong>{{ selectedUser?.nombre }} {{ selectedUser?.apellidos }}</strong>?
+        </p>
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--danger" (click)="confirmDelete()">Eliminar</button>
+          <button class="admin-button admin-button--ghost" (click)="closeModals()">Cancelar</button>
+        </div>
       </div>
     </div>
   }

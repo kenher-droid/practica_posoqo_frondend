@@ -28,7 +28,7 @@
               <div class="comida-acciones">
                 <button 
                   class="btn-inhabilitarse"
-                  (click)="inhabilitarComida(comida.id)"
+                  (click)="abrirModalInhabilitar(comida)"
                 >
                   Inhabilitarse
                 </button>
@@ -39,4 +39,19 @@
       </div>
     }
   </div>
+
+  @if (showModalConfirmInhabilitar()) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Inhabilitar comida</h2>
+        <p class="admin-modal-text">
+          ¿Deseas inhabilitar <strong>{{ comidaParaInhabilitar()?.nombre }}</strong> en el menú activo?
+        </p>
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--secondary" (click)="cerrarModalInhabilitar()">Cancelar</button>
+          <button class="admin-button admin-button--danger" (click)="confirmarInhabilitarComida()">Inhabilitar</button>
+        </div>
+      </div>
+    </div>
+  }
 </div>

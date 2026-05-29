@@ -1,1 +1,139 @@
-<p>promociones works!</p>
+<div class="promociones-container">
+  <!-- Gallery de Promociones -->
+  <div class="promociones-header">
+    <h2>Gestión de Promociones</h2>
+    <button class="btn-anadir" (click)="abrirModalBuscar()">
+      <span class="icon">+</span>
+      Añadir menú
+    </button>
+  </div>
+
+  <div class="promociones-grid">
+    @for (promo of promociones(); track promo.id) {
+      <div class="promo-card">
+        <div class="promo-imagen">
+          <img [src]="promo.imagen" [alt]="promo.nombre" />
+        </div>
+        <div class="promo-info">
+          <h3>{{ promo.nombre }}</h3>
+          <p class="promo-categoria">{{ promo.categoria }}</p>
+          <div class="promo-precios">
+            <span class="precio-actual">${{ promo.precioActual }}</span>
+            <span class="precio-promo">${{ promo.precioPromocion }}</span>
+          </div>
+        </div>
+        <button class="btn-eliminar" (click)="eliminarPromocion(promo.id)">✕</button>
+      </div>
+    }
+  </div>
+
+  <!-- Modal: Buscar Comida -->
+  @if (showModalBuscar()) {
+    <div class="modal-overlay">
+      <div class="modal-card modal-buscar">
+        <h2 class="modal-title">Agregar Comida</h2>
+        
+        <div class="modal-buscar-content">
+          <input 
+            type="text" 
+            class="input-buscar" 
+            placeholder="Buscar comida..." 
+            [(ngModel)]="busquedaComida"
+            name="busqueda"
+          />
+          <div class="comidas-lista">
+            @for (comida of comidasFiltradas(); track comida.id) {
+              <div class="comida-item" (click)="seleccionarComida(comida)">
+                <img [src]="comida.imagen" [alt]="comida.nombre" />
+                <div class="comida-info">
+                  <h4>{{ comida.nombre }}</h4>
+                  <p>{{ comida.categoria }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="modal-acciones">
+          <button class="btn-secondary" (click)="cerrarModalBuscar()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal: Detalles de Promoción -->
+  @if (showModalDetalles()) {
+    <div class="modal-overlay">
+      <div class="modal-card modal-detalles">
+        <h2 class="modal-title">{{ nuevaPromocion().nombre || 'Nueva Promoción' }}</h2>
+        
+        @if (nuevaPromocion().imagen) {
+          <div class="modal-imagen">
+            <img [src]="nuevaPromocion().imagen" [alt]="nuevaPromocion().nombre" />
+          </div>
+        }
+
+        <form class="modal-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Categoría</label>
+              <p class="form-value">{{ nuevaPromocion().categoria }}</p>
+            </div>
+            <div class="form-group">
+              <label>Subcategoría</label>
+              <p class="form-value">{{ nuevaPromocion().subcategoria }}</p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Estado</label>
+              <p class="form-value">{{ nuevaPromocion().estado }}</p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Precio Actual</label>
+              <input 
+                type="number" 
+                class="form-input" 
+                [(ngModel)]="nuevaPromocion().precioActual"
+                name="precioActual"
+                [ngModelOptions]="{updateOn: 'change'}"
+              />
+            </div>
+            <div class="form-group">
+              <label>Precio Promoción</label>
+              <input 
+                type="number" 
+                class="form-input" 
+                [(ngModel)]="nuevaPromocion().precioPromocion"
+                name="precioPromocion"
+                [ngModelOptions]="{updateOn: 'change'}"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Puntos Asignados</label>
+              <input 
+                type="number" 
+                class="form-input" 
+                [(ngModel)]="nuevaPromocion().puntosAsignados"
+                name="puntosAsignados"
+                [ngModelOptions]="{updateOn: 'change'}"
+              />
+            </div>
+          </div>
+        </form>
+
+        <div class="modal-acciones">
+          <button class="btn-secondary" (click)="cerrarModalDetalles()">Cancelar</button>
+          <button class="btn-promocion" (click)="guardarPromocion()">Añadir Promoción</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

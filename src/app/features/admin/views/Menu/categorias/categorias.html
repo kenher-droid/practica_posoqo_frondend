@@ -7,7 +7,7 @@
         <option>{{ cat.nombre }}</option>
       }
     </select>
-    <button class="btn-add-categoria" (click)="anadirCategoria()">
+    <button class="btn-add-categoria" (click)="abrirModalAgregarCategoria()">
       Añadir categoría +
     </button>
   </div>
@@ -28,7 +28,7 @@
           </button>
           <button
             class="btn-danger"
-            (click)="eliminarCategoria(categoria.id)"
+            (click)="abrirModalEliminarCategoria(categoria)"
             title="Eliminar categoría"
           >
             Eliminar
@@ -40,7 +40,12 @@
           <div class="subcategorias-section">
             <!-- Botón para añadir sub-categoría -->
             <div class="add-subcategoria">
-              <button class="btn-add-subcategoria">Añadir sub-categoría</button>
+              <button
+                class="btn-add-subcategoria"
+                (click)="abrirModalAgregarSubcategoria(categoria)"
+              >
+                Añadir sub-categoría
+              </button>
             </div>
 
             <!-- Listado de sub-categorías -->
@@ -50,7 +55,7 @@
                   <span class="subcategoria-nombre">{{ sub.nombre }}</span>
                   <button
                     class="btn-danger-small"
-                    (click)="eliminarSubCategoria(categoria.id, sub.id)"
+                    (click)="abrirModalEliminarSubcategoria(categoria, sub)"
                   >
                     Eliminar
                   </button>
@@ -62,4 +67,80 @@
       </div>
     }
   </div>
+
+  <!-- Modal Agregar Categoría -->
+  @if (showModalAgregarCategoria()) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Nueva categoría</h2>
+        <p class="admin-modal-text">Escribe el nombre de la nueva categoría para agregarla al menú virtual.</p>
+        <input
+          type="text"
+          class="admin-modal-input"
+          placeholder="Nombre de la categoría"
+          [(ngModel)]="nuevoNombre"
+          name="nuevoCategoria"
+        />
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--secondary" (click)="cerrarModalAgregarCategoria()">Cancelar</button>
+          <button class="admin-button admin-button--primary" (click)="confirmarAgregarCategoria()">Agregar</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal Agregar Subcategoría -->
+  @if (showModalAgregarSubcategoria()) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Nueva subcategoría</h2>
+        <p class="admin-modal-text">
+          Añade una subcategoría dentro de <strong>{{ categoriaSeleccionada()?.nombre }}</strong>.
+        </p>
+        <input
+          type="text"
+          class="admin-modal-input"
+          placeholder="Nombre de la subcategoría"
+          [(ngModel)]="nuevoSubNombre"
+          name="nuevoSubCategoria"
+        />
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--secondary" (click)="cerrarModalAgregarSubcategoria()">Cancelar</button>
+          <button class="admin-button admin-button--primary" (click)="confirmarAgregarSubcategoria()">Agregar</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal Confirmar Eliminación Categoría -->
+  @if (showModalConfirmEliminarCategoria()) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Eliminar categoría</h2>
+        <p class="admin-modal-text">
+          ¿Deseas eliminar la categoría <strong>{{ categoriaParaEliminar()?.nombre }}</strong> y todas sus subcategorías?
+        </p>
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--secondary" (click)="cerrarModalEliminarCategoria()">Cancelar</button>
+          <button class="admin-button admin-button--danger" (click)="confirmarEliminarCategoria()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal Confirmar Eliminación Subcategoría -->
+  @if (showModalConfirmEliminarSubcategoria()) {
+    <div class="admin-modal-overlay">
+      <div class="admin-modal-card">
+        <h2 class="admin-modal-title">Eliminar subcategoría</h2>
+        <p class="admin-modal-text">
+          ¿Deseas eliminar la subcategoría <strong>{{ subCategoriaParaEliminar()?.subcategoria?.nombre }}</strong>?
+        </p>
+        <div class="admin-modal-actions">
+          <button class="admin-button admin-button--secondary" (click)="cerrarModalEliminarSubcategoria()">Cancelar</button>
+          <button class="admin-button admin-button--danger" (click)="confirmarEliminarSubcategoria()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  }
 </div>
