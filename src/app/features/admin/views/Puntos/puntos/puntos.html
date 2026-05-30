@@ -28,8 +28,9 @@
               <span class="user-pts-badge">{{ user.puntos }}</span>
               
               <div class="action-group">
-              <button class="admin-button admin-button--primary" (click)="openAdd(user)">Añadir punto</button>
-              <button class="admin-button admin-button--danger" (click)="openDelete(user)">Quitar puntos</button>
+                <button class="admin-button admin-button--primary" (click)="openAdd(user)">Añadir punto</button>
+                <button class="admin-button admin-button--danger" (click)="openDelete(user)">Quitar puntos</button>
+                <button class="admin-button admin-button--secondary" (click)="openHistorial(user)">Historial</button>
               </div>
             </div>
           }
@@ -39,34 +40,105 @@
   </main>
 
   <!-- Modales Superpuestos (Overlays) -->
-  @if (showAddModal() || showDeleteModal()) {
+  @if (showAddModal() || showDeleteModal() || showHistorial()) {
     <div class="admin-modal-overlay" (click)="close()">
       <div class="admin-modal-wrapper" (click)="$event.stopPropagation()">
         
         @if (showAddModal()) {
           <div class="admin-modal-card">
-            <h2 class="modal-headline">¿Añadir punto?</h2>
-            <p class="modal-subtext">{{ selectedUser()?.nombre }}</p>
+            <h2 class="admin-modal-title">Añadir puntos</h2>
+            <p class="admin-modal-text">Selecciona las promociones que quieres añadir a <strong>{{ selectedUser()?.nombre }}</strong>.</p>
+
+            <div class="input-wrapper">
+              <label>Buscar promociones</label>
+              <input class="admin-modal-input" type="text" placeholder="Buscar promoción..." (input)="onAddPromotionSearch($event)" [value]="addPromotionSearch()">
+            </div>
+
+            <div class="promociones-list">
+              @for (promo of promocionesDisponiblesParaAgregar(); track promo.id) {
+                <label class="promocion-item">
+                  <input type="checkbox" (change)="toggleAddPromocion(promo.id, $any($event.target).checked)" [checked]="selectedAddPromociones().includes(promo.id)">
+                  <div>
+                    <div class="promocion-name">{{ promo.nombre }}</div>
+                    <div class="promocion-puntos">{{ promo.puntosPromocion }} pts</div>
+                  </div>
+                </label>
+              }
+            </div>
+
+            <div class="resumen-descuento">
+              <span>Total a añadir</span>
+              <strong>{{ totalAddPoints() }} pts</strong>
+            </div>
+
             <div class="admin-modal-actions">
-              <button class="admin-button admin-button--primary" (click)="confirmAdd()">Confirmar</button>
               <button class="admin-button admin-button--ghost" (click)="close()">Cancelar</button>
+              <button class="admin-button admin-button--primary" (click)="confirmAdd()" [disabled]="totalAddPoints() <= 0">Confirmar</button>
             </div>
           </div>
         }
 
         @if (showDeleteModal()) {
           <div class="admin-modal-card">
-            <h2 class="modal-headline">Quitar Puntos</h2>
-            <p class="modal-subtext">{{ selectedUser()?.nombre }}</p>
-            
+            <h2 class="admin-modal-title">Quitar puntos</h2>
+            <p class="admin-modal-text">Selecciona las promociones que deseas canjear para descontar sus puntos de <strong>{{ selectedUser()?.nombre }}</strong>.</p>
+
             <div class="input-wrapper">
-              <label>Cantidad a descontar:</label>
-              <input type="number" (input)="onPuntosChange($event)" [value]="puntosAQuitar" autofocus>
+              <label>Buscar promociones</label>
+              <input class="admin-modal-input" type="text" placeholder="Buscar promoción..." (input)="onPromotionSearch($event)" [value]="promotionSearch()">
+            </div>
+
+            <div class="promociones-list">
+              @for (promo of promocionesDisponibles(); track promo.id) {
+                <label class="promocion-item">
+                  <input type="checkbox" (change)="togglePromocion(promo.id, $any($event.target).checked)" [checked]="selectedPromociones().includes(promo.id)">
+                  <div>
+                    <div class="promocion-name">{{ promo.nombre }}</div>
+                    <div class="promocion-puntos">{{ promo.puntosPromocion }} pts</div>
+                  </div>
+                </label>
+              }
+            </div>
+
+            <div class="resumen-descuento">
+              <span>Total a descontar</span>
+              <strong>{{ totalSelectedPoints() }} pts</strong>
             </div>
 
             <div class="admin-modal-actions">
-              <button class="admin-button admin-button--danger" (click)="confirmDelete()">Confirmar</button>
               <button class="admin-button admin-button--ghost" (click)="close()">Regresar</button>
+              <button class="admin-button admin-button--danger" (click)="confirmDelete()" [disabled]="totalSelectedPoints() <= 0">Confirmar</button>
+            </div>
+          </div>
+        }
+
+        @if (showHistorial()) {
+          <div class="admin-modal-card historial-modal">
+            <h2 class="admin-modal-title">Historial de puntos</h2>
+            <p class="admin-modal-text">Últimas transacciones de <strong>{{ selectedUser()?.nombre }}</strong>.</p>
+
+            <div class="historial-container">
+              @if (obtenerTransaccionesUsuario(selectedUser()?.id).length > 0) {
+                <div class="transacciones-list">
+                  @for (transaccion of obtenerTransaccionesUsuario(selectedUser()?.id); track transaccion.id) {
+                    <div class="transaccion-item" [class.transaccion-suma]="transaccion.tipo === 'suma'" [class.transaccion-resta]="transaccion.tipo === 'resta'">
+                      <div class="transaccion-header">
+                        <span class="transaccion-tipo" [class.tipo-suma]="transaccion.tipo === 'suma'" [class.tipo-resta]="transaccion.tipo === 'resta'">
+                          {{ transaccion.tipo === 'suma' ? '+' : '-' }} {{ transaccion.cantidad }} pts
+                        </span>
+                        <span class="transaccion-fecha">{{ transaccion.fecha | date: 'short' }}</span>
+                      </div>
+                      <div class="transaccion-razon">{{ transaccion.razon }}</div>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <p class="sin-historial">No hay transacciones registradas para este usuario.</p>
+              }
+            </div>
+
+            <div class="admin-modal-actions">
+              <button class="admin-button admin-button--ghost" (click)="close()">Cerrar</button>
             </div>
           </div>
         }

@@ -11,8 +11,10 @@ html {
 
 /* Ensure proper stacking context */
 app-header {
+  display: block;
   position: relative;
   z-index: 1000;
+  background: #E1BE21;
 }
 
 app-landing-page {

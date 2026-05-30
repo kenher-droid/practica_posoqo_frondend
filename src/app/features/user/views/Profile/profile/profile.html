@@ -7,17 +7,15 @@
   <div class="profile-banner__stats">
     <span class="stat-label">MIS PUNTOS ACUMULADOS</span>
     <div class="points-block">
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle">posoqo</div>
-      <div class="points-circle points-circle--empty"></div>
+      @for (stamp of filledStamps(); track stamp.id) {
+        <div class="points-circle points-circle--filled"></div>
+      }
+      @for (stamp of emptyStamps(); track stamp.id) {
+        <div class="points-circle points-circle--empty"></div>
+      }
     </div>
-    <strong class="points-total">12 puntos</strong>
+    <strong class="points-total">{{ pointsTotal() }} puntos</strong>
+    <p class="stamps-subtitle">{{ pointsTotal() }}/{{ stampGoal }} sellos acumulados</p>
   </div>
 </section>
 
@@ -30,6 +28,25 @@
     <h2>¿Cómo ganar puntos?</h2>
     <p>Para ganar puntos, realiza pedidos por delivery o en local. Cada compra suma puntos y puedes ver tus acumulados aquí.</p>
   </article>
+</section>
+
+<section class="profile-history">
+  <div class="history-header">
+    <h2>Historial de puntos</h2>
+    <p>Revisa cuándo se añadieron o descontaron puntos de tu cuenta.</p>
+  </div>
+
+  <div class="history-list">
+    @for (transaccion of transacciones(); track transaccion.id) {
+      <article class="history-item" [class.history-item--resta]="transaccion.tipo === 'resta'">
+        <div class="history-row">
+          <strong>{{ transaccion.tipo === 'suma' ? '+' : '-' }}{{ transaccion.cantidad }} pts</strong>
+          <span class="history-date">{{ transaccion.fecha | date:'mediumDate' }}</span>
+        </div>
+        <p class="history-reason">{{ transaccion.razon }}</p>
+      </article>
+    }
+  </div>
 </section>
 
 <section class="profile-cta-bar">
