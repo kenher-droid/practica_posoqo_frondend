@@ -1,6 +1,6 @@
 <section class="auth-card">
-  <div class="auth-card__label">Crea tu cuenta</div>
-  <h1>Registro</h1>
+  <div class="auth-card__label">Registrate</div>
+  <h1>Regístrate</h1>
   <p class="auth-card__subtitle">Regístrate para comenzar a acumular puntos y ordenar con POSOQO.</p>
 
   <form class="auth-form" autocomplete="off">
@@ -9,17 +9,25 @@
       <input type="text" placeholder="Tu nombre completo" />
     </label>
     <label>
-      <span>Correo electrónico</span>
+      <span>Fecha de Nacimiento</span>
+      <input type="date" placeholder="Fecha de nacimiento" />
+    </label>
+    <label>
+      <span>Correo electronico</span>
       <input type="email" placeholder="tunombre@correo.com" />
+    </label>
+    <label>
+      <span>Telefono</span>
+      <input type="tel" placeholder="987654321" />
     </label>
     <label>
       <span>Contraseña</span>
       <input type="password" placeholder="••••••••" />
     </label>
-    <button type="submit" class="auth-submit">Crear cuenta</button>
+    <button type="submit" class="auth-submit">CREAR CUENTA</button>
   </form>
 
-  <div class="auth-card__footer">
+  <div class="auth-card__footer auth-card__footer--centered">
     <span>¿Ya tienes cuenta?</span>
     <a routerLink="/auth/login">Inicia sesión</a>
   </div>

@@ -21,8 +21,9 @@
             <span class="precio-actual">${{ promo.precioActual }}</span>
             <span class="precio-promo">${{ promo.precioPromocion }}</span>
           </div>
+          <p class="promo-puntos">Puntos: <strong>{{ promo.puntosAsignados }}</strong></p>
         </div>
-        <button class="btn-eliminar" (click)="eliminarPromocion(promo.id)">✕</button>
+        <button class="btn-eliminar" (click)="eliminarPromocion(promo.id)">Eliminar</button>
       </div>
     }
   </div>

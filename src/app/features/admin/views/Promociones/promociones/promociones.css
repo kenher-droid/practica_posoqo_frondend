@@ -109,6 +109,14 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.promo-puntos {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
 }
 
 .precio-actual {
@@ -125,26 +133,22 @@
 
 .btn-eliminar {
   position: absolute;
-  top: 0.75rem;
+  bottom: 0.75rem;
   right: 0.75rem;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  padding: 0.5rem 1rem;
   background-color: #dc2626;
   color: white;
   border: none;
-  font-size: 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.3s ease;
   z-index: 10;
 }
 
 .btn-eliminar:hover {
   background-color: #991b1b;
-  transform: scale(1.1);
+  transform: translateY(-2px);
 }
 
 /* Modal */

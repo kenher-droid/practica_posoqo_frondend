@@ -4,11 +4,10 @@
     <div class="puntos-header">
       <h1 class="view-title">Gestión de Puntos</h1>
       <div class="search-container">
-        <span class="search-icon">🔍</span>
         <input type="text" 
                (input)="onSearch($event)" 
                [value]="searchTerm()" 
-               placeholder="Buscar por nombre o número de teléfono...">
+               placeholder="Buscar por nombre o teléfono...">
       </div>
     </div>
 
@@ -30,7 +29,7 @@
               
               <div class="action-group">
               <button class="admin-button admin-button--primary" (click)="openAdd(user)">Añadir punto</button>
-              <button class="admin-button admin-button--danger" (click)="openDelete(user)">✕</button>
+              <button class="admin-button admin-button--danger" (click)="openDelete(user)">Quitar puntos</button>
               </div>
             </div>
           }
@@ -49,7 +48,7 @@
             <h2 class="modal-headline">¿Añadir punto?</h2>
             <p class="modal-subtext">{{ selectedUser()?.nombre }}</p>
             <div class="admin-modal-actions">
-              <button class="admin-button admin-button--primary" (click)="confirmAdd()">✓ Confirmar</button>
+              <button class="admin-button admin-button--primary" (click)="confirmAdd()">Confirmar</button>
               <button class="admin-button admin-button--ghost" (click)="close()">Cancelar</button>
             </div>
           </div>
@@ -66,7 +65,7 @@
             </div>
 
             <div class="admin-modal-actions">
-              <button class="admin-button admin-button--danger" (click)="confirmDelete()">Confirmar Baja</button>
+              <button class="admin-button admin-button--danger" (click)="confirmDelete()">Confirmar</button>
               <button class="admin-button admin-button--ghost" (click)="close()">Regresar</button>
             </div>
           </div>

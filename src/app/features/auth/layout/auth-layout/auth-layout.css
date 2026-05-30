@@ -27,13 +27,19 @@
   text-decoration: none;
 }
 
-.auth-back {
+.auth-action-btn {
   color: #e1be21;
   background: rgba(225, 190, 33, 0.12);
   padding: 0.6rem 1rem;
   border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.auth-action-btn:hover {
+  background: rgba(225, 190, 33, 0.2);
+  color: #f7f7f7;
 }
 
 .auth-main {

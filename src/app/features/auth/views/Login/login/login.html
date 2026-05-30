@@ -1,23 +1,25 @@
 <section class="auth-card">
-  <div class="auth-card__label">Bienvenido de nuevo</div>
+  <div class="auth-card__label">Iniciar sesión</div>
   <h1>Iniciar sesión</h1>
   <p class="auth-card__subtitle">Accede a tu cuenta para revisar tus pedidos y puntos.</p>
 
   <form class="auth-form" autocomplete="off">
     <label>
-      <span>Correo electrónico</span>
-      <input type="email" placeholder="tunombre@correo.com" />
+      <span>Numero o correo</span>
+      <input type="text" placeholder="tunombre@correo.com" />
     </label>
     <label>
       <span>Contraseña</span>
       <input type="password" placeholder="••••••••" />
     </label>
 
-    <button type="submit" class="auth-submit">Iniciar sesión</button>
+    <a href="#" class="auth-forgot">¿olvidaste tu contraseña?</a>
+
+    <button type="submit" class="auth-submit">INICIAR SECCION</button>
   </form>
 
-  <div class="auth-card__footer">
-    <span>¿Aún no tienes cuenta?</span>
-    <a routerLink="/auth/register">Crea una cuenta</a>
+  <div class="auth-card__footer auth-card__footer--centered">
+    <span>¿No tienes cuenta?</span>
+    <a routerLink="/auth/register">Registrate</a>
   </div>
 </section>

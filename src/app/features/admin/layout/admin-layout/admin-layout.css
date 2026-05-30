@@ -20,6 +20,37 @@
   z-index: 20;
 }
 
+.logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #0b0b0c;
+  display: inline-block;
+  cursor: default;
+}
+
+.logo:hover {
+  opacity: 1;
+}
+
+.logout-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #0b0b0c;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.logout-btn:hover {
+  background: rgba(192, 57, 43, 0.2);
+  border-color: #c0392b;
+  color: #c0392b;
+  transform: translateY(-1px);
+}
+
 .main-body {
   display: flex;
   flex: 1;

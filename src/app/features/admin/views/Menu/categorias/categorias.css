@@ -4,6 +4,8 @@
   background: white;
   border-radius: 16px;
   border: 1px solid #ececec;
+  position: relative;
+  z-index: 1;
 }
 
 /* Header */
