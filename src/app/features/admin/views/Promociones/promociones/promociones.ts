@@ -65,6 +65,7 @@ export class Promociones {
   busquedaComida = signal('');
   comidasFiltradas = signal(this.comidas);
   promocionSeleccionada = signal<Promocion | null>(null);
+  selectedImageFile = signal<File | null>(null);
   nuevaPromocion = signal<Partial<Promocion>>({
     nombre: '',
     imagen: '',
@@ -113,12 +114,33 @@ export class Promociones {
     this.abrirModalDetalles();
   }
 
+  onImagenSeleccionada(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+    this.selectedImageFile.set(file);
+
+    if (!file) {
+      this.nuevaPromocion.update(p => ({ ...p, imagen: '' }));
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.nuevaPromocion.update(p => ({
+        ...p,
+        imagen: reader.result as string
+      }));
+    };
+    reader.readAsDataURL(file);
+  }
+
   abrirModalDetalles() {
     this.showModalDetalles.set(true);
   }
 
   cerrarModalDetalles() {
     this.showModalDetalles.set(false);
+    this.promocionSeleccionada.set(null);
     this.nuevaPromocion.set({
       nombre: '',
       imagen: '',
@@ -133,21 +155,29 @@ export class Promociones {
 
   guardarPromocion() {
     const promo = this.nuevaPromocion();
-    if (promo.nombre) {
-      const newPromo: Promocion = {
-        id: Date.now(),
-        nombre: promo.nombre || '',
-        imagen: promo.imagen || '',
-        categoria: promo.categoria || '',
-        subcategoria: promo.subcategoria || '',
-        estado: promo.estado || 'Activo',
-        precioActual: promo.precioActual || 0,
-        precioPromocion: promo.precioPromocion || 0,
-        puntosAsignados: promo.puntosAsignados || 0
-      };
-      this.promociones.update(promos => [...promos, newPromo]);
-      this.cerrarModalDetalles();
+    if (!promo.nombre) {
+      return;
     }
+
+    const newPromo: Promocion = {
+      id: this.promocionSeleccionada()?.id ?? Date.now(),
+      nombre: promo.nombre || '',
+      imagen: promo.imagen || '',
+      categoria: promo.categoria || '',
+      subcategoria: promo.subcategoria || '',
+      estado: promo.estado || 'Activo',
+      precioActual: promo.precioActual || 0,
+      precioPromocion: promo.precioPromocion || 0,
+      puntosAsignados: promo.puntosAsignados || 0
+    };
+
+    if (this.promocionSeleccionada()) {
+      this.promociones.update(promos => promos.map(p => p.id === this.promocionSeleccionada()!.id ? newPromo : p));
+    } else {
+      this.promociones.update(promos => [...promos, newPromo]);
+    }
+
+    this.cerrarModalDetalles();
   }
 
   editarPromocion(id: number) {

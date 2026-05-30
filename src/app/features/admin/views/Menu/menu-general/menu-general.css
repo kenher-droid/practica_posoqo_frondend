@@ -199,6 +199,26 @@
   box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
 }
 
+.admin-form-group input[type="file"] {
+  padding: 0.8rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.image-preview {
+  margin-top: 0.75rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  max-height: 180px;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .comidas-grid {

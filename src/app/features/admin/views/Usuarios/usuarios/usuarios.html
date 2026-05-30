@@ -44,22 +44,46 @@
           <div class="admin-form-row">
             <div class="admin-form-group">
               <label>Nombres</label>
-              <input class="admin-input" type="text" [value]="selectedUser?.nombre" placeholder="|Cantidad de integrantes">
+              <input
+                class="admin-input"
+                type="text"
+                [(ngModel)]="selectedUser.nombre"
+                name="nombreUsuario"
+                placeholder="Nombre"
+              />
             </div>
             <div class="admin-form-group">
               <label>Apellidos</label>
-              <input class="admin-input" type="text" [value]="selectedUser?.apellidos" placeholder="|Número del representante">
+              <input
+                class="admin-input"
+                type="text"
+                [(ngModel)]="selectedUser.apellidos"
+                name="apellidosUsuario"
+                placeholder="Apellidos"
+              />
             </div>
           </div>
 
           <div class="admin-form-row">
             <div class="admin-form-group">
               <label>Teléfono</label>
-              <input class="admin-input" type="text" [value]="selectedUser?.telefono" placeholder="|+51">
+              <input
+                class="admin-input"
+                type="text"
+                [(ngModel)]="selectedUser.telefono"
+                name="telefonoUsuario"
+                placeholder="+51"
+              />
             </div>
             <div class="admin-form-group">
               <label>Gmail</label>
-              <input class="admin-input" type="email" [value]="selectedUser?.gmail" placeholder="|Example@gmail.com">
+              <input
+                class="admin-input"
+                type="email"
+                [(ngModel)]="selectedUser.gmail"
+                name="gmailUsuario"
+                placeholder="example@gmail.com"
+              />
             </div>
           </div>
 
@@ -67,18 +91,29 @@
             <div class="admin-form-group password-field">
               <label>Contraseña</label>
               <div class="input-wrapper">
-                <input class="admin-input" type="password" [value]="selectedUser?.contrasena" placeholder="|password">
+                <input
+                  class="admin-input"
+                  type="password"
+                  [(ngModel)]="selectedUser.contrasena"
+                  name="contrasenaUsuario"
+                  placeholder="Contraseña"
+                />
                 <button type="button" class="eye-btn">Ver</button>
               </div>
             </div>
             <div class="admin-form-group">
               <label>Fecha de nacimiento</label>
-              <input class="admin-input" type="text" [value]="selectedUser?.fecha_nacimiento" placeholder="|Fecha de nacimiento">
+              <input
+                class="admin-input"
+                type="date"
+                [(ngModel)]="selectedUser.fecha_nacimiento"
+                name="fechaNacimientoUsuario"
+              />
             </div>
           </div>
 
           <div class="admin-modal-actions">
-            <button type="button" class="admin-button admin-button--primary">Realizar cambios</button>
+            <button type="button" class="admin-button admin-button--primary" (click)="saveUser()">Realizar cambios</button>
             <button type="button" class="admin-button admin-button--ghost" (click)="closeModals()">Cerrar</button>
           </div>
         </form>

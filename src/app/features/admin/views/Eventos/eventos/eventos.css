@@ -46,6 +46,29 @@
   border: 1px solid #ddd; height: 200px; border-radius: 10px; 
   display: flex; justify-content: center; align-items: center; color: #bbb; margin-bottom: 15px;
 }
+.file-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fafafa;
+  margin-bottom: 12px;
+}
+
+.image-preview {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
+
+.image-preview img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 16px;
+  max-height: 200px;
+}
 .btn-submit-form { 
   background: #EBC033; border: none; width: 100%; padding: 12px; 
   border-radius: 10px; font-weight: bold; cursor: pointer;

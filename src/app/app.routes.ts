@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { ADMIN_ROUTES } from './features/admin/admin.routes';
+import { AUTH_ROUTES } from './features/auth/auth.routes';
+import { USER_ROUTES } from './features/user/user.routes';
 
 export const routes: Routes = [
   {
@@ -8,7 +11,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./features/admin/layout/admin-layout/admin-layout').then(m => m.AdminLayout),
-    loadChildren: () => import('./features/admin/admin.routes').then(m => m.ADMIN_ROUTES)
+    children: ADMIN_ROUTES
   },
   {
     path: 'auth',

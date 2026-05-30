@@ -319,6 +319,26 @@
   grid-template-columns: 1fr;
 }
 
+.file-group input[type="file"] {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.imagen-preview {
+  margin-top: 0.75rem;
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 180px;
+}
+
+.imagen-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;

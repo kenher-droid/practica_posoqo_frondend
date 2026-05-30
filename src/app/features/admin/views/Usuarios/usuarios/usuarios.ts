@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css',
 })
@@ -33,8 +35,23 @@ export class Usuarios {
     this.selectedUser = null;
   }
 
+  saveUser() {
+    if (!this.selectedUser) {
+      return;
+    }
+
+    this.usuarios.update(list =>
+      list.map(user =>
+        user.id === this.selectedUser.id ? { ...this.selectedUser } : user
+      )
+    );
+    this.closeModals();
+  }
+
   confirmDelete() {
-    this.usuarios.update(list => list.filter(u => u.id !== this.selectedUser.id));
+    if (this.selectedUser) {
+      this.usuarios.update(list => list.filter(u => u.id !== this.selectedUser.id));
+    }
     this.closeModals();
   }
 }

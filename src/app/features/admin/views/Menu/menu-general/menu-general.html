@@ -111,6 +111,23 @@
           </div>
         </div>
 
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label>Imagen</label>
+            <input
+              type="file"
+              accept="image/*"
+              class="admin-modal-input"
+              (change)="onImagenSeleccionada($event)"
+            />
+            @if (nuevaImagen()) {
+              <div class="image-preview">
+                <img [src]="nuevaImagen()" alt="Vista previa de la comida" />
+              </div>
+            }
+          </div>
+        </div>
+
         <div class="admin-modal-actions">
           <button class="admin-button admin-button--secondary" (click)="cerrarModalAgregarComida()">Cancelar</button>
           <button class="admin-button admin-button--primary" (click)="confirmarAgregarComida()">Guardar</button>

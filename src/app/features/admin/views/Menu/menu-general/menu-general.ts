@@ -121,6 +121,7 @@ export class MenuGeneralComponent {
   nuevoPrecio = signal('');
   nuevaSubcategoria = signal('Sub-categoría');
   nuevaCategoria = signal('Comidas');
+  nuevaImagen = signal('');
 
   get comidasPorCategoria(): { [key: string]: Comida[] } {
     const agrupadas: { [key: string]: Comida[] } = {};
@@ -152,11 +153,27 @@ export class MenuGeneralComponent {
     this.nuevoPrecio.set('');
     this.nuevaSubcategoria.set('Sub-categoría');
     this.nuevaCategoria.set(this.categorias[0] ?? 'Comidas');
+    this.nuevaImagen.set('');
     this.showModalAgregarComida.set(true);
   }
 
   cerrarModalAgregarComida(): void {
     this.showModalAgregarComida.set(false);
+  }
+
+  onImagenSeleccionada(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+    if (!file) {
+      this.nuevaImagen.set('');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.nuevaImagen.set(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   }
 
   confirmarAgregarComida(): void {
@@ -172,7 +189,7 @@ export class MenuGeneralComponent {
       precio,
       subcategoria: this.nuevaSubcategoria(),
       estado: 'activo',
-      imagen: `https://via.placeholder.com/300x300?text=${encodeURIComponent(nombre)}`,
+      imagen: this.nuevaImagen() || `https://via.placeholder.com/300x300?text=${encodeURIComponent(nombre)}`,
       categoria: this.nuevaCategoria(),
     };
 
