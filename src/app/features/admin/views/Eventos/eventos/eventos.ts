@@ -21,7 +21,7 @@ interface Evento {
 })
 export class Eventos {
   eventos = signal<Evento[]>([
-    { id: 1, nombre: 'Halloween Posoqo', fecha: '31/10/26', hora: '20:00', lugar: 'Local Principal', descripcion: 'Fiesta de disfraces y música en vivo.', imagen: '' }
+    { id: 1, nombre: 'Halloween Posoqo', fecha: '2026-10-31', hora: '20:00', lugar: 'Local Principal', descripcion: 'Fiesta de disfraces y música en vivo.', imagen: '' }
   ]);
 
   // Estados de UI
@@ -53,6 +53,7 @@ export class Eventos {
     this.selectedEvento = null;
   }
 
+  // 🔥 AQUÍ SE HACE LA MAGIA DE LA CONVERSIÓN RÁPIDA A WEBP
   onImagenSeleccionada(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0] ?? null;
@@ -60,14 +61,46 @@ export class Eventos {
       return;
     }
 
-    const eventoActual = this.selectedEvento;
     const reader = new FileReader();
-    reader.onload = () => {
-      this.selectedEvento = {
-        ...eventoActual,
-        imagen: reader.result as string
+    reader.onload = (e: any) => {
+      const img = new Image();
+      img.src = e.target.result;
+
+      img.onload = () => {
+        // 1. Creamos un lienzo (canvas) en memoria
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // 2. Establecemos límites para que no suban fotos exageradamente gigantes
+        const MAX_WIDTH = 1000; // Un ancho excelente para eventos web
+        let width = img.width;
+        let height = img.height;
+
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // 3. Dibujamos la imagen redimensionada en el lienzo
+        ctx?.drawImage(img, 0, 0, width, height);
+
+        // 4. Transformamos a formato image/webp con calidad balanceada (0.75 = 75%)
+        // Esto reduce fotos de 5MB a solo 70KB-120KB al instante.
+        const webpBase64 = canvas.toDataURL('image/webp', 0.75);
+
+        // 5. Guardamos en el estado el string .webp ultra liviano para la vista previa y la API
+        if (this.selectedEvento) {
+          this.selectedEvento = {
+            ...this.selectedEvento,
+            imagen: webpBase64
+          };
+        }
       };
     };
+
     reader.readAsDataURL(file);
   }
 
@@ -81,8 +114,21 @@ export class Eventos {
         ...this.selectedEvento,
         id: Date.now()
       };
+      
+      /* =======================================================================
+         🚀 CONEXIÓN API: CREAR EVENTO REAL
+         =======================================================================
+         Aquí enviarías tu 'nuevoEvento' a la base de datos a través de tu servicio HTTP.
+         Como la propiedad .imagen ya viaja en formato WebP comprimido, subirá volando.
+      */
       this.eventos.update(list => [...list, nuevoEvento]);
+      
     } else {
+      /* =======================================================================
+         🔄 CONEXIÓN API: EDITAR EVENTO REAL
+         =======================================================================
+         Aquí llamarías a tu API con un método PUT o PATCH pasando el ID actual.
+      */
       this.eventos.update(list =>
         list.map(evento =>
           evento.id === this.selectedEvento?.id ? { ...this.selectedEvento } : evento
@@ -97,6 +143,12 @@ export class Eventos {
     if (!this.selectedEvento) {
       return;
     }
+
+    /* =======================================================================
+       🗑️ CONEXIÓN API: ELIMINAR EVENTO REAL
+       =======================================================================
+       Aquí ejecutas el servicio de eliminación mandando this.selectedEvento.id
+    */
     this.eventos.update(list => list.filter(e => e.id !== this.selectedEvento!.id));
     this.closeAll();
   }

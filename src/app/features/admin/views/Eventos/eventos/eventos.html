@@ -1,5 +1,4 @@
 <div class="page-layout">
-  <!-- Cabecera de tabla -->
   <div class="table-header">
     <p class="title-label">Eventos actuales</p>
     <button class="add-trigger" (click)="openCreate()">
@@ -7,7 +6,6 @@
     </button>
   </div>
 
-  <!-- Tabla -->
   <div class="card-container">
     <table class="custom-table">
       <thead>
@@ -40,29 +38,28 @@
     </table>
   </div>
 
-  <!-- MODAL: CREAR / EDITAR -->
   @if (modalMode !== 'none') {
     <div class="overlay">
       <div class="modal-form animate-in">
         <h2 class="modal-title">{{ modalMode === 'create' ? 'Añadir evento' : 'Editar evento' }}</h2>
         
-        <form class="grid-form">
+        <form class="grid-form" #eventoForm="ngForm">
           <div class="left-col">
             <div class="input-group">
               <label>Fecha</label>
-              <input type="text" [(ngModel)]="selectedEvento!.fecha" name="fecha" placeholder="dd/mm/aa">
+              <input type="date" [(ngModel)]="selectedEvento!.fecha" name="fecha" required>
             </div>
             <div class="input-group">
               <label>Nombre</label>
-              <input type="text" [(ngModel)]="selectedEvento!.nombre" name="nombre" placeholder="Nombre del evento">
+              <input type="text" [(ngModel)]="selectedEvento!.nombre" name="nombre" placeholder="Nombre del evento" required>
             </div>
             <div class="input-group">
               <label>Hora</label>
-              <input type="text" [(ngModel)]="selectedEvento!.hora" name="hora" placeholder="HH:MM">
+              <input type="time" [(ngModel)]="selectedEvento!.hora" name="hora" required>
             </div>
             <div class="input-group">
               <label>Lugar</label>
-              <input type="text" [(ngModel)]="selectedEvento!.lugar" name="lugar" placeholder="Dirección">
+              <input type="text" [(ngModel)]="selectedEvento!.lugar" name="lugar" placeholder="Dirección" required>
             </div>
           </div>
 
@@ -79,14 +76,15 @@
                 <img [src]="selectedEvento!.imagen" alt="Vista previa del evento" />
               </div>
             }
-            <button type="button" class="btn-submit-form" (click)="saveEvento()">
+            
+            <button type="button" class="btn-submit-form" [disabled]="eventoForm.invalid" (click)="saveEvento()">
               {{ modalMode === 'create' ? 'Añadir evento' : 'Guardar cambios' }}
             </button>
           </div>
 
           <div class="full-col">
             <label>Descripción</label>
-            <textarea [(ngModel)]="selectedEvento!.descripcion" name="descripcion" placeholder="Detalles del evento"></textarea>
+            <textarea [(ngModel)]="selectedEvento!.descripcion" name="descripcion" placeholder="Detalles del evento" required></textarea>
           </div>
         </form>
         
@@ -95,7 +93,6 @@
     </div>
   }
 
-  <!-- MODAL: ELIMINAR (Abajo a la derecha como en la imagen) -->
   @if (showDeleteConfirm) {
     <div class="delete-toast animate-up">
       <h3>ELIMINAR EVENTO</h3>

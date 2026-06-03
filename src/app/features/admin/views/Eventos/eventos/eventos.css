@@ -12,6 +12,7 @@
 .custom-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .custom-table th { border-bottom: 2px solid #333; padding: 10px; text-align: left; }
 .custom-table td { padding: 12px 10px; border-bottom: 1px solid #ddd; }
+.text-muted { color: #666; }
 
 /* Botones de acción */
 .btn-edit { background: #4CAF50; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
@@ -36,16 +37,23 @@
   background: #fafafa;
   resize: vertical;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
 .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
 .input-group label { font-weight: bold; margin-bottom: 5px; }
-.input-group input { padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #fdfdfd; }
 
-.drop-zone { 
-  border: 1px solid #ddd; height: 200px; border-radius: 10px; 
-  display: flex; justify-content: center; align-items: center; color: #bbb; margin-bottom: 15px;
+/* Optimización para que los inputs tipo date/time compartan la misma estética limpia */
+.input-group input { 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  background: #fdfdfd; 
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
 }
+
 .file-input {
   width: 100%;
   padding: 12px 14px;
@@ -53,6 +61,7 @@
   border-radius: 10px;
   background: #fafafa;
   margin-bottom: 12px;
+  box-sizing: border-box;
 }
 
 .image-preview {
@@ -69,10 +78,21 @@
   border-radius: 16px;
   max-height: 200px;
 }
+
 .btn-submit-form { 
   background: #EBC033; border: none; width: 100%; padding: 12px; 
   border-radius: 10px; font-weight: bold; cursor: pointer;
+  transition: opacity 0.2s ease;
 }
+
+/* Opacidad reducida si el formulario es inválido o faltan campos obligatorios */
+.btn-submit-form:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .btn-close-text {
   margin-top: 1.5rem;
   background: transparent;
@@ -89,14 +109,15 @@
   transform: translateY(-1px);
 }
 
-/* Modal Eliminar (Flotante abajo derecha) */
+/* Modal Eliminar (Flotante abajo derecha dentro del contexto relativo) */
 .delete-toast {
-  position: absolute; bottom: 40px; right: 40px; background: white;
+  position: fixed; bottom: 40px; right: 40px; background: white;
   padding: 30px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);
   text-align: center; width: 350px; z-index: 110;
+  box-sizing: border-box;
 }
 .delete-toast h3 { font-size: 18px; margin-bottom: 20px; letter-spacing: 1px; }
-.target-name { margin-bottom: 25px; color: #555; }
+.target-name { margin-bottom: 25px; color: #555; font-weight: bold; }
 .actions { display: flex; gap: 10px; justify-content: center; }
 .btn-confirm { background: #2E7D32; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
 .btn-cancel { background: #C62828; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
