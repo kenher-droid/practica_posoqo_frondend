@@ -1,7 +1,11 @@
 <div class="admin-container">
   <!-- Header Superior -->
   <header class="admin-header">
-    <div class="logo">POSOQO</div>
+    <div class="flex justify-start">
+      <a routerLink="/admin/inicio" class="inline-block py-1 px-1 transition-transform hover:scale-105 w-32">
+        <img src="/assets/Logo.png" alt="Logo POSOQO" loading="lazy" class="w-full h-auto block">
+      </a>
+    </div>
     <button class="logout-btn" (click)="logout()" title="Cerrar sesión">
       Cerrar sesión
     </button>
@@ -12,12 +16,13 @@
     <aside class="admin-sidebar">
       <nav>
         <ul>
-          <li><a routerLink="inicio"><i class="icon-home"></i> Inicio</a></li>
-          <li><a routerLink="eventos"><i class="icon-calendar"></i> Eventos</a></li>
-          <li><a routerLink="menu"><i class="icon-book"></i> Menú virtual</a></li>
-          <li><a routerLink="usuarios"><i class="icon-users"></i> Usuarios</a></li>
-          <li><a routerLink="promociones"><i class="icon-smile"></i> Promociones</a></li>
-          <li><a routerLink="puntos"><i class="icon-star"></i> Puntos</a></li>
+          <!-- Añadimos routerLinkActive="active" a cada opción -->
+          <li><a routerLink="inicio" routerLinkActive="active"><i class="icon-home"></i> Inicio</a></li>
+          <li><a routerLink="eventos" routerLinkActive="active"><i class="icon-calendar"></i> Eventos</a></li>
+          <li><a routerLink="menu" routerLinkActive="active"><i class="icon-book"></i> Menú virtual</a></li>
+          <li><a routerLink="usuarios" routerLinkActive="active"><i class="icon-users"></i> Usuarios</a></li>
+          <li><a routerLink="promociones" routerLinkActive="active"><i class="icon-smile"></i> Promociones</a></li>
+          <li><a routerLink="puntos" routerLinkActive="active"><i class="icon-star"></i> Puntos</a></li>
         </ul>
       </nav>
     </aside>

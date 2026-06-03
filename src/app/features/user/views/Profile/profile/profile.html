@@ -4,16 +4,24 @@
     <h1>Bienvenido a tu cuenta</h1>
     <p>Revisa tus puntos acumulados, canjea recompensas y descubre promociones exclusivas.</p>
   </div>
+  
   <div class="profile-banner__stats">
     <span class="stat-label">MIS PUNTOS ACUMULADOS</span>
+    
     <div class="points-block">
       @for (stamp of filledStamps(); track stamp.id) {
-        <div class="points-circle points-circle--filled"></div>
+        <div class="points-stamp-container">
+          <img src="/assets/icons/punto_icon.png" alt="Sello obtenido" loading="lazy" class="stamp-img">
+        </div>
       }
+
       @for (stamp of emptyStamps(); track stamp.id) {
-        <div class="points-circle points-circle--empty"></div>
+        <div class="points-stamp-container points-stamp-container--empty">
+          <img src="/assets/icons/punto_icon.png" alt="Sello vacío" loading="lazy" class="stamp-img">
+        </div>
       }
     </div>
+
     <strong class="points-total">{{ pointsTotal() }} puntos</strong>
     <p class="stamps-subtitle">{{ pointsTotal() }}/{{ stampGoal }} sellos acumulados</p>
   </div>
