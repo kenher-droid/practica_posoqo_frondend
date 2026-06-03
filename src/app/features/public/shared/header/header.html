@@ -1,58 +1,40 @@
-<header class="bg-[#E1BE21] text-[#0B0B0C] shadow-md">
-  <div class="container mx-auto px-6 py-6 flex justify-between items-center">
+<header class="bg-[#E1BE21] text-[#051923] shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-6 py-4 grid grid-cols-2 md:grid-cols-[auto_1fr_auto] items-center">
 
-    <!-- Logo -->
-    <div class="text-2xl font-bold text-[#0B0B0C] w-32">
-      <a routerLink="/">
-        <img src="/assets/Logo.png" alt="Logo POSOQO" loading="lazy">
+    <div class="flex justify-start">
+      <a routerLink="/" class="inline-block border-t-2 border-b-2 border-[#051923] py-1 px-1 transition-transform hover:scale-105 w-32">
+        <img src="/assets/Logo.png" alt="Logo POSOQO" loading="lazy" class="w-full h-auto block">
       </a>
     </div>
 
-    <!-- Menú -->
-    <nav role="navigation" aria-label="Menú principal">
-      <ul class="flex space-x-6">
+    <nav role="navigation" aria-label="Menú principal" class="hidden md:flex justify-center">
+      <ul class="flex space-x-10 text-base font-semibold lowercase tracking-wide">
         <li>
-          <a
-            routerLink="/"
-            class="px-4 py-2 rounded-lg transition-all duration-300 font-medium text-[#0B0B0C] hover:bg-black/10 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20"
-          >
-            Inicio
+          <a href="#carta" class="px-4 py-2 rounded-lg transition-all duration-200 text-[#051923] hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-black/10">
+            carta
           </a>
         </li>
         <li>
-          <a
-            href="#carta"
-            class="px-4 py-2 rounded-lg transition-all duration-300 font-medium text-[#0B0B0C] hover:bg-black/10 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20"
-          >
-            Carta
+          <a href="#eventos" class="px-4 py-2 rounded-lg transition-all duration-200 text-[#051923] hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-black/10">
+            eventos
           </a>
         </li>
         <li>
-          <a
-            href="#eventos"
-            class="px-4 py-2 rounded-lg transition-all duration-300 font-medium text-[#0B0B0C] hover:bg-black/10 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20"
-          >
-            Eventos
-          </a>
-        </li>
-        <li>
-          <a
-            href="#nosotros"
-            class="px-4 py-2 rounded-lg transition-all duration-300 font-medium text-[#0B0B0C] hover:bg-black/10 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20"
-          >
-            Nosotros
-          </a>
-        </li>
-        <li>
-          <a
-            routerLink="/auth/login"
-            class="px-4 py-2 rounded-lg transition-all duration-300 font-medium text-[#0B0B0C] hover:bg-black/10 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20"
-          >
-            Iniciar sesión
+          <a href="#nosotros" class="px-4 py-2 rounded-lg transition-all duration-200 text-[#051923] hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-black/10">
+            nosotros
           </a>
         </li>
       </ul>
     </nav>
+
+    <div class="flex justify-end">
+      <a
+        routerLink="/auth/login"
+        class="text-base font-bold lowercase tracking-wide px-4 py-2 rounded-lg transition-all duration-200 text-[#051923] hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-black/20"
+      >
+        iniciar sesion
+      </a>
+    </div>
 
   </div>
 </header>

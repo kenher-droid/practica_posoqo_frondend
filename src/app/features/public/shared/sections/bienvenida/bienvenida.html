@@ -1,14 +1,25 @@
 <div class="hero">
+  <div class="hero-content">
+    
+    <p class="frase-principal">
+      descubre el verdadero sabor y la tradición de
+    </p>
 
-  <h1 class="logo">POSOQO</h1>
+    <h1 class="logo">posoqo</h1>
 
-  <p class="subtexto">
-    La mejor bebida y<br>
-    restaurante artesanal de Ayacucho
-  </p>
+    <p class="subtexto">
+      cerveza artesanal de la casa,<br>
+      buena música y el mejor ambiente ayacuchano.
+    </p>
 
-  <button class="btn-login" (click)="irASeccion()" aria-label="Ir a la sección de nosotros">
-    INICIAR SESIÓN
-  </button>
+    <div class="botones-container">
+      <button class="btn-amarillo" routerLink="/auth/login" aria-label="Iniciar sesión">
+        iniciar sesion
+      </button>
+      <button class="btn-amarillo" routerLink="/menu" aria-label="Ver menú">
+        ver menu
+      </button>
+    </div>
 
+  </div>
 </div>

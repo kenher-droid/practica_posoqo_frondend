@@ -1,18 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-bienvenida',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './bienvenida.html',
   styleUrl: './bienvenida.css',
 })
 export class Bienvenida {
-
-  irASeccion() {
-    // Scroll to the next section (nosotros)
-    const nosotrosSection = document.querySelector('.hero_color');
-    if (nosotrosSection) {
-      nosotrosSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
 }

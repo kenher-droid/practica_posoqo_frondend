@@ -1,26 +1,39 @@
 /* Header responsive styles */
 @media (max-width: 768px) {
   header {
-    padding: 1rem;
+    padding: 0.5rem 0;
   }
 
+  /* El contenedor pasa a ser un flex simple en móviles para mantener logo e iniciar sesión en una línea */
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Ajustes por si decides mostrar los enlaces en móvil en el futuro */
   nav ul {
-    flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
 
-  nav ul li a {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+  nav ul li a, 
+  .container div a {
+    font-size: 0.95rem;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 1rem;
+    padding: 0 1.2rem;
   }
 
   header {
-    border-radius: 0 0 15px 15px;
+    /* Mantenemos tu idea de redondear los bordes inferiores para darle un toque moderno en celulares */
+    border-radius: 0 0 16px 16px;
+  }
+  
+  /* Achicamos un pelín el logo en pantallas súper pequeñas */
+  .container span {
+    font-size: 1.25rem;
   }
 }

@@ -1,6 +1,6 @@
 .hero {
   min-height: 100vh;
-  background-image: url('/assets/backgrounds/background_1.avif');
+  background-image: url('/assets/backgrounds/background_1.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -13,7 +13,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.75) 100%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 35%, rgba(0, 0, 0, 0) 60%);
+  
   z-index: 0;
 }
 
