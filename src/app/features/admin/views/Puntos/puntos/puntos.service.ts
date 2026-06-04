@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RestauranteApiService, HistorialPuntosResponse } from '../../../../../core/services/restaurante-api.service';
 
 interface ApiTransaccion {
   id: number;
@@ -13,19 +13,49 @@ interface ApiTransaccion {
 
 @Injectable({ providedIn: 'root' })
 export class PuntosService {
-  private base = 'http://localhost:3000/api/puntos';
-
-  constructor(private http: HttpClient) {}
+  constructor(private readonly api: RestauranteApiService) {}
 
   agregarPuntos(usuarioId: number, cantidad: number, razon: string): Observable<ApiTransaccion> {
-    return this.http.post<ApiTransaccion>(`${this.base}/agregar`, { usuarioId, cantidad, razon });
+    return new Observable<ApiTransaccion>((observer) => {
+      this.api.sumarPuntos(usuarioId, cantidad).subscribe({
+        next: () => {
+          observer.next({
+            id: Date.now(),
+            usuarioId,
+            cantidad,
+            tipo: 'suma',
+            razon,
+            fecha: new Date().toISOString()
+          });
+          observer.complete();
+        },
+        error: (error: unknown) => observer.error(error)
+      });
+    });
   }
 
   quitarPuntos(usuarioId: number, cantidad: number, razon: string): Observable<ApiTransaccion> {
-    return this.http.post<ApiTransaccion>(`${this.base}/quitar`, { usuarioId, cantidad, razon });
+    return new Observable<ApiTransaccion>((observer) => {
+      observer.error(new Error('FastAPI descuenta puntos mediante canje de promocion: usa canjearPuntos(idCliente, idPromocion).'));
+    });
   }
 
   obtenerHistorial(usuarioId: number): Observable<ApiTransaccion[]> {
-    return this.http.get<ApiTransaccion[]>(`${this.base}/historial/${usuarioId}`);
+    return new Observable<ApiTransaccion[]>((observer) => {
+      this.api.historialCliente(usuarioId).subscribe({
+        next: (historial) => {
+          observer.next(historial.map((item: HistorialPuntosResponse) => ({
+            id: item.id,
+            usuarioId: item.id_cliente,
+            cantidad: item.puntos,
+            tipo: item.tipo === 'resta' || item.tipo === 'canje' ? 'resta' : 'suma',
+            razon: item.descripcion ?? item.tipo,
+            fecha: item.fecha
+          })));
+          observer.complete();
+        },
+        error: (error: unknown) => observer.error(error)
+      });
+    });
   }
 }

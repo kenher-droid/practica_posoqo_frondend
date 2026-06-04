@@ -1,4 +1,12 @@
 /* Header responsive styles */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
 @media (max-width: 768px) {
   header {
     border-radius: 0 0 16px 16px;

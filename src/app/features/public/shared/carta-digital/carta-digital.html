@@ -1,0 +1,56 @@
+<app-header></app-header>
+
+<div class="carta-digital-container">
+  <div class="carta-header">
+    <h1>Nuestra Carta</h1>
+    <p>Descubre nuestros deliciosos platillos</p>
+  </div>
+
+  <div class="filtros-container">
+    <div class="filtro-grupo">
+      <label>Categoría:</label>
+      <select (change)="filtrarPorCategoria(+$any($event.target).value)" class="filtro-select">
+        <option value="0">Todas</option>
+        @for (cat of categorias(); track cat.id) {
+          <option [value]="cat.id" [selected]="categoriaSeleccionada() === cat.id">{{ cat.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filtro-grupo">
+      <label>Subcategoría:</label>
+      <select (change)="filtrarPorSubcategoria(+$any($event.target).value)" class="filtro-select">
+        <option value="0">Todas</option>
+        @for (sub of subcategorias(); track sub.id) {
+          <option [value]="sub.id" [selected]="subcategoriaSeleccionada() === sub.id">{{ sub.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    @if (categoriaSeleccionada() || subcategoriaSeleccionada()) {
+      <button (click)="limpiarFiltros()" class="btn-limpiar">Limpiar filtros</button>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Cargando carta...</div>
+  } @else if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else {
+    <div class="carta-grid">
+      @for (menu of menusFiltrados(); track menu.id) {
+        <div class="menu-card">
+          <img [src]="menu.imagen_url" [alt]="menu.nombre" class="menu-image" />
+          <div class="menu-content">
+            <h3 class="menu-name">{{ menu.nombre }}</h3>
+            <p class="menu-description">{{ menu.descripcion }}</p>
+            <p class="menu-price">S/ {{ menu.precio }}</p>
+          </div>
+        </div>
+      }
+    </div>
+    @if (menusFiltrados().length === 0) {
+      <div class="no-resultados">No se encontraron resultados con los filtros seleccionados.</div>
+    }
+  }
+</div>

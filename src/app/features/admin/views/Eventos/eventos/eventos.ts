@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Observable, of, switchMap } from 'rxjs';
+import { EventoCreate, RestauranteApiService } from '../../../../../core/services/restaurante-api.service';
 
 interface Evento {
   id: number;
@@ -19,24 +21,58 @@ interface Evento {
   templateUrl: './eventos.html',
   styleUrl: './eventos.css',
 })
-export class Eventos {
-  eventos = signal<Evento[]>([
-    { id: 1, nombre: 'Halloween Posoqo', fecha: '2026-10-31', hora: '20:00', lugar: 'Local Principal', descripcion: 'Fiesta de disfraces y música en vivo.', imagen: '' }
-  ]);
+export class Eventos implements OnInit {
+  eventos = signal<Evento[]>([]);
+  loading = signal(false);
+  saving = signal(false);
+  error = signal('');
+  selectedImageFile = signal<File | null>(null);
 
   // Estados de UI
   modalMode: 'create' | 'edit' | 'none' = 'none';
   showDeleteConfirm = false;
   selectedEvento: Evento | null = null;
 
+  constructor(private readonly restauranteApi: RestauranteApiService) {}
+
+  ngOnInit(): void {
+    this.cargarEventos();
+  }
+
+  cargarEventos(): void {
+    this.loading.set(true);
+    this.restauranteApi.listarEventos().subscribe({
+      next: (eventos) => {
+        this.eventos.set(eventos.map((evento) => ({
+          id: evento.id,
+          nombre: evento.nombre,
+          fecha: evento.fecha,
+          hora: evento.hora,
+          lugar: evento.lugar,
+          descripcion: evento.descripcion,
+          imagen: evento.imagen_url
+        })));
+        this.loading.set(false);
+      },
+      error: () => {
+        this.error.set('No se pudieron cargar los eventos.');
+        this.loading.set(false);
+      }
+    });
+  }
+
   // Abrir modal para crear
   openCreate() {
+    this.error.set('');
+    this.selectedImageFile.set(null);
     this.selectedEvento = { id: 0, nombre: '', fecha: '', hora: '', lugar: '', descripcion: '', imagen: '' };
     this.modalMode = 'create';
   }
 
   // Abrir modal para editar
   openEdit(evento: Evento) {
+    this.error.set('');
+    this.selectedImageFile.set(null);
     this.selectedEvento = { ...evento };
     this.modalMode = 'edit';
   }
@@ -51,20 +87,23 @@ export class Eventos {
     this.modalMode = 'none';
     this.showDeleteConfirm = false;
     this.selectedEvento = null;
+    this.selectedImageFile.set(null);
+    this.saving.set(false);
   }
 
   // 🔥 AQUÍ SE HACE LA MAGIA DE LA CONVERSIÓN RÁPIDA A WEBP
   onImagenSeleccionada(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0] ?? null;
+    this.selectedImageFile.set(file);
     if (!file || !this.selectedEvento) {
       return;
     }
 
     const reader = new FileReader();
-    reader.onload = (e: any) => {
+    reader.onload = (e: ProgressEvent<FileReader>) => {
       const img = new Image();
-      img.src = e.target.result;
+      img.src = String(e.target?.result ?? '');
 
       img.onload = () => {
         // 1. Creamos un lienzo (canvas) en memoria
@@ -105,38 +144,91 @@ export class Eventos {
   }
 
   saveEvento() {
-    if (!this.selectedEvento || !this.selectedEvento.nombre || !this.selectedEvento.fecha) {
+    this.error.set('');
+    if (
+      !this.selectedEvento ||
+      !this.selectedEvento.nombre.trim() ||
+      !this.selectedEvento.fecha ||
+      !this.selectedEvento.hora ||
+      !this.selectedEvento.lugar.trim() ||
+      !this.selectedEvento.descripcion.trim()
+    ) {
+      this.error.set('Completa todos los campos del evento.');
       return;
     }
 
+    this.saving.set(true);
+    const evento = { ...this.selectedEvento };
+
     if (this.modalMode === 'create') {
-      const nuevoEvento: Evento = {
-        ...this.selectedEvento,
-        id: Date.now()
-      };
-      
-      /* =======================================================================
-         🚀 CONEXIÓN API: CREAR EVENTO REAL
-         =======================================================================
-         Aquí enviarías tu 'nuevoEvento' a la base de datos a través de tu servicio HTTP.
-         Como la propiedad .imagen ya viaja en formato WebP comprimido, subirá volando.
-      */
-      this.eventos.update(list => [...list, nuevoEvento]);
-      
+      this.resolveImagenUrl(evento.imagen || '').pipe(
+        switchMap((imagenUrl) => this.restauranteApi.crearEvento(this.toEventoPayload(evento, imagenUrl)))
+      ).subscribe({
+        next: (nuevoEvento) => {
+          this.eventos.update(list => [...list, this.fromApiEvento(nuevoEvento)]);
+          this.closeAll();
+        },
+        error: () => {
+          this.saving.set(false);
+          this.error.set('No se pudo crear el evento. Revisa que la imagen y los campos sean validos.');
+        }
+      });
     } else {
-      /* =======================================================================
-         🔄 CONEXIÓN API: EDITAR EVENTO REAL
-         =======================================================================
-         Aquí llamarías a tu API con un método PUT o PATCH pasando el ID actual.
-      */
-      this.eventos.update(list =>
-        list.map(evento =>
-          evento.id === this.selectedEvento?.id ? { ...this.selectedEvento } : evento
-        )
-      );
+      this.resolveImagenUrl(evento.imagen || '').pipe(
+        switchMap((imagenUrl) => this.restauranteApi.actualizarEvento(evento.id, this.toEventoPayload(evento, imagenUrl)))
+      ).subscribe({
+        next: (eventoActualizado) => {
+          this.eventos.update(list =>
+            list.map(item =>
+              item.id === eventoActualizado.id ? this.fromApiEvento(eventoActualizado) : item
+            )
+          );
+          this.closeAll();
+        },
+        error: () => {
+          this.saving.set(false);
+          this.error.set('No se pudo actualizar el evento. Revisa que la imagen y los campos sean validos.');
+        }
+      });
+    }
+  }
+
+  private resolveImagenUrl(currentImage: string): Observable<string> {
+    const file = this.selectedImageFile();
+    if (!file) {
+      return of(currentImage);
     }
 
-    this.closeAll();
+    return this.restauranteApi.subirImagen(file).pipe(
+      switchMap((response) => of(response.url ?? response.imagen_url ?? response.path ?? currentImage))
+    );
+  }
+
+  private toEventoPayload(evento: Evento, imagenUrl: string): EventoCreate {
+    return {
+      nombre: evento.nombre.trim(),
+      fecha: evento.fecha,
+      hora: this.normalizeHora(evento.hora),
+      lugar: evento.lugar.trim(),
+      imagen_url: imagenUrl,
+      descripcion: evento.descripcion.trim()
+    };
+  }
+
+  private normalizeHora(hora: string): string {
+    return hora.length === 5 ? `${hora}:00` : hora;
+  }
+
+  private fromApiEvento(evento: EventoCreate & { id: number }): Evento {
+    return {
+      id: evento.id,
+      nombre: evento.nombre,
+      fecha: evento.fecha,
+      hora: evento.hora,
+      lugar: evento.lugar,
+      descripcion: evento.descripcion,
+      imagen: evento.imagen_url
+    };
   }
 
   confirmDelete() {
@@ -144,12 +236,13 @@ export class Eventos {
       return;
     }
 
-    /* =======================================================================
-       🗑️ CONEXIÓN API: ELIMINAR EVENTO REAL
-       =======================================================================
-       Aquí ejecutas el servicio de eliminación mandando this.selectedEvento.id
-    */
-    this.eventos.update(list => list.filter(e => e.id !== this.selectedEvento!.id));
-    this.closeAll();
+    const id = this.selectedEvento.id;
+    this.restauranteApi.eliminarEvento(id).subscribe({
+      next: () => {
+        this.eventos.update(list => list.filter(e => e.id !== id));
+        this.closeAll();
+      },
+      error: () => this.error.set('No se pudo eliminar el evento.')
+    });
   }
 }

@@ -2,14 +2,14 @@
   <h1>Resumen del Sistema</h1>
   
   <div class="stats-grid">
-    <!-- Tarjeta Usuarios -->
+    <!-- Tarjeta Clientes -->
     <div class="stat-card">
       <div class="icon-section bg-green">
         <i class="icon-user"></i> <!-- Reemplazar con tu librería de iconos -->
       </div>
       <div class="info-section">
-        <span class="number">0</span>
-        <span class="label">Usuarios</span>
+        <span class="number">{{ totalClientes() }}</span>
+        <span class="label">Clientes</span>
       </div>
     </div>
 
@@ -19,7 +19,7 @@
         <i class="icon-calendar"></i>
       </div>
       <div class="info-section">
-        <span class="number">0</span>
+        <span class="number">{{ totalEventos() }}</span>
         <span class="label">Eventos</span>
       </div>
     </div>
@@ -30,17 +30,38 @@
         <i class="icon-book"></i>
       </div>
       <div class="info-section">
-        <span class="number">0</span>
+        <span class="number">{{ totalMenus() }}</span>
         <span class="label">Menús</span>
       </div>
     </div>
   </div>
 
+  @if (error()) {
+    <p class="dashboard-error">{{ error() }}</p>
+  }
+
   <!-- Información extra sugerida -->
   <section class="recent-activity">
-    <h2>Proximos cumpleaños</h2>
-    <div class="empty-state">
-      Aqui se debe editar para los cumpleaños, gaaaa
-    </div>
+    <h2>Próximos cumpleaños</h2>
+    @if (cumpleanosProximos().length === 0) {
+      <div class="empty-state">
+        No hay cumpleaños próximos en los próximos 30 días
+      </div>
+    } @else {
+      <div class="cumpleanos-list">
+        @for (cumple of cumpleanosProximos(); track cumple.id) {
+          <div class="cumpleanos-item">
+            <div class="cumpleanos-info">
+              <h3>{{ cumple.nombre }}</h3>
+              <p class="cumpleanos-date">🎂 {{ cumple.fecha_nacimiento }}</p>
+              <p class="cumpleanos-phone">📞 {{ cumple.telefono }}</p>
+            </div>
+            <div class="cumpleanos-days">
+              <span class="days-badge">{{ cumple.diasRestantes }} días</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
   </section>
 </div>

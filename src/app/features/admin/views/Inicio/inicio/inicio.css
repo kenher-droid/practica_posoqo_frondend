@@ -51,10 +51,78 @@
   font-size: 0.9rem;
 }
 
+.dashboard-error {
+  color: #b42318;
+  font-size: 0.9rem;
+  margin: -20px 0 24px;
+}
+
 .recent-activity {
   background: #f9f9f9;
   padding: 2rem;
   border-radius: 8px;
   border: 1px dashed #ccc;
-  text-align: center;
+}
+
+.recent-activity h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.empty-state {
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+}
+
+.cumpleanos-list {
+  display: grid;
+  gap: 15px;
+}
+
+.cumpleanos-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border-left: 4px solid #E1BE21;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cumpleanos-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cumpleanos-info h3 {
+  margin: 0 0 8px 0;
+  color: #051923;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cumpleanos-date,
+.cumpleanos-phone {
+  margin: 4px 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.cumpleanos-days {
+  display: flex;
+  align-items: center;
+}
+
+.days-badge {
+  background: linear-gradient(135deg, #E1BE21 0%, #f4d03f 100%);
+  color: #051923;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(225, 190, 33, 0.3);
 }

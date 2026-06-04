@@ -11,9 +11,8 @@
           <th>Nombre <i class="chevron"></i></th>
           <th>Teléfono <i class="chevron"></i></th>
           <th>Gmail <i class="chevron"></i></th>
-          <th>Contraseña <i class="chevron"></i></th>
           <th>Puntos <i class="chevron"></i></th>
-          <th>Acciones</th>
+          <th>Cumpleaños</th>
         </tr>
       </thead>
       <tbody>
@@ -23,116 +22,12 @@
             <td>{{ user.nombre }} {{ user.apellidos }}</td>
             <td>{{ user.telefono }}</td>
             <td>{{ user.gmail }}</td>
-            <td>{{ user.contrasena }}</td>
             <td>{{ user.puntos }}</td>
-            <td class="btns-cell">
-              <button class="admin-button admin-button--secondary" (click)="openEdit(user)">Editar</button>
-              <button class="admin-button admin-button--danger" (click)="openDelete(user)">Eliminar</button>
-            </td>
+            <td>{{ user.fecha_nacimiento || 'No registrado' }}</td>
           </tr>
         }
       </tbody>
     </table>
   </div>
 
-  @if (showEditModal) {
-    <div class="admin-modal-overlay">
-      <div class="admin-modal-card animate-scale">
-        <h2 class="edit-title">Editar: {{ selectedUser?.nombre }}</h2>
-        
-        <form class="edit-form">
-          <div class="admin-form-row">
-            <div class="admin-form-group">
-              <label>Nombres</label>
-              <input
-                class="admin-input"
-                type="text"
-                [(ngModel)]="selectedUser.nombre"
-                name="nombreUsuario"
-                placeholder="Nombre"
-              />
-            </div>
-            <div class="admin-form-group">
-              <label>Apellidos</label>
-              <input
-                class="admin-input"
-                type="text"
-                [(ngModel)]="selectedUser.apellidos"
-                name="apellidosUsuario"
-                placeholder="Apellidos"
-              />
-            </div>
-          </div>
-
-          <div class="admin-form-row">
-            <div class="admin-form-group">
-              <label>Teléfono</label>
-              <input
-                class="admin-input"
-                type="text"
-                [(ngModel)]="selectedUser.telefono"
-                name="telefonoUsuario"
-                placeholder="+51"
-              />
-            </div>
-            <div class="admin-form-group">
-              <label>Gmail</label>
-              <input
-                class="admin-input"
-                type="email"
-                [(ngModel)]="selectedUser.gmail"
-                name="gmailUsuario"
-                placeholder="example@gmail.com"
-              />
-            </div>
-          </div>
-
-          <div class="admin-form-row">
-            <div class="admin-form-group password-field">
-              <label>Contraseña</label>
-              <div class="input-wrapper">
-                <input
-                  class="admin-input"
-                  type="password"
-                  [(ngModel)]="selectedUser.contrasena"
-                  name="contrasenaUsuario"
-                  placeholder="Contraseña"
-                />
-                <button type="button" class="eye-btn">Ver</button>
-              </div>
-            </div>
-            <div class="admin-form-group">
-              <label>Fecha de nacimiento</label>
-              <input
-                class="admin-input"
-                type="date"
-                [(ngModel)]="selectedUser.fecha_nacimiento"
-                name="fechaNacimientoUsuario"
-              />
-            </div>
-          </div>
-
-          <div class="admin-modal-actions">
-            <button type="button" class="admin-button admin-button--primary" (click)="saveUser()">Realizar cambios</button>
-            <button type="button" class="admin-button admin-button--ghost" (click)="closeModals()">Cerrar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  }
-
-  @if (showDeleteConfirm) {
-    <div class="admin-modal-overlay">
-      <div class="admin-modal-card">
-        <h2 class="admin-modal-title">Eliminar usuario</h2>
-        <p class="admin-modal-text">
-          ¿Eliminar al usuario <strong>{{ selectedUser?.nombre }} {{ selectedUser?.apellidos }}</strong>?
-        </p>
-        <div class="admin-modal-actions">
-          <button class="admin-button admin-button--danger" (click)="confirmDelete()">Eliminar</button>
-          <button class="admin-button admin-button--ghost" (click)="closeModals()">Cancelar</button>
-        </div>
-      </div>
-    </div>
-  }
 </div>

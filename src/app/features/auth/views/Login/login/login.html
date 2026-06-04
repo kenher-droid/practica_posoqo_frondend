@@ -3,19 +3,25 @@
   <h1>Iniciar sesión</h1>
   <p class="auth-card__subtitle">Accede a tu cuenta para revisar tus pedidos y puntos.</p>
 
-  <form class="auth-form" autocomplete="off">
+  <form class="auth-form" autocomplete="off" (ngSubmit)="submit()">
     <label>
-      <span>Numero o correo</span>
-      <input type="text" placeholder="tunombre@correo.com" />
+      <span>Telefono</span>
+      <input type="tel" placeholder="987654321" [(ngModel)]="telefono" name="telefono" required />
     </label>
     <label>
       <span>Contraseña</span>
-      <input type="password" placeholder="••••••••" />
+      <input type="password" placeholder="••••••••" [(ngModel)]="password" name="password" required />
     </label>
 
     <a href="#" class="auth-forgot">¿olvidaste tu contraseña?</a>
 
-    <button type="submit" class="auth-submit">INICIAR SECCION</button>
+    @if (error) {
+      <p class="auth-error">{{ error }}</p>
+    }
+
+    <button type="submit" class="auth-submit" [disabled]="loading">
+      {{ loading ? 'INGRESANDO...' : 'INICIAR SESION' }}
+    </button>
   </form>
 
   <div class="auth-card__footer auth-card__footer--centered">

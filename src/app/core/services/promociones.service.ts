@@ -4,18 +4,14 @@ import { ApiService } from './api.service';
 import { API_ENDPOINTS } from '../config';
 
 export interface PromocionPayload {
-  nombre: string;
-  imagen: string;
-  categoria: string;
-  subcategoria: string;
-  estado: string;
-  precioActual: number;
-  precioPromocion: number;
-  puntosAsignados: number;
+  puntos: number;
+  descuento: number | string;
+  id_menu: number;
 }
 
 export interface PromocionResponse extends PromocionPayload {
   id: number;
+  descuento: string;
 }
 
 @Injectable({

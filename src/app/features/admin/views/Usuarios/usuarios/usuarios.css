@@ -8,6 +8,12 @@
 
 .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
+.admin-table th:nth-child(5),
+.admin-table td:nth-child(5) {
+  width: 80px;
+  text-align: center;
+}
+
 .chevron { border: solid #555; border-width: 0 1px 1px 0; display: inline-block; padding: 2px; transform: rotate(45deg); margin-left: 5px; }
 
 .btns-cell { white-space: nowrap; }

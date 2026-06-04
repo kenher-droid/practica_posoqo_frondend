@@ -1,4 +1,31 @@
-<section class="max-w-[1200px] mx-auto px-6 py-10">
-  <h1 class="text-3xl font-bold mb-4">Eventos</h1>
-  <p class="text-base text-gray-700">Aquí aparecerán los próximos eventos. Añade tu contenido personalizado.</p>
-</section>
+<app-header></app-header>
+
+<div class="eventos-container">
+  <div class="eventos-header">
+    <h1>Nuestros Eventos</h1>
+    <p>Descubre los próximos eventos especiales</p>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Cargando eventos...</div>
+  } @else if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else {
+    <div class="eventos-grid">
+      @for (evento of eventos(); track evento.id) {
+        <div class="evento-card">
+          <img [src]="evento.imagen_url" [alt]="evento.nombre" class="evento-image" />
+          <div class="evento-content">
+            <h3 class="evento-name">{{ evento.nombre }}</h3>
+            <p class="evento-description">{{ evento.descripcion }}</p>
+            <div class="evento-details">
+              <p class="evento-detail">📅 {{ evento.fecha }}</p>
+              <p class="evento-detail">🕐 {{ evento.hora }}</p>
+              <p class="evento-detail">📍 {{ evento.lugar }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

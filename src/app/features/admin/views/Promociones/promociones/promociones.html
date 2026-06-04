@@ -1,32 +1,43 @@
 <div class="promociones-container">
-  <!-- Gallery de Promociones -->
   <div class="promociones-header">
     <h2>Gestión de Promociones</h2>
-    <button class="btn-anadir" (click)="abrirModalBuscar()">
+    <button class="btn-anadir" (click)="abrirModalBuscar()" [disabled]="cargando()">
       <span class="icon">+</span>
-      Añadir menú
+      Añadir del menú
     </button>
   </div>
 
+  @if (error()) {
+    <p class="promo-error">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="promo-loading">Cargando promociones...</p>
+  } @else {
   <div class="promociones-grid">
     @for (promo of promociones(); track promo.id) {
-      <div class="promo-card">
+      <div class="promo-card" (click)="editarPromocion(promo.id)">
         <div class="promo-imagen">
           <img [src]="promo.imagen" [alt]="promo.nombre" />
         </div>
         <div class="promo-info">
           <h3>{{ promo.nombre }}</h3>
-          <p class="promo-categoria">{{ promo.categoria }}</p>
+          <p class="promo-categoria">{{ promo.categoria }} · {{ promo.subcategoria }}</p>
           <div class="promo-precios">
-            <span class="precio-actual">${{ promo.precioActual }}</span>
-            <span class="precio-promo">${{ promo.precioPromocion }}</span>
+            <span class="precio-actual">S/ {{ promo.precioActual }}</span>
+            <span class="descuento-badge">-{{ promo.descuentoPorcentaje }}%</span>
+            <span class="precio-promo">S/ {{ promo.precioConDescuento }}</span>
           </div>
-          <p class="promo-puntos">Puntos: <strong>{{ promo.puntosAsignados }}</strong></p>
+          <p class="promo-descuento-hint">Pagas S/ {{ promo.precioConDescuento }} con {{ promo.descuentoPorcentaje }}% de descuento</p>
+          <p class="promo-puntos">Puntos para canjear: <strong>{{ promo.puntosAsignados }}</strong></p>
         </div>
-        <button class="btn-eliminar" (click)="eliminarPromocion(promo.id)">Eliminar</button>
+        <button class="btn-eliminar" type="button" (click)="eliminarPromocion(promo.id); $event.stopPropagation()">Eliminar</button>
       </div>
+    } @empty {
+      <p class="promo-empty">No hay promociones. Elige un plato del menú para crear una.</p>
     }
   </div>
+  }
 
   <!-- Modal: Buscar Comida -->
   @if (showModalBuscar()) {
@@ -48,9 +59,11 @@
                 <img [src]="comida.imagen" [alt]="comida.nombre" />
                 <div class="comida-info">
                   <h4>{{ comida.nombre }}</h4>
-                  <p>{{ comida.categoria }}</p>
+                  <p>{{ comida.categoria }} · S/ {{ comida.precio }}</p>
                 </div>
               </div>
+            } @empty {
+              <p class="promo-empty-list">No hay platos disponibles (ya tienen promoción o no hay menú).</p>
             }
           </div>
         </div>
@@ -66,8 +79,9 @@
   @if (showModalDetalles()) {
     <div class="modal-overlay">
       <div class="modal-card modal-detalles">
-        <h2 class="modal-title">{{ nuevaPromocion().nombre || 'Nueva Promoción' }}</h2>
-        
+        <h2 class="modal-title">{{ promocionSeleccionada() ? 'Editar promoción' : 'Nueva promoción' }}</h2>
+        <p class="modal-subtitle">{{ nuevaPromocion().nombre }}</p>
+
         @if (nuevaPromocion().imagen) {
           <div class="modal-imagen">
             <img [src]="nuevaPromocion().imagen" [alt]="nuevaPromocion().nombre" />
@@ -78,97 +92,66 @@
           <div class="form-row">
             <div class="form-group">
               <label>Categoría</label>
-              <input
-                type="text"
-                class="form-input"
-                [(ngModel)]="nuevaPromocion().categoria"
-                name="categoria"
-                placeholder="Categoría"
-              />
+              <p class="form-value">{{ nuevaPromocion().categoria }}</p>
             </div>
             <div class="form-group">
               <label>Subcategoría</label>
+              <p class="form-value">{{ nuevaPromocion().subcategoria }}</p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Estado del menú</label>
+              <p class="form-value">{{ nuevaPromocion().estado }}</p>
+            </div>
+            <div class="form-group">
+              <label>Precio en menú</label>
+              <p class="form-value">S/ {{ nuevaPromocion().precioActual }}</p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Descuento (%)</label>
               <input
-                type="text"
+                type="number"
                 class="form-input"
-                [(ngModel)]="nuevaPromocion().subcategoria"
-                name="subcategoria"
-                placeholder="Subcategoría"
+                [(ngModel)]="nuevaPromocion().descuentoPorcentaje"
+                name="descuentoPorcentaje"
+                min="1"
+                max="100"
               />
             </div>
-          </div>
-
-          <div class="form-row">
             <div class="form-group">
-              <label>Estado</label>
-              <select
-                class="form-input"
-                [(ngModel)]="nuevaPromocion().estado"
-                name="estado"
-              >
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-              </select>
-            </div>
-            <div class="form-group file-group">
-              <label>Imagen de promoción</label>
+              <label>Puntos para canjear</label>
               <input
-                type="file"
-                accept="image/*"
+                type="number"
                 class="form-input"
-                (change)="onImagenSeleccionada($event)"
-              />
-              @if (nuevaPromocion().imagen) {
-                <div class="imagen-preview">
-                  <img
-                    [src]="nuevaPromocion().imagen"
-                    [alt]="nuevaPromocion().nombre || 'Imagen de promoción'"
-                  />
-                </div>
-              }
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Precio Actual</label>
-              <input 
-                type="number" 
-                class="form-input" 
-                [(ngModel)]="nuevaPromocion().precioActual"
-                name="precioActual"
-                [ngModelOptions]="{updateOn: 'change'}"
-              />
-            </div>
-            <div class="form-group">
-              <label>Precio Promoción</label>
-              <input 
-                type="number" 
-                class="form-input" 
-                [(ngModel)]="nuevaPromocion().precioPromocion"
-                name="precioPromocion"
-                [ngModelOptions]="{updateOn: 'change'}"
-              />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Puntos Asignados</label>
-              <input 
-                type="number" 
-                class="form-input" 
                 [(ngModel)]="nuevaPromocion().puntosAsignados"
                 name="puntosAsignados"
-                [ngModelOptions]="{updateOn: 'change'}"
+                min="1"
               />
             </div>
+          </div>
+
+          <div class="precio-preview">
+            <p class="precio-preview-titulo">
+              Precio con descuento:
+              <strong>S/ {{ calcularPrecioConDescuento(nuevaPromocion().precioActual, nuevaPromocion().descuentoPorcentaje) }}</strong>
+            </p>
+            <p class="precio-preview-detalle">
+              S/ {{ nuevaPromocion().precioActual }} menos {{ nuevaPromocion().descuentoPorcentaje }}%
+              (ahorras S/ {{ (nuevaPromocion().precioActual - calcularPrecioConDescuento(nuevaPromocion().precioActual, nuevaPromocion().descuentoPorcentaje)) | number:'1.2-2' }})
+            </p>
           </div>
         </form>
 
         <div class="modal-acciones">
           <button class="btn-secondary" (click)="cerrarModalDetalles()">Cancelar</button>
-          <button class="btn-promocion" (click)="guardarPromocion()">Añadir Promoción</button>
+          <button class="btn-promocion" (click)="guardarPromocion()">
+            {{ promocionSeleccionada() ? 'Guardar cambios' : 'Crear promoción' }}
+          </button>
         </div>
       </div>
     </div>

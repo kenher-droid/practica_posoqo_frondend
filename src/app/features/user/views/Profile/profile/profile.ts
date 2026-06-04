@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RestauranteApiService } from '../../../../../core/services/restaurante-api.service';
 
 interface TransaccionPuntos {
   id: number;
@@ -15,28 +16,33 @@ interface TransaccionPuntos {
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
-export class Profile {
+export class Profile implements OnInit {
   stampGoal = 12;
+  puntosCliente = signal(0);
 
-  transacciones = signal<TransaccionPuntos[]>([
-    {
-      id: 1,
-      tipo: 'suma',
-      cantidad: 30,
-      razon: 'Compra de Combo familiar',
-      fecha: new Date('2026-05-28T15:20:00')
-    },
-    {
-      id: 2,
-      tipo: 'resta',
-      cantidad: 18,
-      razon: 'Canje por Refresco 1L',
-      fecha: new Date('2026-05-29T13:40:00')
-    }
-  ]);
+  transacciones = signal<TransaccionPuntos[]>([]);
+
+  constructor(private readonly restauranteApi: RestauranteApiService) {}
+
+  ngOnInit(): void {
+    this.restauranteApi.miCliente().subscribe({
+      next: (cliente) => this.puntosCliente.set(cliente.puntos)
+    });
+    this.restauranteApi.miHistorial().subscribe({
+      next: (historial) => {
+        this.transacciones.set(historial.map((item) => ({
+          id: item.id,
+          tipo: item.tipo === 'resta' || item.tipo === 'canje' ? 'resta' : 'suma',
+          cantidad: item.puntos,
+          razon: item.descripcion ?? item.tipo,
+          fecha: new Date(item.fecha)
+        })));
+      }
+    });
+  }
 
   pointsTotal(): number {
-    return this.transacciones().reduce((sum, transaccion) => {
+    return this.puntosCliente() || this.transacciones().reduce((sum, transaccion) => {
       return sum + (transaccion.tipo === 'suma' ? transaccion.cantidad : -transaccion.cantidad);
     }, 0);
   }
@@ -73,4 +79,3 @@ registrarMovimiento(tipo: 'suma' | 'resta', cantidad: number, razon: string) {
   this.transacciones.update((listaActual) => [nuevaTransaccion, ...listaActual]);
 }
 }
-

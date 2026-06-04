@@ -101,13 +101,15 @@
           </div>
           <div class="admin-form-group">
             <label>Subcategoría</label>
-            <input
-              type="text"
+            <select
               class="admin-modal-input"
-              placeholder="Subcategoría"
-              [(ngModel)]="nuevaSubcategoria"
+              [(ngModel)]="nuevaSubcategoriaId"
               name="subcategoriaComida"
-            />
+            >
+              @for (subcategoria of subcategoriasDisponibles; track subcategoria.id) {
+                <option [ngValue]="subcategoria.id">{{ subcategoria.nombre }}</option>
+              }
+            </select>
           </div>
         </div>
 

@@ -3,28 +3,33 @@
   <h1>Regístrate</h1>
   <p class="auth-card__subtitle">Regístrate para comenzar a acumular puntos y ordenar con POSOQO.</p>
 
-  <form class="auth-form" autocomplete="off">
+  <form class="auth-form" autocomplete="off" (ngSubmit)="submit()">
     <label>
       <span>Nombre completo</span>
-      <input type="text" placeholder="Tu nombre completo" />
+      <input type="text" placeholder="Tu nombre completo" [(ngModel)]="nombre" name="nombre" required />
     </label>
     <label>
       <span>Fecha de Nacimiento</span>
-      <input type="date" placeholder="Fecha de nacimiento" />
+      <input type="date" placeholder="Fecha de nacimiento" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" required />
     </label>
     <label>
       <span>Correo electronico</span>
-      <input type="email" placeholder="tunombre@correo.com" />
+      <input type="email" placeholder="tunombre@correo.com" [(ngModel)]="email" name="email" />
     </label>
     <label>
       <span>Telefono</span>
-      <input type="tel" placeholder="987654321" />
+      <input type="tel" placeholder="987654321" [(ngModel)]="telefono" name="telefono" required />
     </label>
     <label>
       <span>Contraseña</span>
-      <input type="password" placeholder="••••••••" />
+      <input type="password" placeholder="••••••••" [(ngModel)]="password" name="password" required />
     </label>
-    <button type="submit" class="auth-submit">CREAR CUENTA</button>
+    @if (error) {
+      <p class="auth-error">{{ error }}</p>
+    }
+    <button type="submit" class="auth-submit" [disabled]="loading">
+      {{ loading ? 'CREANDO...' : 'CREAR CUENTA' }}
+    </button>
   </form>
 
   <div class="auth-card__footer auth-card__footer--centered">

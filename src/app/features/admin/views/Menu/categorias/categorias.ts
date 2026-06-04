@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RestauranteApiService } from '../../../../../core/services/restaurante-api.service';
 
 interface SubCategoria {
   id: number;
@@ -21,32 +22,9 @@ interface Categoria {
   templateUrl: './categorias.html',
   styleUrl: './categorias.css',
 })
-export class CategoriasComponent {
-  categorias = signal<Categoria[]>([
-    {
-      id: 1,
-      nombre: 'Bebidas',
-      expandida: true,
-      subCategorias: [
-        { id: 1, nombre: 'Vinos' },
-        { id: 2, nombre: 'Cervezas' },
-        { id: 3, nombre: 'Batidos' },
-        { id: 4, nombre: 'Chichas' },
-        { id: 5, nombre: 'Vodka' },
-      ],
-    },
-    {
-      id: 2,
-      nombre: 'Alimentos',
-      expandida: true,
-      subCategorias: [
-        { id: 6, nombre: 'Hamburguesas' },
-        { id: 7, nombre: 'Pizzas' },
-        { id: 8, nombre: 'Aeropuerto' },
-        { id: 9, nombre: 'Ceviches' },
-      ],
-    },
-  ]);
+export class CategoriasComponent implements OnInit {
+  categorias = signal<Categoria[]>([]);
+  error = signal('');
 
   categoriaSeleccionada = signal<Categoria | null>(null);
   categoriaParaEliminar = signal<Categoria | null>(null);
@@ -59,6 +37,36 @@ export class CategoriasComponent {
 
   nuevoNombre = signal('');
   nuevoSubNombre = signal('');
+
+  constructor(private readonly restauranteApi: RestauranteApiService) {}
+
+  ngOnInit(): void {
+    this.cargarCategorias();
+  }
+
+  cargarCategorias(): void {
+    this.restauranteApi.listarCategorias().subscribe({
+      next: (categorias) => {
+        this.restauranteApi.listarSubcategorias().subscribe({
+          next: (subcategorias) => {
+            this.categorias.set(categorias.map((categoria) => ({
+              id: categoria.id,
+              nombre: categoria.nombre,
+              expandida: true,
+              subCategorias: subcategorias
+                .filter((subcategoria) => subcategoria.id_categoria === categoria.id)
+                .map((subcategoria) => ({
+                  id: subcategoria.id,
+                  nombre: subcategoria.nombre
+                }))
+            })));
+          },
+          error: () => this.error.set('No se pudieron cargar las subcategorias.')
+        });
+      },
+      error: () => this.error.set('No se pudieron cargar las categorias.')
+    });
+  }
 
   toggleExpandir(index: number): void {
     const nuevas = [...this.categorias()];
@@ -82,15 +90,18 @@ export class CategoriasComponent {
       return;
     }
 
-    const nuevaCategoria: Categoria = {
-      id: Math.max(...this.categorias().map((c) => c.id), 0) + 1,
-      nombre,
-      expandida: true,
-      subCategorias: [],
-    };
-
-    this.categorias.set([...this.categorias(), nuevaCategoria]);
-    this.cerrarModalAgregarCategoria();
+    this.restauranteApi.crearCategoria(nombre).subscribe({
+      next: (categoria) => {
+        this.categorias.set([...this.categorias(), {
+          id: categoria.id,
+          nombre: categoria.nombre,
+          expandida: true,
+          subCategorias: []
+        }]);
+        this.cerrarModalAgregarCategoria();
+      },
+      error: () => this.error.set('No se pudo crear la categoria.')
+    });
   }
 
   abrirModalAgregarSubcategoria(categoria: Categoria): void {
@@ -116,12 +127,18 @@ export class CategoriasComponent {
     const indice = nuevas.findIndex((c) => c.id === categoria.id);
 
     if (indice >= 0) {
-      const nuevaSubCategoria: SubCategoria = {
-        id: Math.max(...nuevas[indice].subCategorias.map((s) => s.id), 0) + 1,
-        nombre,
-      };
-      nuevas[indice].subCategorias = [...nuevas[indice].subCategorias, nuevaSubCategoria];
-      this.categorias.set(nuevas);
+      this.restauranteApi.crearSubcategoria(nombre, categoria.id).subscribe({
+        next: (subcategoria) => {
+          nuevas[indice].subCategorias = [...nuevas[indice].subCategorias, {
+            id: subcategoria.id,
+            nombre: subcategoria.nombre
+          }];
+          this.categorias.set(nuevas);
+          this.cerrarModalAgregarSubcategoria();
+        },
+        error: () => this.error.set('No se pudo crear la subcategoria.')
+      });
+      return;
     }
 
     this.cerrarModalAgregarSubcategoria();
@@ -143,8 +160,13 @@ export class CategoriasComponent {
       return;
     }
 
-    this.categorias.set(this.categorias().filter((c) => c.id !== categoria.id));
-    this.cerrarModalEliminarCategoria();
+    this.restauranteApi.eliminarCategoria(categoria.id).subscribe({
+      next: () => {
+        this.categorias.set(this.categorias().filter((c) => c.id !== categoria.id));
+        this.cerrarModalEliminarCategoria();
+      },
+      error: () => this.error.set('No se pudo eliminar la categoria.')
+    });
   }
 
   abrirModalEliminarSubcategoria(categoria: Categoria, subcategoria: SubCategoria): void {
@@ -163,15 +185,19 @@ export class CategoriasComponent {
       return;
     }
 
-    const nuevas = [...this.categorias()];
-    const indice = nuevas.findIndex((c) => c.id === info.categoriaId);
-    if (indice >= 0) {
-      nuevas[indice].subCategorias = nuevas[indice].subCategorias.filter(
-        (s) => s.id !== info.subcategoria.id
-      );
-      this.categorias.set(nuevas);
-    }
-
-    this.cerrarModalEliminarSubcategoria();
+    this.restauranteApi.eliminarSubcategoria(info.subcategoria.id).subscribe({
+      next: () => {
+        const nuevas = [...this.categorias()];
+        const indice = nuevas.findIndex((c) => c.id === info.categoriaId);
+        if (indice >= 0) {
+          nuevas[indice].subCategorias = nuevas[indice].subCategorias.filter(
+            (s) => s.id !== info.subcategoria.id
+          );
+          this.categorias.set(nuevas);
+        }
+        this.cerrarModalEliminarSubcategoria();
+      },
+      error: () => this.error.set('No se pudo eliminar la subcategoria.')
+    });
   }
 }

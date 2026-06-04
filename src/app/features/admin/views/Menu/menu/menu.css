@@ -1,15 +1,16 @@
 .menu-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   height: 100%;
+  margin-top: -0.75rem;
 }
 
 /* Sección de botones principales */
 .menu-tabs {
   position: sticky;
-  top: calc(80px + 20px);
-  z-index: 15;
+  top: 0;
+  z-index: 25;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
