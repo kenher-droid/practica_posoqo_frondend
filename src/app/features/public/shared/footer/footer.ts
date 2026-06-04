@@ -34,9 +34,9 @@ abrirMapa() {
   ];
 
   informacion = [
-    { nombre: 'Terminos y condiciones', ruta: '/terminos' },
-    { nombre: 'Politicas de reservas', ruta: '/reservas' },
-    { nombre: 'Libro de reclamaciones', ruta: '/reclamos' }
+    { nombre: 'Terminos y condiciones', ruta: '/terminos-condiciones' },
+    { nombre: 'Politicas de privacidad', ruta: '/terminos-condiciones' },
+    { nombre: 'Politicas de seguridad', ruta: '/terminos-condiciones' }
   ];
 
   sobreNosotros = [
