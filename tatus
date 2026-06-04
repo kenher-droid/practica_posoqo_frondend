@@ -1,0 +1,79 @@
+[1mdiff --git a/src/app/app.config.ts b/src/app/app.config.ts[m
+[1mindex 3812a65..d27614b 100644[m
+[1m--- a/src/app/app.config.ts[m
+[1m+++ b/src/app/app.config.ts[m
+[36m@@ -1,15 +1,16 @@[m
+ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';[m
+ import { provideRouter } from '@angular/router';[m
+[31m-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';[m
+[32m+[m[32mimport { provideHttpClient, withInterceptors } from '@angular/common/http';[m
+ [m
+ import { routes } from './app.routes';[m
+ import { provideClientHydration, withEventReplay } from '@angular/platform-browser';[m
+[32m+[m[32mimport { authInterceptor } from './core/services/auth.interceptor';[m
+ [m
+ export const appConfig: ApplicationConfig = {[m
+   providers: [[m
+     provideBrowserGlobalErrorListeners(),[m
+     provideRouter(routes),[m
+[31m-    provideHttpClient(withInterceptorsFromDi()),[m
+[32m+[m[32m    provideHttpClient(withInterceptors([authInterceptor])),[m
+     provideClientHydration(withEventReplay())[m
+   ][m
+ };[m
+[1mdiff --git a/src/app/app.routes.ts b/src/app/app.routes.ts[m
+[1mindex a488a73..8c55549 100644[m
+[1m--- a/src/app/app.routes.ts[m
+[1m+++ b/src/app/app.routes.ts[m
+[36m@@ -6,7 +6,11 @@[m [mimport { USER_ROUTES } from './features/user/user.routes';[m
+ export const routes: Routes = [[m
+   {[m
+     path: '',[m
+[31m-    loadComponent: () => import('./features/public/layout/public-layout').then(m => m.PublicLayout)[m
+[32m+[m[32m    loadComponent: () => import('./features/public/layout/public-layout').then(m => m.PublicLayout),[m
+[32m+[m[32m    children: [[m
+[32m+[m[32m      { path: 'cartas', loadComponent: () => import('./features/public/shared/sections/carta/carta').then(m => m.Carta) },[m
+[32m+[m[32m      { path: 'eventos', loadComponent: () => import('./features/public/shared/sections/eventos/eventos').then(m => m.PublicEventos) }[m
+[32m+[m[32m    ][m
+   },[m
+   {[m
+     path: 'admin',[m
+[1mdiff --git a/src/app/features/admin/layout/admin-layout/admin-layout.ts b/src/app/features/admin/layout/admin-layout/admin-layout.ts[m
+[1mindex 41487a3..5c8abc0 100644[m
+[1m--- a/src/app/features/admin/layout/admin-layout/admin-layout.ts[m
+[1m+++ b/src/app/features/admin/layout/admin-layout/admin-layout.ts[m
+[36m@@ -1,5 +1,5 @@[m
+[31m-import { Component } from '@angular/core';[m
+[31m-import { RouterModule, Router } from "@angular/router";[m
+[32m+[m[32mimport { Component, inject } from '@angular/core';[m
+[32m+[m[32mimport { RouterModule, Router } from '@angular/router';[m
+ import { CommonModule } from '@angular/common';[m
+ [m
+ @Component({[m
+[36m@@ -10,11 +10,14 @@[m [mimport { CommonModule } from '@angular/common';[m
+   styleUrl: './admin-layout.css',[m
+ })[m
+ export class AdminLayout {[m
+[31m-  constructor(private router: Router) {}[m
+[32m+[m[32m  private readonly router = inject(Router);[m
+ [m
+   logout(): void {[m
+[31m-    // TODO: Limpiar sesión y tokens[m
+[31m-    console.log('Cerrando sesión...');[m
+[32m+[m[32m    localStorage.removeItem('access_token');[m
+[32m+[m[32m    localStorage.removeItem('token_type');[m
+[32m+[m[32m    localStorage.removeItem('id_rol');[m
+[32m+[m[32m    localStorage.removeItem('id_usuario');[m
+[32m+[m[32m    localStorage.removeItem('usuario');[m
+     this.router.navigate(['/auth/login']);[m
+   }[m
+ }[m
+[1mdiff --git a/src/app/features/admin/views/Eventos/eventos/eventos.ts b/src/app/features/admin/views/Eventos/eventos/eventos.ts[m
+[1mindex 2bcc2c4..05170b9 100644[m
+[1m--- a/src/app/features/admin/views/Eventos/eventos/eventos.ts[m
+[1m+++ b/src/app/features/admin/views/Eventos/eventos/eventos.ts[m
+[36m@@ -1,6 +1,9 @@[m
+[31m-import { Component, signal } from '@angular/core';[m
+[31m-import { CommonModule } from '@angular/common';[m
+[32m+[m[32mimport { Component, signal, OnInit, inject, PLATFORM_ID } from '@angular/core';[m
+[32m+[m[32mimport { CommonModule, isPlatformBrowser } from '@angular/common';[m
