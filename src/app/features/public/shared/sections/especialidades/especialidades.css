@@ -1,26 +1,116 @@
-/* Especialidades carousel styles */
-@media (max-width: 768px) {
-  .w-\[320px\] {
-    width: 280px !important;
-  }
-
-  h2 {
-    font-size: 2.5rem !important;
-    margin-left: 0 !important;
-    text-align: center !important;
-  }
+/* --- Contenedor e Inyecciones de Texto de la Sección --- */
+.fidelidad-section {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  font-family: sans-serif;
+  color: #1e2d4a;
 }
 
-@media (max-width: 480px) {
-  .w-\[320px\] {
-    width: 250px !important;
+.titulo-principal {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 2.5rem;
+}
+
+.texto-amarillo {
+  color: #e5be22;
+}
+
+/* --- Gran Contenedor Blanco Central --- */
+.tarjeta-blanca-contenedor {
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+/* --- Bloque Izquierdo (Imagen) --- */
+.bloque-izquierdo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.subtitulo-amarillo {
+  color: #e5be22;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.contenedor-imagen-dinamica {
+  width: 100%;
+  height: 380px;
+  border-radius: 4px; /* Casi rectangular o con esquinas muy leves según la imagen */
+  overflow: hidden;
+}
+
+.imagen-fidelidad {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease-in-out; /* Transición suave al cambiar de foto */
+}
+
+/* --- Bloque Derecho (Botones / Pasos) --- */
+.bloque-derecho {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.boton-paso {
+  background-color: transparent;
+  border: 2.5px solid transparent; /* Reservamos espacio para evitar saltos de layout */
+  border-radius: 18px;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Estado normal de los textos dentro de los botones */
+.boton-paso p {
+  color: #000000;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Hover: Se activa sutilmente */
+.boton-paso:hover {
+  border-color: #e5be22;
+  background-color: rgba(229, 190, 34, 0.03);
+}
+
+/* Estado Activo (Al hacer Click / Selección fija) */
+.boton-paso.paso-activo {
+  border-color: #e5be22;
+  background-color: #ffffff;
+  box-shadow: 0 6px 15px rgba(229, 190, 34, 0.1);
+}
+
+/* --- Responsive (Adaptabilidad Móvil) --- */
+@media (max-width: 992px) {
+  .tarjeta-blanca-contenedor {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem;
   }
 
-  h2 {
-    font-size: 2rem !important;
+  .contenedor-imagen-dinamica {
+    height: 280px;
   }
 
-  .gap-6 {
-    gap: 1rem !important;
+  .titulo-principal {
+    font-size: 2rem;
+    text-align: center;
   }
 }

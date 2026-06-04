@@ -1,92 +1,90 @@
-.container-nosotros {
+/* --- Contenedor Principal Dividido --- */
+.seccion-visitanos {
   display: grid;
-  /* Creamos dos columnas iguales: una para el área amarilla y otra para la blanca */
-  grid-template-columns: 1fr 1fr; 
-  align-items: center;
-  min-height:50vh; /* Centrado vertical en toda la pantalla */
+  grid-template-columns: 1fr 1fr; /* Mitad mapa, mitad texto */
   width: 100%;
-  padding: 0; /* Quitamos el padding lateral para que el fondo llegue a los bordes */
-
-  /* 🔥 agregado */
-  grid-template-areas: "imagen texto";
-}
-
-.texto-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  z-index: 2;
-  text-align: center;
-
-  /* 🔥 agregado */
-  grid-area: texto;
-}
-
-.titulo {
-  font-family: 'Arial Black', sans-serif;
-  font-size: 3.5rem;
-  font-weight: 900;
-  margin-bottom: 1.5rem;
-  color: #000;
-  line-height: 1;
-}
-
-.descripcion {
+  min-height: 50vh; /* Ajuste perfecto de altura horizontal */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
   font-family: sans-serif;
-  font-size: 1.5rem;
-  font-weight: 300;
-  max-width: 450px;
-  line-height: 1.4;
-  color: #1a1a1a;
 }
 
-.imagen-col {
-  display: grid;
-  place-items: center;
-  padding: 2rem;
-
-  /* 🔥 agregado */
-  grid-area: imagen;
-}
-
-.foto-curva {
+/* --- Bloque del Mapa Real --- */
+.bloque-mapa {
   width: 100%;
-  max-width: 400px; 
-  height: 400px;
-
-  background-image: url('/assets/backgrounds/plaza.jpg');
-  background-size: cover;
-  background-position: center;
-  
-  border-radius: 25px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+  height: 100%;
+  min-height: 450px; /* Evita que colapse la altura */
 }
 
-.foto-curva:hover {
-  transform: scale(1.03);
+.bloque-mapa iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* --- RESPONSIVO PARA MÓVIL --- */
-@media (max-width: 992px) {
-  .container-nosotros {
-    grid-template-columns: 1fr;
-    padding: 4rem 1rem;
+/* --- Bloque de Información Amarillo --- */
+.bloque-informacion {
+  background-color: #e5be22; /* Amarillo corporativo exacto de la imagen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  width: 100%;
+  height: 100%;
+}
 
-    /* opcional: orden en móvil */
-    grid-template-areas:
-      "imagen"
-      "texto";
-  }
-  
-  .titulo {
-    font-size: 2.5rem;
+.contenido-texto {
+  max-width: 400px;
+  text-align: center;
+}
+
+/* --- Estilos de Texto --- */
+.titulo-visitanos {
+  color: #000000;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.direccion-texto {
+  color: #000000;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --- Adaptabilidad para Pantallas Móviles --- */
+@media (max-width: 768px) {
+  .seccion-visitanos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 60vh; /* Cambiado de 50vh a 60vh para emparejar con tu contenedor superior */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+  .bloque-mapa {
+    height: 300px;
+    min-height: 300px;
   }
 
-  .foto-curva {
-    max-width: 320px;
-    height: 320px;
+  .bloque-informacion {
+    padding: 4rem 1.5rem;
+  }
+
+  .titulo-visitanos {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .direccion-texto {
+    font-size: 1.15rem;
   }
 }

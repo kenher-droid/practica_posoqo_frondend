@@ -1,0 +1,17 @@
+<div class="menu-section">
+  <h2 class="titulo-menu">
+    Disfruta de su <span class="texto-amarillo">variedad de platos</span> <br>
+    y combos pensados para tu paladar
+  </h2>
+
+  <div class="grid-platos">
+    @for (plato of listaPlatos; track plato.id) {
+      <div class="tarjeta-plato">
+        <div class="contenedor-imagen">
+          <img [src]="plato.imagen" [alt]="plato.nombre" class="imagen-menu">
+        </div>
+        <h3 class="nombre-plato">{{ plato.nombre }}</h3>
+      </div>
+    }
+  </div>
+</div>

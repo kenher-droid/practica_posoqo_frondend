@@ -8,8 +8,7 @@
   overflow: hidden;
 }
 
-.hero::before,
-.hero_2::before {
+.hero::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -18,19 +17,18 @@
   z-index: 0;
 }
 
-.hero > *,
-.hero_2 > * {
+.hero > *{
   position: relative;
   z-index: 1;
 }
 
+/* Limpiamos estilos antiguos y aplicamos el color crema plano exacto del diseño */
 .hero_2 {
-  min-height: 100vh;
   width: 100%;
-  background-image: url('/assets/backgrounds/background_2.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  min-height: auto;
+  background-color: #f3f2e8; /* Fondo crema idéntico a la imagen */
+  padding: 4rem 1.5rem;
+  box-sizing: border-box;
   position: relative;
   display: flex;
   justify-content: center;
@@ -38,38 +36,33 @@
   overflow: hidden;
 }
 
-.hero_color {
-  min-height: 60vh;
-  background: #f5f5f5;
-  position: relative;
-  overflow: hidden;
-  z-index: 0;
-}
+/* NOTA: Se borró el selector .hero_2::before para limpiar los gradientes oscuros */
 
-.hero_color::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #e0b800;
-  clip-path: polygon(0 0, 50% 0, 45% 100%, 0 100%);
-  z-index: -1;
+.especialidades-section {
+  background-color: #f3f2e8; /* El color crema de fondo */
+  padding: 5rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 .hero_color_2 {
-  min-height: 60vh;
-  background: #f5f5f5;
+  width: 100%;
+  min-height: auto;
   position: relative;
   overflow: hidden;
   z-index: 0;
+  display: block;
 }
 
-.hero_color_2::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #e0b800;
-  clip-path: polygon(0 0, 50% 0, 45% 100%, 0 100%);
-  z-index: -1;
+.platos {
+  width: 100%;
+  background-color: #f3f2e8; /* Mismo fondo crema de las secciones anteriores */
+  padding: 5rem 2rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Responsive adjustments */

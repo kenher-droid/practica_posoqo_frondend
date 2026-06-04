@@ -1,0 +1,86 @@
+/* --- Contenedor de la Sección --- */
+.menu-section {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  font-family: sans-serif;
+  color: #1e2d4a; /* Azul oscuro texturizado */
+}
+
+/* --- Títulos --- */
+.titulo-menu {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 3.5rem;
+  text-align: left;
+}
+
+.texto-amarillo {
+  color: #e5be22; /* Amarillo/Dorado idéntico */
+}
+
+/* --- Grid de 2 Columnas como en la foto --- */
+.grid-platos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem; /* Espaciado entre tarjetas */
+}
+
+/* --- Tarjeta Blanca --- */
+.tarjeta-plato {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.tarjeta-plato:hover {
+  transform: translateY(-5px); /* Efecto sutil al pasar el mouse */
+}
+
+/* Contenedor cuadrado interno para la imagen */
+.contenedor-imagen {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Lo hace perfectamente cuadrado */
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.imagen-menu {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Texto del Plato */
+.nombre-plato {
+  color: #8c7e1e; /* Verde oliva/dorado oscuro del texto */
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --- Responsive (Móvil) --- */
+@media (max-width: 600px) {
+  .grid-platos {
+    grid-template-columns: 1fr; /* Pasa a 1 sola columna en celulares pequeños si es necesario */
+    gap: 1.5rem;
+  }
+
+  .titulo-menu {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .nombre-plato {
+    font-size: 1.4rem;
+  }
+}

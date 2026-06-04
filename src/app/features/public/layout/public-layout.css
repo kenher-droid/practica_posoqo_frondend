@@ -12,6 +12,7 @@ html {
 /* Ensure proper stacking context */
 app-header {
   display: block;
+  width: 100%;
   position: relative;
   z-index: 1000;
   background: #E1BE21;

@@ -1,66 +1,45 @@
-import { Component, input, signal, computed } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 
-export interface CarouselItem {
-  title: string;
-  image: string;
+interface PasosFidelidad {
+  subtitulo: string;
+  imagen: string;
 }
 
 @Component({
   selector: 'app-especialidades',
-  standalone: true, // Asegúrate de tenerlo si no usas NgModules
+  standalone: true,
   imports: [],
   templateUrl: './especialidades.html',
   styleUrl: './especialidades.css',
 })
 export class Especialidades {
-  items = input<CarouselItem[]>([
-    { title: 'Pollo a la braza', image: 'https://picsum.photos/id/102/800/600' },
-    { title: 'Cervezas', image: 'https://picsum.photos/id/225/800/600' },
-    { title: 'Hamburguesas', image: 'https://picsum.photos/id/493/800/600' },
-    { title: 'Pizzas', image: 'https://picsum.photos/id/292/800/600' },
-    { title: 'Postres', image: 'https://picsum.photos/id/102/800/600' }
-  ]);
+  // Guardamos el índice del paso activo (0, 1 o 2)
+  pasoActual = signal<number>(0);
 
-  currentIndex = signal(0);
+  // Definimos la información vinculada a cada paso del lado derecho
+  private pasosData: PasosFidelidad[] = [
+    { 
+      subtitulo: 'Cada orden suma.', 
+      imagen: '/assets/extras/alitas.png' 
+    },
+    { 
+      subtitulo: '¡Suma en la app o local!', 
+      imagen: '/assets/extras/cerveza_artesanal.png' 
+    },
+    { 
+      subtitulo: 'Canjea tus premios.', 
+      imagen: '/assets/extras/hamburguesa.png' 
+    }
+  ];
 
-  private readonly CARD_WIDTH = 400; 
-  private readonly GAP = 24;
+  // Devuelve la imagen correspondiente al paso actual
+  imagenActiva = computed(() => this.pasosData[this.pasoActual()].imagen);
 
-  maxScroll = computed(() => {
+  // Devuelve el subtítulo correspondiente al paso actual
+  subtituloActivo = computed(() => this.pasosData[this.pasoActual()].subtitulo);
 
-    return Math.max(0, this.items().length - 1);
-  });
-
-  transform = computed(() => {
-    const offset = this.currentIndex() * (this.CARD_WIDTH + this.GAP);
-    return `translateX(-${offset}px)`;
-  });
-
-
-  next() {
-    this.currentIndex.update(idx => {
-
-      if (idx >= this.maxScroll()) {
-        return 0;
-      }
-      return idx + 1;
-    });
-  }
-
-  prev() {
-    this.currentIndex.update(idx => {
-      // Si estamos en la primera y damos atrás, vamos a la última posición de scroll
-      if (idx <= 0) {
-        return this.maxScroll();
-      }
-      return idx - 1;
-    });
-  }
-
-  goTo(idx: number) {
-    // Si el usuario hace clic en un punto muy lejano, 
-    // lo limitamos al scroll máximo permitido
-    const target = idx > this.maxScroll() ? this.maxScroll() : idx;
-    this.currentIndex.set(target);
+  // Cambia el paso activo al hacer click
+  cambiarPaso(indice: number): void {
+    this.pasoActual.set(indice);
   }
 }
