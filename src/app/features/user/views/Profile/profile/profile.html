@@ -11,13 +11,13 @@
     <div class="points-block">
       @for (stamp of filledStamps(); track stamp.id) {
         <div class="points-stamp-container">
-          <img src="/assets/icons/punto_icon.png" alt="Sello obtenido" loading="lazy" class="stamp-img">
+          <img src="/assets/icons/punto_icon.webp" alt="Sello obtenido" loading="lazy" class="stamp-img">
         </div>
       }
 
       @for (stamp of emptyStamps(); track stamp.id) {
         <div class="points-stamp-container points-stamp-container--empty">
-          <img src="/assets/icons/punto_icon.png" alt="Sello vacío" loading="lazy" class="stamp-img">
+          <img src="/assets/icons/punto_icon.webp" alt="Sello vacío" loading="lazy" class="stamp-img">
         </div>
       }
     </div>
