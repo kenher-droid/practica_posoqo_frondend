@@ -30,9 +30,9 @@
     <div class="footer-col">
       <h2 class="col-title">Informacion</h2>
       <ul class="col-list">
-        @for (item of informacion; track item.nombre) {
-          <li><a [routerLink]="item.ruta" class="footer-link">{{ item.nombre }}</a></li>
-        }
+        <li><a routerLink="/terminos-condiciones" [queryParams]="{ tab: 'terminos' }" class="footer-link">Terminos y condiciones</a></li>
+        <li><a routerLink="/terminos-condiciones" [queryParams]="{ tab: 'privacidad' }" class="footer-link">Politicas de privacidad</a></li>
+        <li><a routerLink="/terminos-condiciones" [queryParams]="{ tab: 'seguridad' }" class="footer-link">Politicas de seguridad</a></li>
       </ul>
     </div>
 

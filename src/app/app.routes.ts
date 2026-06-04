@@ -9,6 +9,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/public/layout/public-layout').then(m => m.PublicLayout)
   },
   {
+    path: 'terminos-condiciones',
+    loadComponent: () => import('./features/public/shared/terms-and-conditions').then(m => m.TermsAndConditions),
+    data: { title: 'Términos y Condiciones' }
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./features/admin/layout/admin-layout/admin-layout').then(m => m.AdminLayout),
     children: ADMIN_ROUTES

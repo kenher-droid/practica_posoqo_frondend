@@ -4,7 +4,7 @@
   max-width: 1140px;
   margin: 0 auto;
   font-family: sans-serif;
-  color: #1e2d4a; /* Azul oscuro texturizado */
+  color: #1e2d4a;
 }
 
 /* --- Títulos --- */
@@ -17,22 +17,22 @@
 }
 
 .texto-amarillo {
-  color: #e5be22; /* Amarillo/Dorado idéntico */
+  color: #e5be22;
 }
 
-/* --- Grid de 2 Columnas como en la foto --- */
+/* --- Grid de 2 Columnas --- */
 .grid-platos {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem; /* Espaciado entre tarjetas */
+  gap: 2.5rem;
 }
 
-/* --- Tarjeta Blanca --- */
+/* --- Tarjeta Blanca ORIGINAL (Recuperada y Asegurada) --- */
 .tarjeta-plato {
-  background-color: #ffffff;
-  border-radius: 20px;
+  background-color: #ffffff; /* Aseguramos el fondo blanco */
+  border-radius: 20px;       /* Recuperamos bordes redondeados */
   padding: 2rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03); /* Recuperamos la sombra sutil */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,13 +42,13 @@
 }
 
 .tarjeta-plato:hover {
-  transform: translateY(-5px); /* Efecto sutil al pasar el mouse */
+  transform: translateY(-5px);
 }
 
-/* Contenedor cuadrado interno para la imagen */
+/* Contenedor cuadrado interno para la imagen (Recuperado) */
 .contenedor-imagen {
   width: 100%;
-  aspect-ratio: 1 / 1; /* Lo hace perfectamente cuadrado */
+  aspect-ratio: 1 / 1;
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 1.5rem;
@@ -60,18 +60,76 @@
   object-fit: cover;
 }
 
-/* Texto del Plato */
+/* Texto del Plato ORIGINAL (Recuperado y Estilizado) */
 .nombre-plato {
-  color: #8c7e1e; /* Verde oliva/dorado oscuro del texto */
+  color: #8c7e1e; /* Recuperamos el color oliva/dorado */
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0;
 }
 
-/* --- Responsive (Móvil) --- */
+/* --- Sección Delivery por WhatsApp (Mantenida como solicitaste) --- */
+.promocion-delivery {
+  margin-top: 5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+  border: 2px dashed #e5be22;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  text-align: center;
+}
+
+.contenido-delivery {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.titulo-delivery {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1e2d4a;
+  margin-bottom: 1rem;
+}
+
+.texto-delivery {
+  font-size: 1.1rem;
+  color: #5a6b82;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+/* Botón interactivo de WhatsApp */
+.boton-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  background-color: #25d366;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+  transition: all 0.3s ease;
+}
+
+.boton-whatsapp:hover {
+  background-color: #20ba5a;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+}
+
+.icono-wsp {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* --- Ajuste Responsive --- */
 @media (max-width: 600px) {
   .grid-platos {
-    grid-template-columns: 1fr; /* Pasa a 1 sola columna en celulares pequeños si es necesario */
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
@@ -82,5 +140,25 @@
 
   .nombre-plato {
     font-size: 1.4rem;
+  }
+
+  .promocion-delivery {
+    margin-top: 3.5rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .titulo-delivery {
+    font-size: 1.4rem;
+  }
+
+  .texto-delivery {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .boton-whatsapp {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
   }
 }

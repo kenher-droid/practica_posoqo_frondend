@@ -20,15 +20,15 @@ export class Especialidades {
   private pasosData: PasosFidelidad[] = [
     { 
       subtitulo: 'Cada orden suma.', 
-      imagen: '/assets/extras/alitas.png' 
+      imagen: '/assets/extras/alitas.webp' 
     },
     { 
       subtitulo: '¡Suma en la app o local!', 
-      imagen: '/assets/extras/cerveza_artesanal.png' 
+      imagen: '/assets/extras/cerveza_artesanal.webp' 
     },
     { 
       subtitulo: 'Canjea tus premios.', 
-      imagen: '/assets/extras/hamburguesa.png' 
+      imagen: '/assets/extras/hamburguesa.webp' 
     }
   ];
 

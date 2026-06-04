@@ -1,0 +1,161 @@
+<div class="terms-container">
+  <div class="terms-header">
+    <div class="header-top">
+      <button class="back-btn" (click)="goBack()" title="Volver a inicio">
+        <span class="arrow">&larr;</span> Volver
+      </button>
+    </div>
+    <h1>Términos, Condiciones y Políticas de Seguridad</h1>
+    <p class="subtitle">Cervecería Artesanal POSOQO - Protegiendo tu experiencia</p>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="tabs-navigation">
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'terminos'"
+      (click)="selectTab('terminos')">
+      Términos y Condiciones
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'puntos'"
+      (click)="selectTab('puntos')">
+      Política de Puntos
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'cookies'"
+      (click)="selectTab('cookies')">
+      Cookies
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'privacidad'"
+      (click)="selectTab('privacidad')">
+      Privacidad y Datos
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'seguridad'"
+      (click)="selectTab('seguridad')">
+      Seguridad
+    </button>
+  </div>
+
+  <!-- Content Sections -->
+  <div class="tabs-content">
+    
+    <!-- Términos y Condiciones Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'terminos'">
+      <h2>{{ terminosData.title }}</h2>
+      <div class="sections">
+        <div class="section" *ngFor="let section of terminosData.sections">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.content }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Política de Puntos Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'puntos'">
+      <h2>{{ puntosData.title }}</h2>
+      <div class="sections">
+        <div class="section" *ngFor="let section of puntosData.sections">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.content }}</p>
+        </div>
+      </div>
+      
+      <!-- Tabla de Canjes (para la sección de canjes) -->
+      <div class="rewards-table" *ngIf="activeTab === 'puntos'">
+        <h3 style="margin-top: 30px;">Tabla de Canjes Rápida</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Puntos</th>
+              <th>Recompensa</th>
+              <th>Vigencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>50</td>
+              <td>Descuento 10%</td>
+              <td>30 días</td>
+            </tr>
+            <tr>
+              <td>100</td>
+              <td>Comida o bebida S/ 50</td>
+              <td>6 meses</td>
+            </tr>
+            <tr>
+              <td>150</td>
+              <td>Eventos exclusivos</td>
+              <td>3 meses</td>
+            </tr>
+            <tr>
+              <td>200</td>
+              <td>Vale S/ 100</td>
+              <td>3 meses</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Cookies Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'cookies'">
+      <h2>{{ cookiesData.title }}</h2>
+      <div class="sections">
+        <div class="section" *ngFor="let section of cookiesData.sections">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.content }}</p>
+        </div>
+      </div>
+      <div class="cookie-notice">
+        <p><strong>Nota importante:</strong> Al utilizar nuestro sitio web, usted acepta el uso de cookies según se describe en esta política. 
+        Puede cambiar la configuración de cookies en su navegador en cualquier momento.</p>
+      </div>
+    </div>
+
+    <!-- Privacidad y Datos Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'privacidad'">
+      <h2>{{ privacidadData.title }}</h2>
+      <div class="sections">
+        <div class="section" *ngFor="let section of privacidadData.sections">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.content }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seguridad Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'seguridad'">
+      <h2>{{ politicasData.title }}</h2>
+      <div class="sections">
+        <div class="section" *ngFor="let section of politicasData.sections">
+          <h3>{{ section.title }}</h3>
+          <p>{{ section.content }}</p>
+        </div>
+      </div>
+      <div class="security-tips">
+        <h3>Consejos de Seguridad Adicionales</h3>
+        <ul>
+          <li>Siempre verifica que la URL comience con "https://" (no "http://")</li>
+          <li>Nunca abras enlaces sospechosos de correos no solicitados</li>
+          <li>Mantén tu software y navegador actualizados</li>
+          <li>Reporta actividad sospechosa inmediatamente</li>
+          <li>Usa redes WiFi públicas con precaución</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer Info -->
+  <div class="terms-footer">
+    <p><strong>Última actualización:</strong> 4 de junio de 2026</p>
+    <p>Para preguntas o reportar problemas de seguridad, contáctanos en: <strong>privacidad@posoqo.com</strong></p>
+  </div>
+</div>
