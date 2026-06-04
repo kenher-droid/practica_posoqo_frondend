@@ -14,6 +14,11 @@ export const routes: Routes = [
     data: { title: 'Términos y Condiciones' }
   },
   {
+    path: 'eventos',
+    loadComponent: () => import('./features/public/shared/events/eventos').then(m => m.Eventos),
+    data: { title: 'Eventos' }
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./features/admin/layout/admin-layout/admin-layout').then(m => m.AdminLayout),
     children: ADMIN_ROUTES
