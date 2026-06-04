@@ -54,4 +54,23 @@ export class Profile {
   extraPoints() {
     return Math.max(this.pointsTotal() - this.stampGoal, 0);
   }
+
+registrarMovimiento(tipo: 'suma' | 'resta', cantidad: number, razon: string) {
+
+  if (tipo === 'resta' && cantidad > this.pointsTotal()) {
+    console.warn("No hay puntos suficientes para realizar este canje");
+    return; 
+  }
+
+  const nuevaTransaccion: TransaccionPuntos = {
+    id: Date.now(),
+    tipo,
+    cantidad,
+    razon,
+    fecha: new Date() 
+  };
+
+  this.transacciones.update((listaActual) => [nuevaTransaccion, ...listaActual]);
 }
+}
+
