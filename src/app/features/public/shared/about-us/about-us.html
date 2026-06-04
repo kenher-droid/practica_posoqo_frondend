@@ -1,0 +1,140 @@
+<div class="about-container">
+  <div class="about-header">
+    <div class="header-top">
+      <button class="back-btn" (click)="goBack()" title="Volver a inicio">
+        <span class="arrow">&larr;</span> Volver
+      </button>
+    </div>
+    <h1>Sobre Nosotros</h1>
+    <p class="subtitle">Cervecería Artesanal POSOQO - Una Historia de Pasión y Calidad</p>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="tabs-navigation">
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'mision'"
+      (click)="selectTab('mision')">
+      Misión
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'vision'"
+      (click)="selectTab('vision')">
+      Visión
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'valores'"
+      (click)="selectTab('valores')">
+      Valores
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'historia'"
+      (click)="selectTab('historia')">
+      Historia
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'equipo'"
+      (click)="selectTab('equipo')">
+      Equipo
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'contacto'"
+      (click)="selectTab('contacto')">
+      Contacto
+    </button>
+  </div>
+
+  <!-- Content Sections -->
+  <div class="tabs-content">
+    
+    <!-- Misión Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'mision'">
+      <h2>{{ misionData.title }}</h2>
+      <div class="content-box">
+        <p>{{ misionData.content }}</p>
+      </div>
+    </div>
+
+    <!-- Visión Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'vision'">
+      <h2>{{ visionData.title }}</h2>
+      <div class="content-box">
+        <p>{{ visionData.content }}</p>
+      </div>
+    </div>
+
+    <!-- Valores Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'valores'">
+      <h2>{{ valoresData.title }}</h2>
+      <div class="valores-grid">
+        <div class="valor-card" *ngFor="let valor of valoresData.values">
+          <h3>{{ valor.nombre }}</h3>
+          <p>{{ valor.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historia Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'historia'">
+      <h2>{{ historiaData.title }}</h2>
+      <div class="timeline">
+        <div class="timeline-item" *ngFor="let milestone of historiaData.milestones">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <h3>{{ milestone.year }} - {{ milestone.evento }}</h3>
+            <p>{{ milestone.descripcion }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Equipo Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'equipo'">
+      <h2>{{ equipoData.title }}</h2>
+      <p class="equipo-intro">{{ equipoData.descripcion }}</p>
+      <div class="equipo-grid">
+        <div class="equipo-card" *ngFor="let area of equipoData.areas">
+          <h3>{{ area.nombre }}</h3>
+          <p>{{ area.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contacto Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'contacto'">
+      <h2>{{ contactoData.title }}</h2>
+      <div class="contacto-info">
+        <div class="info-item">
+          <h3>Ubicación</h3>
+          <p>{{ contactoData.direccion }}</p>
+        </div>
+        <div class="info-item">
+          <h3>Teléfono</h3>
+          <ul>
+            <li *ngFor="let tel of contactoData.telefonos">{{ tel }}</li>
+          </ul>
+        </div>
+        <div class="info-item">
+          <h3>Correo Electrónico</h3>
+          <p><a href="mailto:{{ contactoData.correo }}">{{ contactoData.correo }}</a></p>
+        </div>
+        <div class="info-item">
+          <h3>Horario de Atención</h3>
+          <p>{{ contactoData.horario }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer Info -->
+  <div class="about-footer">
+    <p>Gracias por ser parte de la comunidad POSOQO</p>
+    <p>Síguenos en redes sociales para contenido exclusivo y promociones</p>
+  </div>
+</div>

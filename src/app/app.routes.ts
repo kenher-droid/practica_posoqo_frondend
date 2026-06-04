@@ -14,9 +14,15 @@ export const routes: Routes = [
     data: { title: 'Términos y Condiciones' }
   },
   {
+<<<<<<< HEAD
     path: 'eventos',
     loadComponent: () => import('./features/public/shared/events/eventos').then(m => m.Eventos),
     data: { title: 'Eventos' }
+=======
+    path: 'nosotros',
+    loadComponent: () => import('./features/public/shared/about-us').then(m => m.AboutUs),
+    data: { title: 'Sobre Nosotros' }
+>>>>>>> 22959e9df6ed2549f62775d08928f323dd309b70
   },
   {
     path: 'admin',
