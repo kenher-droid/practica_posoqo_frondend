@@ -28,39 +28,62 @@
 </section>
 
 <section class="profile-actions">
-  <article>
-    <h2>¿Cómo canjear mis puntos?</h2>
-    <p>Para canjear tus puntos debes comunicarte o acercarte al local o pedir por delivery. Elige promociones disponibles y al recibir tu pedido, tus puntos se descontarán.</p>
+
+  <article class="action-card">
+    <div class="action-icon">
+      <i class="fas fa-gift"></i>
+    </div>
+
+    <h2>¿CÓMO CANJEAR?</h2>
+
+    <p>
+      Visítanos en cualquiera de nuestros locales o haz un pedido por
+      delivery. Informa a nuestro equipo que deseas usar tus puntos y
+      aplicaremos el descuento instantáneamente en tu cuenta.
+    </p>
   </article>
-  <article>
-    <h2>¿Cómo ganar puntos?</h2>
-    <p>Para ganar puntos, realiza pedidos por delivery o en local. Cada compra suma puntos y puedes ver tus acumulados aquí.</p>
+
+  <article class="action-card">
+    <div class="action-icon">
+      <i class="fas fa-coins"></i>
+    </div>
+
+    <h2>¿CÓMO GANAR?</h2>
+
+    <p>
+      Cada compra cuenta. Por cada S/10 de consumo obtienes 1 punto.
+      Los puntos se cargan automáticamente al vincular tu pedido con
+      tu número de cuenta o DNI.
+    </p>
   </article>
 </section>
+<div class="profile-layout-wrapper">
+  <div class="profile-wrapper">
+  <section class="profile-history">
+    <div class="history-header">
+      <h2>Historial de puntos</h2>
+      <p>Revisa cuándo se añadieron o descontaron puntos de tu cuenta.</p>
+    </div>
 
-<section class="profile-history">
-  <div class="history-header">
-    <h2>Historial de puntos</h2>
-    <p>Revisa cuándo se añadieron o descontaron puntos de tu cuenta.</p>
-  </div>
+    <div class="history-list">
+      @for (transaccion of transacciones(); track transaccion.id) {
+        <article class="history-item" [class.history-item--resta]="transaccion.tipo === 'resta'">
+          <div class="history-row">
+            <strong>{{ transaccion.tipo === 'suma' ? '+' : '-' }}{{ transaccion.cantidad }} pts</strong>
+            <span class="history-date">{{ transaccion.fecha | date:'mediumDate' }}</span>
+          </div>
+          <p class="history-reason">{{ transaccion.razon }}</p>
+        </article>
+      }
+    </div>
+  </section>
 
-  <div class="history-list">
-    @for (transaccion of transacciones(); track transaccion.id) {
-      <article class="history-item" [class.history-item--resta]="transaccion.tipo === 'resta'">
-        <div class="history-row">
-          <strong>{{ transaccion.tipo === 'suma' ? '+' : '-' }}{{ transaccion.cantidad }} pts</strong>
-          <span class="history-date">{{ transaccion.fecha | date:'mediumDate' }}</span>
-        </div>
-        <p class="history-reason">{{ transaccion.razon }}</p>
-      </article>
-    }
-  </div>
-</section>
-
-<section class="profile-cta-bar">
-  <div>
-    <strong>POSOQO DELIVERY</strong>
-    <p>Comunícate al WhatsApp de Posoqo para pedir tus comidas preferidas y también ganar puntos.</p>
-  </div>
-  <a routerLink="/" class="button button--secondary">realizar pedido</a>
-</section>
+  <section class="profile-cta-bar">
+    <div>
+      <strong>POSOQO DELIVERY</strong>
+      <p>Comunícate al WhatsApp de Posoqo para pedir tus comidas preferidas y también ganar puntos.</p>
+    </div>
+<a href="https://wa.me/51930734075" target="_blank" rel="noopener noreferrer" class="button button--secondary">
+  REALIZAR PEDIDO
+</a>  </section>
+</div>
