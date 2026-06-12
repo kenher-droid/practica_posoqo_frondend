@@ -15,14 +15,14 @@ interface ApiTransaccion {
 export class PuntosService {
   constructor(private readonly api: RestauranteApiService) {}
 
-  agregarPuntos(usuarioId: number, cantidad: number, razon: string): Observable<ApiTransaccion> {
+  agregarPuntosPorCompra(usuarioId: number, montoCompra: number, razon: string): Observable<ApiTransaccion> {
     return new Observable<ApiTransaccion>((observer) => {
-      this.api.sumarPuntos(usuarioId, cantidad).subscribe({
+      this.api.sumarPuntosPorMonto({ id_cliente: usuarioId, monto_compra: montoCompra }).subscribe({
         next: () => {
           observer.next({
             id: Date.now(),
             usuarioId,
-            cantidad,
+            cantidad: montoCompra,
             tipo: 'suma',
             razon,
             fecha: new Date().toISOString()
@@ -34,9 +34,26 @@ export class PuntosService {
     });
   }
 
-  quitarPuntos(usuarioId: number, cantidad: number, razon: string): Observable<ApiTransaccion> {
+  canjearPuntos(usuarioId: number, puntos: number, razon: string): Observable<ApiTransaccion> {
     return new Observable<ApiTransaccion>((observer) => {
-      observer.error(new Error('FastAPI descuenta puntos mediante canje de promocion: usa canjearPuntos(idCliente, idPromocion).'));
+      this.api.canjearPuntosPorMonto({
+        id_cliente: usuarioId,
+        puntos_a_canjear: puntos,
+        usar_todos_puntos: false
+      }).subscribe({
+        next: () => {
+          observer.next({
+            id: Date.now(),
+            usuarioId,
+            cantidad: puntos,
+            tipo: 'resta',
+            razon,
+            fecha: new Date().toISOString()
+          });
+          observer.complete();
+        },
+        error: (error: unknown) => observer.error(error)
+      });
     });
   }
 
@@ -47,7 +64,7 @@ export class PuntosService {
           observer.next(historial.map((item: HistorialPuntosResponse) => ({
             id: item.id,
             usuarioId: item.id_cliente,
-            cantidad: item.puntos,
+            cantidad: Number(item.puntos),
             tipo: item.tipo === 'resta' || item.tipo === 'canje' ? 'resta' : 'suma',
             razon: item.descripcion ?? item.tipo,
             fecha: item.fecha

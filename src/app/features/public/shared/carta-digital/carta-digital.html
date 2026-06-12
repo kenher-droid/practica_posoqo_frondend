@@ -21,7 +21,7 @@
       <label>Subcategoría:</label>
       <select (change)="filtrarPorSubcategoria(+$any($event.target).value)" class="filtro-select">
         <option value="0">Todas</option>
-        @for (sub of subcategorias(); track sub.id) {
+        @for (sub of subcategoriasFiltradas; track sub.id) {
           <option [value]="sub.id" [selected]="subcategoriaSeleccionada() === sub.id">{{ sub.nombre }}</option>
         }
       </select>
@@ -40,11 +40,21 @@
     <div class="carta-grid">
       @for (menu of menusFiltrados(); track menu.id) {
         <div class="menu-card">
+          @if (menu.descuentoPct) {
+            <div class="descuento-badge">-{{ menu.descuentoPct }}%</div>
+          }
           <img [src]="menu.imagen_url" [alt]="menu.nombre" class="menu-image" />
           <div class="menu-content">
             <h3 class="menu-name">{{ menu.nombre }}</h3>
             <p class="menu-description">{{ menu.descripcion }}</p>
-            <p class="menu-price">S/ {{ menu.precio }}</p>
+            <div class="menu-precio-row">
+              @if (menu.precioConDescuento !== null) {
+                <span class="menu-price-original">S/ {{ menu.precio }}</span>
+                <span class="menu-price menu-price--promo">S/ {{ menu.precioConDescuento | number:'1.2-2' }}</span>
+              } @else {
+                <span class="menu-price">S/ {{ menu.precio }}</span>
+              }
+            </div>
           </div>
         </div>
       }

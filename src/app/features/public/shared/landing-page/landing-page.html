@@ -1,3 +1,20 @@
+<!-- Modal verificación de edad -->
+@if (mostrarModal()) {
+  <div class="edad-overlay">
+    <div class="edad-modal">
+      <div class="edad-logo">POSOQO</div>
+      <div class="edad-icono">🍺</div>
+      <h2 class="edad-titulo">Verificación de edad</h2>
+      <p class="edad-texto">Este sitio contiene contenido relacionado con bebidas alcohólicas. ¿Eres mayor de 18 años?</p>
+      <div class="edad-acciones">
+        <button class="edad-btn edad-btn--si" (click)="confirmarEdad()">Sí, soy mayor de 18</button>
+        <button class="edad-btn edad-btn--no" (click)="rechazarEdad()">No, soy menor</button>
+      </div>
+      <p class="edad-aviso">Al ingresar confirmas que tienes 18 años o más.</p>
+    </div>
+  </div>
+}
+
 <section class="hero">
     <app-bienvenida></app-bienvenida>
 </section>

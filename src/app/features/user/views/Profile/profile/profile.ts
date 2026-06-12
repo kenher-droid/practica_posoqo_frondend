@@ -26,14 +26,14 @@ export class Profile implements OnInit {
 
   ngOnInit(): void {
     this.restauranteApi.miCliente().subscribe({
-      next: (cliente) => this.puntosCliente.set(cliente.puntos)
+      next: (cliente) => this.puntosCliente.set(Number(cliente.puntos))
     });
     this.restauranteApi.miHistorial().subscribe({
       next: (historial) => {
         this.transacciones.set(historial.map((item) => ({
           id: item.id,
           tipo: item.tipo === 'resta' || item.tipo === 'canje' ? 'resta' : 'suma',
-          cantidad: item.puntos,
+          cantidad: Number(item.puntos),
           razon: item.descripcion ?? item.tipo,
           fecha: new Date(item.fecha)
         })));

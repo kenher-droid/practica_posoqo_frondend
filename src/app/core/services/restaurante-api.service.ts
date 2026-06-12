@@ -22,7 +22,7 @@ export interface UsuarioCreate {
 export interface ClienteConUsuarioResponse {
   id: number;
   fecha_nacimiento: string;
-  puntos: number;
+  puntos: string;
   id_usuario: number;
   nombre?: string | null;
   telefono?: string | null;
@@ -73,13 +73,11 @@ export type EventoCreate = Omit<EventoResponse, 'id'>;
 
 export interface PromocionMenuResponse {
   id: number;
-  puntos: number;
   descuento: string;
   id_menu: number;
 }
 
 export interface PromocionMenuCreate {
-  puntos: number;
   descuento: number | string;
   id_menu: number;
 }
@@ -88,9 +86,31 @@ export interface HistorialPuntosResponse {
   id: number;
   id_cliente: number;
   tipo: string;
-  puntos: number;
+  puntos: string;
   descripcion?: string | null;
   fecha: string;
+}
+
+export interface ConfiguracionPuntosResponse {
+  id: number;
+  soles_por_punto: string;   // cuántos soles para ganar 1 punto
+  valor_punto_soles: string; // cuánto vale 1 punto al canjear (en soles)
+}
+
+export interface ConfiguracionPuntosCreate {
+  soles_por_punto: number | string;
+  valor_punto_soles: number | string;
+}
+
+export interface SumarPuntosRequest {
+  id_cliente: number;
+  monto_compra: number | string;
+}
+
+export interface CanjeRequest {
+  id_cliente: number;
+  puntos_a_canjear?: number | string | null;
+  usar_todos_puntos?: boolean;
 }
 
 @Injectable({
@@ -127,12 +147,30 @@ export class RestauranteApiService {
     return this.api.get<ClienteConUsuarioResponse>(API_ENDPOINTS.clientesMe);
   }
 
-  sumarPuntos(id_cliente: number, puntos: number): Observable<void> {
-    return this.api.post<void>(API_ENDPOINTS.sumarPuntos, null, undefined, { id_cliente, puntos });
+  sumarPuntos(id_cliente: number, monto_compra: number): Observable<void> {
+    // El backend espera SumarPuntosRequest en el body
+    return this.api.post<void>(API_ENDPOINTS.sumarPuntos, { id_cliente, monto_compra });
   }
 
-  canjearPuntos(id_cliente: number, id_promocion: number): Observable<void> {
-    return this.api.post<void>(API_ENDPOINTS.canjearPuntos, { id_cliente, id_promocion });
+  canjearPuntos(id_cliente: number, puntos_a_canjear: number): Observable<void> {
+    // El backend espera CanjeRequest en el body
+    return this.api.post<void>(API_ENDPOINTS.canjearPuntos, { id_cliente, puntos_a_canjear });
+  }
+
+  obtenerConfiguracionPuntos(): Observable<ConfiguracionPuntosResponse> {
+    return this.api.get<ConfiguracionPuntosResponse>(API_ENDPOINTS.configuracionPuntos);
+  }
+
+  actualizarConfiguracionPuntos(payload: ConfiguracionPuntosCreate): Observable<ConfiguracionPuntosResponse> {
+    return this.api.post<ConfiguracionPuntosResponse>(API_ENDPOINTS.configuracionPuntos, payload);
+  }
+
+  sumarPuntosPorMonto(payload: SumarPuntosRequest): Observable<void> {
+    return this.api.post<void>(API_ENDPOINTS.sumarPuntos, payload);
+  }
+
+  canjearPuntosPorMonto(payload: CanjeRequest): Observable<void> {
+    return this.api.post<void>(API_ENDPOINTS.canjearPuntos, payload);
   }
 
   historialCliente(idCliente: number): Observable<HistorialPuntosResponse[]> {

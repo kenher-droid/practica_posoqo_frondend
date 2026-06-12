@@ -4,7 +4,6 @@ import { ApiService } from './api.service';
 import { API_ENDPOINTS } from '../config';
 
 export interface PromocionPayload {
-  puntos: number;
   descuento: number | string;
   id_menu: number;
 }

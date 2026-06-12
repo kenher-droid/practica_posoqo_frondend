@@ -19,6 +19,7 @@ export const API_ENDPOINTS = {
   promociones: '/promociones/',
   historialMe: '/historial-puntos/me',
   historialPuntos: '/historial-puntos',
+  configuracionPuntos: '/configuracion-puntos/',
   imagenesSubir: '/imagenes/subir'
 };
 

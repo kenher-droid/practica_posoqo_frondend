@@ -30,7 +30,6 @@ interface PromocionVista {
   precioActual: number;
   descuentoPorcentaje: number;
   precioConDescuento: number;
-  puntosAsignados: number;
 }
 
 @Component({
@@ -60,7 +59,6 @@ export class Promociones implements OnInit {
     estado: 'Activo',
     precioActual: 0,
     descuentoPorcentaje: 10,
-    puntosAsignados: 0,
   });
 
   comidasFiltradas = computed(() => {
@@ -161,7 +159,6 @@ export class Promociones implements OnInit {
       precioActual,
       descuentoPorcentaje,
       precioConDescuento: this.calcularPrecioConDescuento(precioActual, descuentoPorcentaje),
-      puntosAsignados: promo.puntos,
     };
   }
 
@@ -190,7 +187,6 @@ export class Promociones implements OnInit {
       estado: comida.estado,
       precioActual: comida.precio,
       descuentoPorcentaje: 10,
-      puntosAsignados: 0,
     });
     this.cerrarModalBuscar();
     this.showModalDetalles.set(true);
@@ -212,7 +208,6 @@ export class Promociones implements OnInit {
       estado: 'Activo',
       precioActual: 0,
       descuentoPorcentaje: 10,
-      puntosAsignados: 0,
     });
   }
 
@@ -222,7 +217,6 @@ export class Promociones implements OnInit {
 
     if (
       !idMenu ||
-      promo.puntosAsignados <= 0 ||
       promo.descuentoPorcentaje <= 0 ||
       promo.descuentoPorcentaje > 100
     ) {
@@ -230,7 +224,6 @@ export class Promociones implements OnInit {
     }
 
     const payload = {
-      puntos: promo.puntosAsignados,
       descuento: promo.descuentoPorcentaje,
       id_menu: idMenu,
     };
@@ -275,7 +268,6 @@ export class Promociones implements OnInit {
       estado: promo.estado,
       precioActual: promo.precioActual,
       descuentoPorcentaje: promo.descuentoPorcentaje,
-      puntosAsignados: promo.puntosAsignados,
     });
     this.showModalDetalles.set(true);
   }

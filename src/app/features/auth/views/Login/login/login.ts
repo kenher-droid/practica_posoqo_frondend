@@ -31,22 +31,13 @@ export class Login {
     }
 
     this.loading = true;
-    this.authService.login({ telefono: this.telefono.trim(), password: this.password }).subscribe({
-      next: (response) => {
-        console.log('Login response:', response);
-        this.restauranteApi.miUsuario().subscribe({
-          next: (usuario) => {
-            console.log('Usuario:', usuario);
-            this.loading = false;
-            const destino = usuario.id_rol === 3 ? '/user/profile' : '/admin/inicio';
-            void this.router.navigate([destino]);
-          },
-          error: (err) => {
-            console.error('Error al obtener usuario:', err);
-            this.loading = false;
-            this.error = 'Error al obtener datos del usuario.';
-          }
-        });
+    this.authService.login({ telefono: this.telefono.trim(), password: this.password }).pipe(
+      switchMap(() => this.restauranteApi.miUsuario())
+    ).subscribe({
+      next: (usuario) => {
+        this.loading = false;
+        const destino = usuario.id_rol === 3 ? '/user/profile' : '/admin/inicio';
+        void this.router.navigate([destino]);
       },
       error: (err) => {
         console.error('Error en login:', err);

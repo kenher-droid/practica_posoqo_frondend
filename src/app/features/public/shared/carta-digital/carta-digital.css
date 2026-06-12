@@ -144,6 +144,7 @@
 }
 
 .menu-card {
+  position: relative;
   background: white;
   border-radius: 12px;
   overflow: hidden;
@@ -225,4 +226,39 @@
   display: inline-block;
   border-radius: 5px;
   box-shadow: 0 2px 6px rgba(225, 190, 33, 0.2);
+}
+
+.menu-precio-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.menu-price-original {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.menu-price--promo {
+  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+.descuento-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 6px;
+  z-index: 2;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
 }

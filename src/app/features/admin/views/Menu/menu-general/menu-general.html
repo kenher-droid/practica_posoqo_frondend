@@ -9,12 +9,12 @@
 
   <!-- Secciones por categoría -->
   <div class="categorias-section">
-    @for (categoria of categorias; track categoria; let i = $index) {
+    @for (categoria of categorias; track categoria.id; let i = $index) {
       <div class="categoria-comidas">
-        <h3 class="categoria-title">{{ categoria }}</h3>
+        <h3 class="categoria-title">{{ categoria.nombre }}</h3>
         
         <div class="comidas-grid">
-          @for (comida of comidasPorCategoria[categoria]; track comida.id; let j = $index) {
+          @for (comida of comidasPorCategoria[categoria.nombre]; track comida.id; let j = $index) {
             <div class="comida-card">
               <!-- Imagen de la comida -->
               <div class="comida-imagen">
@@ -91,11 +91,12 @@
             <label>Categoría</label>
             <select
               class="admin-modal-input"
-              [(ngModel)]="nuevaCategoria"
+              [ngModel]="nuevaCategoriaId()"
+              (ngModelChange)="onCategoriaChange($event)"
               name="categoriaComida"
             >
-              @for (categoria of categorias; track categoria) {
-                <option>{{ categoria }}</option>
+              @for (categoria of categorias; track categoria.id) {
+                <option [ngValue]="categoria.id">{{ categoria.nombre }}</option>
               }
             </select>
           </div>

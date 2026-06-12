@@ -30,6 +30,19 @@ export class Register {
       return;
     }
 
+    // Validar que sea mayor o igual a 18 años
+    const hoy = new Date();
+    const nacimiento = new Date(this.fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+      edad--;
+    }
+    if (edad < 18) {
+      this.error = 'Debes tener al menos 18 años para registrarte.';
+      return;
+    }
+
     this.loading = true;
     this.authService.register({
       nombre: this.nombre.trim(),

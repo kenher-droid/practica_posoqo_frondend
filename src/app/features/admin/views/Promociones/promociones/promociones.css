@@ -193,23 +193,21 @@
 }
 
 .btn-eliminar {
-  position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
+  margin-top: 0.75rem;
   padding: 0.5rem 1rem;
-  background-color: #dc2626;
-  color: white;
-  border: none;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #dc2626;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 10;
+  width: 100%;
 }
 
 .btn-eliminar:hover {
-  background-color: #991b1b;
-  transform: translateY(-2px);
+  background-color: #dc2626;
+  color: white;
 }
 
 /* Modal */

@@ -1,31 +1,81 @@
 <app-header></app-header>
 
-<div class="eventos-container">
-  <div class="eventos-header">
-    <h1>Nuestros Eventos</h1>
-    <p>Descubre los próximos eventos especiales</p>
-  </div>
+<div class="eventos-page">
 
   @if (loading()) {
-    <div class="loading">Cargando eventos...</div>
+    <div class="estado-mensaje">Cargando eventos...</div>
   } @else if (error()) {
-    <div class="error">{{ error() }}</div>
+    <div class="estado-mensaje error">{{ error() }}</div>
+  } @else if (eventos().length === 0) {
+    <div class="estado-mensaje">No hay eventos disponibles por el momento.</div>
   } @else {
-    <div class="eventos-grid">
-      @for (evento of eventos(); track evento.id) {
-        <div class="evento-card">
-          <img [src]="evento.imagen_url" [alt]="evento.nombre" class="evento-image" />
-          <div class="evento-content">
-            <h3 class="evento-name">{{ evento.nombre }}</h3>
-            <p class="evento-description">{{ evento.descripcion }}</p>
-            <div class="evento-details">
-              <p class="evento-detail">📅 {{ evento.fecha }}</p>
-              <p class="evento-detail">🕐 {{ evento.hora }}</p>
-              <p class="evento-detail">📍 {{ evento.lugar }}</p>
+
+    <div class="eventos-wrapper">
+
+      <!-- Encabezado sobre el slider -->
+      <div class="eventos-encabezado">
+        <p class="label-proximos">PRÓXIMOS EVENTOS</p>
+        <h1 class="titulo-descubre">Descubre lo que se viene</h1>
+      </div>
+
+      <!-- Slider -->
+      <div class="slider-wrapper">
+        @if (eventoActual(); as evento) {
+
+          <!-- Fondo imagen -->
+          <div class="slider-bg" [style.backgroundImage]="'url(' + evento.imagen_url + ')'"></div>
+          <div class="slider-overlay"></div>
+
+          <!-- Badge + contador -->
+          <div class="slider-topbar">
+            <span class="badge-destacado">
+              <i class="ti ti-star"></i> Evento destacado
+            </span>
+            <span class="contador">
+              {{ (indiceActual() + 1).toString().padStart(2,'0') }} /
+              {{ eventos().length.toString().padStart(2,'0') }}
+            </span>
+          </div>
+
+          <!-- Flechas -->
+          @if (eventos().length > 1) {
+            <button class="flecha flecha-izq" (click)="anterior()" aria-label="Anterior">&#8249;</button>
+            <button class="flecha flecha-der" (click)="siguiente()" aria-label="Siguiente">&#8250;</button>
+          }
+
+          <!-- Info inferior -->
+          <div class="slider-content">
+            <h2 class="slider-nombre">{{ evento.nombre }}</h2>
+            <p class="slider-descripcion">{{ evento.descripcion }}</p>
+            <div class="slider-detalles">
+              <span><i class="ti ti-calendar"></i> {{ formatearFecha(evento.fecha) }}</span>
+              <span><i class="ti ti-clock"></i> {{ formatearHora(evento.hora) }}</span>
+              <span><i class="ti ti-map-pin"></i> {{ evento.lugar }}</span>
             </div>
           </div>
+
+        }
+      </div>
+
+      <!-- Thumbnails de otros eventos -->
+      @if (eventos().length > 1) {
+        <div class="thumbnails-strip">
+          @for (ev of eventos(); track ev.id; let i = $index) {
+            <button
+              class="thumb"
+              [class.thumb-activo]="i === indiceActual()"
+              (click)="irA(i)"
+              [attr.aria-label]="'Ver evento ' + ev.nombre"
+            >
+              <div class="thumb-img" [style.backgroundImage]="'url(' + ev.imagen_url + ')'"></div>
+              <div class="thumb-overlay"></div>
+              <span class="thumb-nombre">{{ ev.nombre }}</span>
+            </button>
+          }
         </div>
       }
+
     </div>
+
   }
 </div>

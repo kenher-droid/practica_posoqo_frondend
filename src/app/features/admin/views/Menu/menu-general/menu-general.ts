@@ -1,6 +1,7 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, AfterViewInit, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { of, switchMap } from 'rxjs';
 import { RestauranteApiService, CategoriaResponse, MenuResponse, SubCategoriaResponse } from '../../../../../core/services/restaurante-api.service';
 
 interface Comida {
@@ -20,7 +21,7 @@ interface Comida {
   templateUrl: './menu-general.html',
   styleUrl: './menu-general.css',
 })
-export class MenuGeneralComponent implements OnInit {
+export class MenuGeneralComponent implements OnInit, AfterViewInit {
   comidas = signal<Comida[]>([]);
   private menusApi: MenuResponse[] = [];
   private categoriasApi: CategoriaResponse[] = [];
@@ -33,13 +34,21 @@ export class MenuGeneralComponent implements OnInit {
   nuevoNombre = signal('');
   nuevoPrecio = signal('');
   nuevaSubcategoria = signal('Sub-categoría');
-  nuevaCategoria = signal('Comidas');
+  nuevaCategoriaId = signal<number | null>(null);
   nuevaImagen = signal('');
+  nuevaImagenArchivo = signal<File | null>(null);
   nuevaSubcategoriaId = signal<number | null>(null);
 
-  constructor(private readonly restauranteApi: RestauranteApiService) {}
+  constructor(
+    private readonly restauranteApi: RestauranteApiService,
+    private readonly cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
+    // No cargar datos aquí
+  }
+
+  ngAfterViewInit(): void {
     this.cargarMenu();
   }
 
@@ -51,6 +60,7 @@ export class MenuGeneralComponent implements OnInit {
         this.restauranteApi.listarMenus().subscribe((menus) => {
           this.menusApi = menus;
           this.comidas.set(menus.map((menu) => this.mapMenu(menu)));
+          this.cdr.detectChanges();
         });
       });
     });
@@ -82,12 +92,21 @@ export class MenuGeneralComponent implements OnInit {
     return agrupadas;
   }
 
-  get categorias(): string[] {
-    return Object.keys(this.comidasPorCategoria);
+  get categorias(): CategoriaResponse[] {
+    return this.categoriasApi;
   }
 
   get subcategoriasDisponibles(): SubCategoriaResponse[] {
-    return this.subcategoriasApi;
+    const catId = this.nuevaCategoriaId();
+    if (catId === null) return [];
+    return this.subcategoriasApi.filter(s => s.id_categoria === catId);
+  }
+
+  onCategoriaChange(catId: number): void {
+    this.nuevaCategoriaId.set(Number(catId));
+    // Reset subcategoría al cambiar categoría
+    const primeraSubcat = this.subcategoriasApi.find(s => s.id_categoria === Number(catId));
+    this.nuevaSubcategoriaId.set(primeraSubcat?.id ?? null);
   }
 
   toggleEstado(id: number): void {
@@ -122,9 +141,14 @@ export class MenuGeneralComponent implements OnInit {
     this.nuevoNombre.set('');
     this.nuevoPrecio.set('');
     this.nuevaSubcategoria.set('Sub-categoría');
-    this.nuevaSubcategoriaId.set(this.subcategoriasApi[0]?.id ?? null);
-    this.nuevaCategoria.set(this.categorias[0] ?? 'Comidas');
+    const primeraCategoria = this.categoriasApi[0] ?? null;
+    this.nuevaCategoriaId.set(primeraCategoria?.id ?? null);
+    const primeraSubcat = primeraCategoria
+      ? this.subcategoriasApi.find(s => s.id_categoria === primeraCategoria.id)
+      : null;
+    this.nuevaSubcategoriaId.set(primeraSubcat?.id ?? null);
     this.nuevaImagen.set('');
+    this.nuevaImagenArchivo.set(null);
     this.showModalAgregarComida.set(true);
   }
 
@@ -137,9 +161,11 @@ export class MenuGeneralComponent implements OnInit {
     const file = input.files?.[0] ?? null;
     if (!file) {
       this.nuevaImagen.set('');
+      this.nuevaImagenArchivo.set(null);
       return;
     }
 
+    this.nuevaImagenArchivo.set(file);
     const reader = new FileReader();
     reader.onload = () => {
       this.nuevaImagen.set(reader.result as string);
@@ -149,8 +175,8 @@ export class MenuGeneralComponent implements OnInit {
 
   confirmarAgregarComida(): void {
     const nombre = this.nuevoNombre().trim();
-    const precio = parseInt(this.nuevoPrecio());
-    if (!nombre || !precio || !this.nuevaCategoria()) {
+    const precio = Number(this.nuevoPrecio());
+    if (!nombre || !precio || !this.nuevaCategoriaId()) {
       return;
     }
 
@@ -159,20 +185,34 @@ export class MenuGeneralComponent implements OnInit {
       return;
     }
 
-    this.restauranteApi.crearMenu({
+    this.resolveImagenUrl(nombre).pipe(
+      switchMap((imagenUrl) => this.restauranteApi.crearMenu({
       nombre,
-      descripcion: this.nuevaSubcategoria(),
-      imagen_url: this.nuevaImagen() || `https://via.placeholder.com/300x300?text=${encodeURIComponent(nombre)}`,
+      descripcion: this.subcategoriasApi.find((item) => item.id === idSubCategoria)?.nombre ?? '',
+      imagen_url: imagenUrl,
       precio,
       estado_activo: true,
       id_sub_categoria: idSubCategoria
-    }).subscribe({
+      }))
+    ).subscribe({
       next: (menu) => {
         this.menusApi = [...this.menusApi, menu];
         this.comidas.set([...this.comidas(), this.mapMenu(menu)]);
         this.cerrarModalAgregarComida();
       }
     });
+  }
+
+  private resolveImagenUrl(nombre: string) {
+    const archivo = this.nuevaImagenArchivo();
+    const fallback = `https://via.placeholder.com/300x300?text=${encodeURIComponent(nombre)}`;
+    if (!archivo) {
+      return of(this.nuevaImagen() || fallback);
+    }
+
+    return this.restauranteApi.subirImagen(archivo).pipe(
+      switchMap((response) => of(response.url ?? response.imagen_url ?? response.path ?? fallback))
+    );
   }
 
   abrirModalConfirmEliminar(comida: Comida): void {

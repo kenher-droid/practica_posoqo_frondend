@@ -42,7 +42,7 @@ export class Usuarios implements OnInit {
           telefono: cliente.telefono ?? '',
           gmail: cliente.email ?? '',
           contrasena: '',
-          puntos: cliente.puntos,
+          puntos: Number(cliente.puntos),
           fecha_nacimiento: cliente.fecha_nacimiento,
           id_rol: 3
         })));
