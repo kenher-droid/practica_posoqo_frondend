@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { ADMIN_ROUTES } from './features/admin/admin.routes';
 import { AUTH_ROUTES } from './features/auth/auth.routes';
 import { USER_ROUTES } from './features/user/user.routes';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [authGuard],
     loadComponent: () => import('./features/admin/layout/admin-layout/admin-layout').then(m => m.AdminLayout),
     children: ADMIN_ROUTES
   },
@@ -40,6 +42,7 @@ export const routes: Routes = [
   },
   {
     path: 'user',
+    canActivate: [authGuard],
     loadComponent: () => import('./features/user/layout/user-layout/user-layout').then(m => m.UserLayout),
     loadChildren: () => import('./features/user/user.routes').then(m => m.USER_ROUTES)
   }
