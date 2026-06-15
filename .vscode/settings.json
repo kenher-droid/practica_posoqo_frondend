@@ -6,7 +6,6 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
         "tsconfig.spec.json": true,
-        "tsconfig.json": true,
         "tsconfig.app.json": true,
         "README.md": true,
         "package.json": true,
@@ -17,12 +16,12 @@
         ".gitignore": true,
         ".editorconfig": true,
         "node_modules": true,
+        ".angular": true,
         ".vscode": true,
-        ".angular": true
+        "tsconfig.json": true
     },
     "hide-files.files": [
         "tsconfig.spec.json",
-        "tsconfig.json",
         "tsconfig.app.json",
         "README.md",
         "package.json",
@@ -33,7 +32,8 @@
         ".gitignore",
         ".editorconfig",
         "node_modules",
+        ".angular",
         ".vscode",
-        ".angular"
+        "tsconfig.json"
     ]
 }

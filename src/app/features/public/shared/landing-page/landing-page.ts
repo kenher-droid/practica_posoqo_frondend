@@ -17,7 +17,14 @@ export class LandingPage {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly router = inject(Router);
 
-  mostrarModal = signal(true);
+  mostrarModal = signal(this.verificarEdadConfirmada() ? false : true);
+
+  private verificarEdadConfirmada(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return sessionStorage.getItem('edadVerificada') === '1';
+    }
+    return false;
+  }
 
   confirmarEdad(): void {
     if (isPlatformBrowser(this.platformId)) {
