@@ -1,14 +1,7 @@
-/* Sobrescribir el fondo negro del body global */
+/* Contenedor principal */
 :host {
   display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: #ffffff;
-  overflow-y: auto;
-  z-index: 1;
 }
 
 .carta-digital-container {

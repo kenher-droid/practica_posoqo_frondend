@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Header } from '../header/header';
 
 @Component({
   selector: 'app-terms-and-conditions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Header],
   templateUrl: './terms-and-conditions.html',
   styleUrl: './terms-and-conditions.css',
 })

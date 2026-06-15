@@ -1,17 +1,10 @@
 :host {
   display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: #f0ede8;
-  overflow-y: auto;
-  z-index: 1;
 }
 
 .eventos-page {
-  padding-top: 80px;
+  padding-top: 120px;
   min-height: 100vh;
   background: #f0ede8;
 }
