@@ -15,17 +15,17 @@
     <nav role="navigation" aria-label="Menú principal" class="hidden md:flex items-center ml-auto mr-12">
       <ul class="flex space-x-12 text-xl font-semibold lowercase tracking-wide">
         <li>
-          <a routerLink="/carta" class="px-2 py-1 rounded transition-all duration-200 text-[#051923] hover:opacity-80">
+          <a routerLink="/carta" [class.active-nav]="isActive('carta')" class="px-4 py-2 rounded transition-all duration-200 text-[#051923] hover:opacity-60 hover:bg-[rgba(5,25,35,0.1)] nav-link">
             carta
           </a>
         </li>
         <li>
-          <a routerLink="/eventos" class="px-2 py-1 rounded transition-all duration-200 text-[#051923] hover:opacity-80">
+          <a routerLink="/eventos" [class.active-nav]="isActive('eventos')" class="px-4 py-2 rounded transition-all duration-200 text-[#051923] hover:opacity-60 hover:bg-[rgba(5,25,35,0.1)] nav-link">
             eventos
           </a>
         </li>
         <li>
-          <a routerLink="/nosotros" class="px-2 py-1 rounded transition-all duration-200 text-[#051923] hover:opacity-80">
+          <a routerLink="/nosotros" [class.active-nav]="isActive('nosotros')" class="px-4 py-2 rounded transition-all duration-200 text-[#051923] hover:opacity-60 hover:bg-[rgba(5,25,35,0.1)] nav-link">
             nosotros
           </a>
         </li>

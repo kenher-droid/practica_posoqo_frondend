@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +8,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
-  // Menú ahora está hardcoded en el template para consistencia
+  private router = inject(Router);
+  
+  isActive(route: string): boolean {
+    return this.router.url.includes(route);
+  }
 }
