@@ -13,8 +13,6 @@
       <input type="password" placeholder="••••••••" [(ngModel)]="password" name="password" required />
     </label>
 
-    <a href="#" class="auth-forgot">¿olvidaste tu contraseña?</a>
-
     @if (error) {
       <p class="auth-error">{{ error }}</p>
     }
@@ -24,8 +22,10 @@
     </button>
   </form>
 
-  <div class="auth-card__footer auth-card__footer--centered">
-    <span>¿No tienes cuenta?</span>
-    <a routerLink="/auth/register">Registrate</a>
+  <div class="auth-divider">O</div>
+
+  <div class="auth-card__footer auth-footer-register">
+    <p class="auth-footer-text">¿No tienes cuenta?</p>
+    <a routerLink="/auth/register" class="auth-secondary-btn">Crear nueva cuenta</a>
   </div>
 </section>

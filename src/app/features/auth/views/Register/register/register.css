@@ -71,20 +71,66 @@
 }
 
 .auth-card__footer {
-  margin-top: 1.75rem;
+  margin-top: 2rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-footer-register,
+.auth-footer-login {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 1rem;
+}
+
+.auth-footer-text {
+  margin: 0;
   color: #b5b5b5;
+  font-size: 0.95rem;
 }
 
-.auth-card__footer.auth-card__footer--centered {
-  justify-content: center;
-  gap: 0.75rem;
-}
-
-.auth-card__footer a {
+.auth-secondary-btn {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(225, 190, 33, 0.2);
+  border: 2px solid #e1be21;
   color: #e1be21;
   text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-secondary-btn:hover {
+  background: #e1be21;
+  color: #0b0b0c;
+  transform: translateY(-1px);
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: #666;
   font-weight: 600;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.auth-divider::before {
+  margin-right: 1rem;
+}
+
+.auth-divider::after {
+  margin-left: 1rem;
 }
