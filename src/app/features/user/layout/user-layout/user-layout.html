@@ -1,9 +1,13 @@
 <div class="user-layout">
+  <app-confirm-modal></app-confirm-modal>
+  
   <header class="user-header">
     <div class="user-header__brand">POSOQO</div>
     <div class="user-header__actions">
       <a routerLink="/" class="user-action-btn">Volver a inicio</a>
-      <a routerLink="/auth/login" class="user-action-btn logout-btn">Cerrar sesión</a>
+      <button class="user-action-btn logout-btn" (click)="logout()" title="Cerrar sesión">
+        Cerrar sesión
+      </button>
     </div>
   </header>
 
