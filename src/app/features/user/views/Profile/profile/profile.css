@@ -3,11 +3,12 @@
   grid-template-columns: 1.1fr 0.9fr;
   gap: 2rem;
   align-items: center;
-  padding: 2rem;
+  padding: 3rem;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(225, 190, 33, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border: 1px solid rgba(225, 190, 33, 0.2);
   margin-bottom: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .profile-banner__text {
@@ -26,6 +27,8 @@
   font-size: clamp(2rem, 3vw, 3.5rem);
   margin: 0;
   color: #ffffff;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 .profile-banner__text p {
@@ -36,10 +39,11 @@
 .profile-banner__stats {
   display: grid;
   gap: 1.25rem;
-  padding: 1.5rem;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.8) 0%, rgba(30, 30, 30, 0.9) 100%);
+  border: 1px solid rgba(225, 190, 33, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .stamps-subtitle {
@@ -47,6 +51,16 @@
   color: #c9c9c9;
   line-height: 1.6;
   text-align: center;
+}
+
+.stat-label {
+  display: block;
+  color: #e1be21;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
 .points-block {
@@ -105,25 +119,36 @@
 
 .action-card {
   padding: 2.5rem;
-  background: #090909;
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 4px;
-  transition: .25s ease;
+  background: linear-gradient(135deg, rgba(225, 190, 33, 0.05) 0%, rgba(9, 9, 9, 0.8) 100%);
+  border: 1px solid rgba(225, 190, 33, 0.3);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .action-card:hover {
   border-color: #e1be21;
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(225, 190, 33, 0.15);
 }
 
 .action-icon {
   width: 54px;
   height: 54px;
-  border: 1px solid rgba(225,190,33,.4);
+  border: 2px solid rgba(225, 190, 33, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
+  border-radius: 12px;
+  background: rgba(225, 190, 33, 0.08);
+  transition: all 0.3s ease;
+}
+
+.action-card:hover .action-icon {
+  background: rgba(225, 190, 33, 0.15);
+  border-color: #e1be21;
+  transform: scale(1.1);
 }
 
 .action-icon i {
@@ -169,6 +194,10 @@
    ESTILOS DE HISTORIAL Y CTA
    ======================================================= */
 /* CONTENEDOR DE HISTORIAL + CTA */
+.profile-layout-wrapper {
+  width: 100%;
+}
+
 /* CONTENEDOR PRINCIPAL */
 .profile-wrapper {
   display: flex;
@@ -180,9 +209,11 @@
 /* HISTORIAL */
 .profile-history {
   flex: 1;
-  background: #111111;
-  border: 1px solid rgba(255,255,255,.12);
-  padding: 2rem;
+  background: linear-gradient(135deg, rgba(9, 9, 9, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
+  border: 1px solid rgba(225, 190, 33, 0.2);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .history-header {
@@ -190,8 +221,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(225, 190, 33, 0.2);
 }
 
 .history-header h2 {
@@ -218,15 +249,17 @@
 }
 
 .history-item {
-  background: #1a1a1a;
-  border: none;
-  border-radius: 0;
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(225, 190, 33, 0.1);
+  border-radius: 12px;
   padding: 1.5rem;
-  transition: .25s;
+  transition: all 0.25s ease;
 }
 
 .history-item:hover {
-  transform: translateX(6px);
+  transform: translateX(8px);
+  border-color: rgba(225, 190, 33, 0.3);
+  background: rgba(30, 30, 30, 0.8);
 }
 
 .history-row {
@@ -245,7 +278,7 @@
 }
 
 .history-item--resta .history-row strong {
-  color: #d48f8f;
+  color: #ff7875;
 }
 
 .history-date {
@@ -267,61 +300,79 @@
   content: "+";
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(225,190,33,.4);
+  border: 2px solid rgba(225, 190, 33, 0.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-right: 1rem;
   color: #e1be21;
   font-size: 1.3rem;
+  border-radius: 8px;
+  background: rgba(225, 190, 33, 0.08);
 }
 
 .history-item--resta .history-row strong::before {
   content: "−";
-  color: #d48f8f;
-  border-color: rgba(212,143,143,.4);
+  color: #ff7875;
+  border-color: rgba(255, 120, 117, 0.5);
+  background: rgba(255, 120, 117, 0.08);
 }
 
 /* POSOQO DELIVERY */
 .profile-cta-bar {
   margin-top: 80px;
   flex: 0 0 380px;
-  background: #444444;
-  border: 1px solid rgba(255,255,255,.12);
-  padding: 3rem;
-  box-shadow: 8px 8px 0 rgba(0,0,0,.4);
+  background: linear-gradient(135deg, #e1be21 0%, #d4a91d 100%);
+  border: none;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 50px rgba(225, 190, 33, 0.25);
+  transition: all 0.3s ease;
+}
+
+.profile-cta-bar:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(225, 190, 33, 0.35);
 }
 
 .profile-cta-bar strong {
   display: block;
-  color: #e1be21;
+  color: #0b0b0c;
   text-transform: uppercase;
   letter-spacing: .3em;
   margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 .profile-cta-bar p {
-  color: #bdbdbd;
+  color: #1a1a1a;
   line-height: 1.8;
   margin-bottom: 2rem;
+  font-weight: 600;
 }
 
 .profile-cta-bar .button {
   width: 100%;
-  background: #e1be21;
-  color: #111;
+  background: linear-gradient(135deg, #e1be21 0%, #d4a91d 100%);
+  color: #0b0b0c;
   text-transform: uppercase;
   font-weight: 800;
   text-align: center;
   padding: 1rem;
-  border: none;
+  border: 2px solid transparent;
   display: block;
   text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 15px rgba(225, 190, 33, 0.2);
 }
 
 .profile-cta-bar .button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   cursor: pointer;
+  box-shadow: 0 8px 25px rgba(225, 190, 33, 0.35);
 }
 
 /* RESPONSIVE */

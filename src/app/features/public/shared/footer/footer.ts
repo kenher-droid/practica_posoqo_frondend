@@ -21,16 +21,15 @@ abrirMapa() {
   ubicacion = {
     icono: '',
     lineas: [
-      'Parque Sucre',
-      'Av. Portal Independencia ',
-      'Huamanga-Ayacucho'
+      'Plaza Mayor de Huamanga, ',
+      'Portal Independencia Nº65, ',
+      'Ayacucho, Perú.'
     ]
   };
 
   contactos = [
-    { etiqueta: 'Celular 1', valor: '+51 912 345 678' },
-    { etiqueta: 'Celular 2', valor: '+51 912 144 141' },
-    { etiqueta: 'Correo', valor: 'emailexample@gmail.com' }
+    { etiqueta: 'Celular 2', valor: '+51 930 734 075' },
+    { etiqueta: 'Correo', valor: 'caposoqo@gmail.com' }
   ];
 
   informacion = [
